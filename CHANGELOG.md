@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0
+
+- Portage de 18 composants depuis meridian-synergy-ui, renommés `Ms*` → `Wp*` (classes
+  `.wp-*`, tokens `--wp-*`, types `Wp*`) : WpAlert, WpBadge, WpBreadcrumb, WpButton,
+  WpCard, WpCertifications, WpContactBanner, WpContactChannel, WpCtaBanner, WpInput,
+  WpLocaleSwitcher, WpModal, WpPageHero, WpSocialCard, WpSocialLinks, WpSpecGrid,
+  WpThemeToggle, WpValueCard. Stories portées, `src/index.ts` complété.
+- Permet à waypoint360-app / waypoint360-web de se découpler de meridian-synergy-ui.
+
 ## 0.1.1
 
 - `WpLogo` redessiné autour du pin de localisation (inspiré du favicon waypoint360.eu) :
