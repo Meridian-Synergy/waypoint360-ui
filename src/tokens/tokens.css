@@ -1,0 +1,64 @@
+/*
+ * Waypoint360 design tokens.
+ *
+ * NOTE — iso-charte: these values currently mirror the Meridian Synergy charter
+ * (--ms-* → --wp-*). They will be replaced by Waypoint360's own charter (palette,
+ * typography, badges) in a dedicated charter review. Until then, do not introduce
+ * new colors or fonts.
+ */
+:root {
+  /* === Colors === */
+  --wp-color-navy:     #1B2B56;   /* Primary — navbars, headings, primary buttons */
+  --wp-color-sky:      #00AAEF;   /* Energy accent — links, active states, highlights */
+  --wp-color-orange:   #F05A28;   /* Critical actions — destructive, danger, delete */
+  --wp-color-gold:     #C9A84C;   /* CTA — conversion, invitation to act */
+  --wp-color-silver:   #7A7D8A;   /* Secondary — body text, borders, placeholders */
+  --wp-color-white:    #FFFFFF;   /* Light mode surfaces */
+
+  /* Dark mode base (community portal) */
+  --wp-color-dark-bg:  #10192C;
+  --wp-color-dark-bg2: #182236;
+
+  /* Extended surface tokens */
+  --wp-color-bg:           #ECEEF3;   /* Page background light mode */
+  --wp-color-border:       #D5D9E4;   /* Standard border */
+  --wp-color-muted:        #8C95AA;   /* Muted labels, meta text — use on dark backgrounds */
+  --wp-color-muted-strong: #636B82;   /* Accessible muted on light bg — WCAG AA 5.1:1 on white */
+  --wp-color-sky-dark:     #0074A8;   /* Accessible sky on light bg — WCAG AA 5.2:1 on white */
+
+  /* Status */
+  --wp-color-success:  #22c55e;
+  --wp-color-warning:  #f59e0b;
+  --wp-color-error:    #ef4444;
+
+  /* === Typography === */
+  --wp-font-display:   'Barlow', sans-serif;           /* Headings, titles, hero — Bold 700 / SemiBold 600 */
+  --wp-font-body:      'Barlow', sans-serif;           /* Body text, buttons, labels — Regular 400 / SemiBold 600 */
+  --wp-font-condensed: 'Barlow Condensed', sans-serif; /* Section labels, tags, uppercase meta — Medium 500 */
+  --wp-font-data:      'Space Mono', monospace;        /* Data, GPS coords, codes, numbers */
+
+  /* === Spacing === */
+  --wp-space-xs:  4px;
+  --wp-space-sm:  8px;
+  --wp-space-md:  16px;
+  --wp-space-lg:  24px;
+  --wp-space-xl:  40px;
+  --wp-space-2xl: 56px;
+
+  /* === Border radius === */
+  --wp-radius-sm:   4px;
+  --wp-radius-md:   8px;
+  --wp-radius-lg:   16px;
+  --wp-radius-xl:   20px;
+  --wp-radius-full: 9999px;
+
+  /* === Shadows === */
+  --wp-shadow-xs: 0 1px 4px rgba(27, 43, 86, 0.05);
+  --wp-shadow-sm: 0 2px 12px rgba(27, 43, 86, 0.06);
+  --wp-shadow-md: 0 4px 24px rgba(27, 43, 86, 0.10);
+  --wp-shadow-lg: 0 8px 40px rgba(27, 43, 86, 0.14);
+
+  /* === Transitions === */
+  --wp-transition-fast: 0.1s ease;
+  --wp-transition-base: 0.2s ease;
+}
