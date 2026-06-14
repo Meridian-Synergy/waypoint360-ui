@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+- Nouveau composant `WpNotice` : bloc notice discret (icône ⓘ au trait + texte), tones
+  `info` / `beta` / `warning` / `danger`. Extrait du pattern `.beta-notice` dupliqué dans
+  les apps. Slot par défaut pour le contenu, prop `icon` pour masquer l'icône.
+
 ## 0.2.0
 
 - Portage de 18 composants depuis meridian-synergy-ui, renommés `Ms*` → `Wp*` (classes

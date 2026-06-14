@@ -7,6 +7,7 @@ export { default as WpInput          } from './components/WpInput/WpInput.vue'
 export { default as WpCard           } from './components/WpCard/WpCard.vue'
 export { default as WpAlert          } from './components/WpAlert/WpAlert.vue'
 export { default as WpModal          } from './components/WpModal/WpModal.vue'
+export { default as WpNotice         } from './components/WpNotice/WpNotice.vue'
 export { default as WpThemeToggle    } from './components/WpThemeToggle/WpThemeToggle.vue'
 
 export { default as WpLocaleSwitcher } from './components/WpLocaleSwitcher/WpLocaleSwitcher.vue'
