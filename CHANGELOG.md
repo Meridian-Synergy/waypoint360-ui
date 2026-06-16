@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.7
+
+- `WpPatch` (fix) : rendu des icônes via `<component :is>` sur des descripteurs d'éléments
+  SVG, au lieu de `v-html`. `v-html` ne crée pas de façon fiable des nœuds dans le namespace
+  SVG → les emblèmes pouvaient ne pas s'afficher (patchs identiques au sein d'une catégorie).
+  Mêmes icônes, rendu garanti.
+
 ## 0.5.6
 
 - `WpPatch` : **bibliothèque d'icônes** étendue (6 → 25) pour que **chaque badge ait une icône
