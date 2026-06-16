@@ -177,45 +177,46 @@ const ariaLabel = computed<string>(() => props.name ?? props.bannerText ?? 'Achi
   position:       relative;
   display:        inline-block;
   line-height:    0;
-  /* default (none) tier */
-  --patch-ring:   var(--wp-color-silver);
-  --patch-ink:    var(--wp-color-white);
+  /* Self-contained: tier/brand fallbacks so the patch renders even when the
+   * consumer app does not declare the (provisional) --wp-tier-* tokens. */
+  --patch-ring:   var(--wp-color-silver, #7A7D8A);
+  --patch-ink:    var(--wp-color-white, #FFFFFF);
 }
 
-.wp-patch--bronze   { --patch-ring: var(--wp-tier-bronze); }
-.wp-patch--silver   { --patch-ring: var(--wp-tier-silver); }
-.wp-patch--gold     { --patch-ring: var(--wp-tier-gold); }
-.wp-patch--platinum { --patch-ring: var(--wp-tier-platinum); --patch-ink: var(--wp-color-navy); }
+.wp-patch--bronze   { --patch-ring: var(--wp-tier-bronze, #CD7F32); }
+.wp-patch--silver   { --patch-ring: var(--wp-tier-silver, #AEB6BF); }
+.wp-patch--gold     { --patch-ring: var(--wp-tier-gold, #D4AF37); }
+.wp-patch--platinum { --patch-ring: var(--wp-tier-platinum, #D9E2EC); --patch-ink: var(--wp-color-navy, #1B2B56); }
 
 .wp-patch__svg { width: 100%; height: 100%; display: block; }
 
-.wp-patch__art { transition: filter var(--wp-transition-base), opacity var(--wp-transition-base); }
+.wp-patch__art { transition: filter var(--wp-transition-base, 0.2s ease), opacity var(--wp-transition-base, 0.2s ease); }
 .wp-patch--locked .wp-patch__art,
 .wp-patch--locked .wp-patch__flag { filter: grayscale(1); opacity: 0.4; }
 
-.wp-patch__shape       { fill: var(--wp-color-navy); stroke: var(--patch-ring); stroke-width: 6; }
+.wp-patch__shape       { fill: var(--wp-color-navy, #1B2B56); stroke: var(--patch-ring); stroke-width: 6; }
 .wp-patch__inner       { fill: none; stroke: var(--patch-ring); stroke-width: 1.5; opacity: 0.5; }
 .wp-patch__pleat       { fill: none; stroke: var(--patch-ring); stroke-width: 5; stroke-dasharray: 3 4; opacity: 0.85; }
 .wp-patch__ribbon-tail { fill: var(--patch-ring); }
 
 .wp-patch__emblem      { fill: var(--patch-ink); stroke: var(--patch-ink); }
-.wp-patch__emblem-hub  { fill: var(--wp-color-navy); stroke: none; }
+.wp-patch__emblem-hub  { fill: var(--wp-color-navy, #1B2B56); stroke: none; }
 
 /* Banner plate + ink */
 .wp-patch__banner rect { fill: var(--patch-ring); }
 .wp-patch__banner text {
-  fill:           var(--wp-color-navy);
-  font-family:    var(--wp-font-condensed);
+  fill:           var(--wp-color-navy, #1B2B56);
+  font-family:    var(--wp-font-condensed, 'Barlow Condensed', sans-serif);
   font-weight:    600;
   font-size:      9px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.wp-patch__pastille circle { fill: var(--patch-ring); stroke: var(--wp-color-navy); stroke-width: 1.5; }
+.wp-patch__pastille circle { fill: var(--patch-ring); stroke: var(--wp-color-navy, #1B2B56); stroke-width: 1.5; }
 .wp-patch__pastille text {
-  fill:        var(--wp-color-navy);
-  font-family: var(--wp-font-data);
+  fill:        var(--wp-color-navy, #1B2B56);
+  font-family: var(--wp-font-data, 'Space Mono', monospace);
   font-weight: 700;
   font-size:   11px;
 }
@@ -232,6 +233,6 @@ const ariaLabel = computed<string>(() => props.name ?? props.bannerText ?? 'Achi
   border:             2.5px solid var(--patch-ring);
   background-size:    cover;
   background-position: center;
-  box-shadow:         var(--wp-shadow-xs);
+  box-shadow:         var(--wp-shadow-xs, 0 1px 4px rgba(0, 0, 0, 0.18));
 }
 </style>
