@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.5
+
+- `WpPatch` (fix) : suppression des « queues de ruban » de la rosette (Communauté/Soutien) —
+  illisibles à petite taille, elles ressemblaient à des éléments qui dépassent sans sens.
+  Le bord plissé suffit à signer la rosette ; la couleur d'accent + l'icône différencient déjà
+  les catégories. (Un vrai ruban pourra être réintroduit plus tard si besoin.)
+
 ## 0.5.4
 
 - `WpPatch` (lisibilité) : emblème agrandi (~×1,3, ce qui épaissit aussi les icônes à traits

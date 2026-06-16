@@ -106,12 +106,6 @@ const rootStyle = computed<Record<string, string>>(() => {
       <title v-if="description || name">{{ description ?? name }}</title>
 
       <g class="wp-patch__art">
-        <!-- Rosette ribbon tails (behind the medallion) -->
-        <template v-if="shape === 'rosette'">
-          <path class="wp-patch__ribbon-tail" d="M40 78 L32 99 L44 93 L48 84 Z" />
-          <path class="wp-patch__ribbon-tail" d="M60 78 L68 99 L56 93 L52 84 Z" />
-        </template>
-
         <!-- Silhouette -->
         <path class="wp-patch__shape" :d="shapePath" />
 
@@ -210,7 +204,6 @@ const rootStyle = computed<Record<string, string>>(() => {
 .wp-patch__shape       { fill: var(--wp-color-navy, #1B2B56); stroke: var(--patch-ring); stroke-width: 6; }
 .wp-patch__inner       { fill: none; stroke: var(--patch-ring); stroke-width: 1.5; opacity: 0.5; }
 .wp-patch__pleat       { fill: none; stroke: var(--patch-ring); stroke-width: 5; stroke-dasharray: 3 4; opacity: 0.85; }
-.wp-patch__ribbon-tail { fill: var(--patch-ring); }
 
 .wp-patch__emblem      { fill: var(--patch-ink); stroke: var(--patch-ink); }
 .wp-patch__emblem-hub  { fill: var(--wp-color-navy, #1B2B56); stroke: none; }
