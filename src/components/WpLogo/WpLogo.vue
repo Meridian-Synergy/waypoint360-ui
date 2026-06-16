@@ -29,20 +29,21 @@ const w = computed(() => props.width ?? defaults[props.variant])
   <svg
     v-if="variant === 'horizontal'"
     :width="w"
-    viewBox="0 0 320 82"
+    viewBox="0 14 205 56"
     xmlns="http://www.w3.org/2000/svg"
     aria-label="Waypoint360"
     role="img"
   >
     <!-- Pin scaled to ~the wordmark height and recentred on the text's optical axis
-         (y≈43). Without this the pin (62.5u) dwarfs the two-line wordmark (~40u). -->
-    <g transform="translate(13.12, 16.65) scale(0.68)">
+         (y≈43); left-aligned. Tight viewBox crops the dead space so the wordmark stays
+         legible at a reasonable rendered width. -->
+    <g transform="translate(-3.56, 16.65) scale(0.68)">
       <path d="M 41 70 C 23 53, 17 42, 17 31.5 A 24 24 0 1 1 65 31.5 C 65 42, 59 53, 41 70 Z" :fill="sky"/>
       <circle cx="41" cy="31.5" r="10.5" fill="#FFFFFF"/>
       <circle cx="41" cy="31.5" r="4" :fill="navy"/>
     </g>
-    <text x="92" y="38" font-family="'Barlow',Arial,sans-serif" font-weight="700" font-size="20.5" :fill="ink" letter-spacing="2.6">WAYPOINT</text>
-    <text x="92" y="63" font-family="'Barlow',Arial,sans-serif" font-weight="700" font-size="20.5" :fill="sky" letter-spacing="5">360</text>
+    <text x="58" y="38" font-family="'Barlow',Arial,sans-serif" font-weight="700" font-size="20.5" :fill="ink" letter-spacing="2.6">WAYPOINT</text>
+    <text x="58" y="63" font-family="'Barlow',Arial,sans-serif" font-weight="700" font-size="20.5" :fill="sky" letter-spacing="5">360</text>
   </svg>
 
   <!-- ── Vertical (pin top + "WAYPOINT / 360" below) ── -->

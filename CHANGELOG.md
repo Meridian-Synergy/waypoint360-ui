@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0
+
+- `WpLogo` (horizontal) : resserrage du lockup pour rendre le wordmark lisible à taille
+  raisonnable. Le pin est calé à gauche, le texte rapproché (x 92 → 58) et le viewBox
+  recadré sur le contenu (`0 0 320 82` → `0 14 205 56`, ratio 3,9 → 3,66 avec ~25 % de
+  vide en moins). À largeur de rendu égale, la capitale du wordmark passe de ~7 px à
+  ~13 px. **Note consommateurs** : le ratio largeur/hauteur du variant `horizontal` change
+  (hauteur rendue un peu plus grande à largeur égale) → réajuster les largeurs si besoin.
+
 ## 0.4.1
 
 - `WpLogo` (horizontal) : rééquilibrage du pin. Il faisait 62,5u de haut contre ~40u
