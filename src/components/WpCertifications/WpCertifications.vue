@@ -9,9 +9,11 @@ type AdditionalKey = typeof ADDITIONAL_KEYS[number]
 
 export type CertKey = DgacKey | AdditionalKey
 
-// A cert is either a plain held flag (legacy) or held + obtention date + issuing
-// country. Object keeps room for a future repeatable (multi-country) model.
-export type CertEntry = boolean | { held: boolean; obtained?: string | null; country?: string | null }
+// A cert is either a plain held flag (legacy) or held + obtention date + explicit
+// expiry date + issuing country. The official EU competency certificate prints the
+// expiry, not the obtention date — `expires` is authoritative when set; otherwise
+// the expiry is derived from `obtained + validity`.
+export type CertEntry = boolean | { held: boolean; obtained?: string | null; expires?: string | null; country?: string | null }
 
 export interface WpCertificationsValue {
   a1_a3?:        CertEntry
@@ -25,10 +27,14 @@ export interface WpCertificationsValue {
 
 export interface WpCertificationsDateLabels {
   obtained:  string
-  expiresOn: string   // template containing "{date}"
+  expiresOn: string   // template containing "{date}" — the computed/effective expiry
   valid:     string
   soon:      string
   expired:   string
+  /** Label of the explicit expiry-date input. Optional for backward compatibility. */
+  expiresInput?: string
+  /** Validity info line, template containing "{years}" (e.g. "Validity: {years} years"). */
+  validityInfo?: string
 }
 
 export interface WpCertCountryOption { value: string; label: string }
@@ -82,33 +88,58 @@ function isHeld(v: CertEntry | undefined): boolean {
 function obtainedOf(v: CertEntry | undefined): string | null {
   return typeof v === 'object' && v ? (v.obtained ?? null) : null
 }
+function expiresOf(v: CertEntry | undefined): string | null {
+  return typeof v === 'object' && v ? (v.expires ?? null) : null
+}
 function countryOf(v: CertEntry | undefined): string | null {
   return typeof v === 'object' && v ? (v.country ?? null) : null
 }
 
-function emitEntry(key: CertKey, held: boolean, obtained: string | null, country: string | null) {
-  const entry: CertEntry = richMode.value ? { held, obtained, country } : held
+interface RichEntry { held: boolean; obtained: string | null; expires: string | null; country: string | null }
+function currentEntry(key: CertKey): RichEntry {
+  const v = props.modelValue[key]
+  return { held: isHeld(v), obtained: obtainedOf(v), expires: expiresOf(v), country: countryOf(v) }
+}
+function emitPatch(key: CertKey, patch: Partial<RichEntry>) {
+  const next = { ...currentEntry(key), ...patch }
+  const entry: CertEntry = richMode.value
+    ? { held: next.held, obtained: next.obtained, expires: next.expires, country: next.country }
+    : next.held
   emit('update:modelValue', { ...props.modelValue, [key]: entry })
 }
 function toggle(key: CertKey) {
   const nextHeld = !isHeld(props.modelValue[key])
   // Default the country to the user's own when a cert is first marked held.
   const country = nextHeld ? (countryOf(props.modelValue[key]) ?? props.defaultCountry ?? null) : countryOf(props.modelValue[key])
-  emitEntry(key, nextHeld, obtainedOf(props.modelValue[key]), country)
+  emitPatch(key, { held: nextHeld, country })
 }
 function setDate(key: CertKey, e: Event) {
-  emitEntry(key, isHeld(props.modelValue[key]), (e.target as HTMLInputElement).value || null, countryOf(props.modelValue[key]))
+  emitPatch(key, { obtained: (e.target as HTMLInputElement).value || null })
+}
+function setExpiry(key: CertKey, e: Event) {
+  emitPatch(key, { expires: (e.target as HTMLInputElement).value || null })
 }
 function setCountry(key: CertKey, e: Event) {
-  emitEntry(key, isHeld(props.modelValue[key]), obtainedOf(props.modelValue[key]), (e.target as HTMLSelectElement).value || null)
+  emitPatch(key, { country: (e.target as HTMLSelectElement).value || null })
 }
 
+function validityYearsOf(key: CertKey): number {
+  return props.validityByKey?.[key] ?? props.validityYears
+}
+// Explicit expiry wins; otherwise derive it from the obtention date + validity.
 function expiry(key: CertKey): Date | null {
+  const expires = expiresOf(props.modelValue[key])
+  if (expires) return new Date(expires)
   const obtained = obtainedOf(props.modelValue[key])
   if (!obtained) return null
   const d = new Date(obtained)
-  d.setFullYear(d.getFullYear() + (props.validityByKey?.[key] ?? props.validityYears))
+  d.setFullYear(d.getFullYear() + validityYearsOf(key))
   return d
+}
+function validityInfoText(key: CertKey): string {
+  return props.dateLabels?.validityInfo
+    ? props.dateLabels.validityInfo.replace('{years}', String(validityYearsOf(key)))
+    : ''
 }
 function fmtDate(d: Date): string {
   return d.toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' })
@@ -162,6 +193,11 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
           <template v-if="withDates && dateLabels">
             <label class="wp-certs__meta-label">{{ dateLabels.obtained }}</label>
             <input type="date" class="wp-certs__date-input" :value="obtainedOf(modelValue[key]) ?? ''" @change="setDate(key, $event)" />
+            <template v-if="dateLabels.expiresInput">
+              <label class="wp-certs__meta-label">{{ dateLabels.expiresInput }}</label>
+              <input type="date" class="wp-certs__date-input" :value="expiresOf(modelValue[key]) ?? ''" @change="setExpiry(key, $event)" />
+            </template>
+            <span v-if="validityInfoText(key)" class="wp-certs__validity">{{ validityInfoText(key) }}</span>
             <template v-if="expiry(key)">
               <span class="wp-certs__expiry">{{ expiresText(key) }}</span>
               <span class="wp-certs__status" :class="`wp-certs__status--${status(key)}`">{{ statusText(key) }}</span>
@@ -302,6 +338,12 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
   font-size: 12px;
   color: var(--wp-color-text-sub);
   white-space: nowrap;
+}
+.wp-certs__validity {
+  font-size: 11px;
+  color: var(--wp-color-text-sub);
+  white-space: nowrap;
+  opacity: 0.8;
 }
 .wp-certs__status {
   font-size: 11px;
