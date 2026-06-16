@@ -125,12 +125,13 @@ const rootStyle = computed<Record<string, string>>(() => {
         <!-- Inner accent ring -->
         <path v-if="innerPath" class="wp-patch__inner" :d="innerPath" />
 
-        <!-- Central emblem (icon) — hidden when a flag medallion is shown -->
-        <g v-if="icon && !flag" class="wp-patch__emblem" :transform="`translate(50 ${emblemY})`">
+        <!-- Central emblem (icon) — hidden when a flag medallion is shown.
+             Scaled up so thin-stroke icons stay legible at small sizes. -->
+        <g v-if="icon && !flag" class="wp-patch__emblem" :transform="`translate(50 ${emblemY}) scale(1.3)`">
           <template v-if="icon === 'propeller'">
-            <ellipse cx="0" cy="0" rx="4" ry="16" />
-            <ellipse cx="0" cy="0" rx="16" ry="4" />
-            <circle cx="0" cy="0" r="4.5" class="wp-patch__emblem-hub" />
+            <ellipse cx="0" cy="0" rx="5.5" ry="17" />
+            <ellipse cx="0" cy="0" rx="17" ry="5.5" />
+            <circle cx="0" cy="0" r="6" class="wp-patch__emblem-hub" />
           </template>
           <polyline
             v-else-if="icon === 'check'"
@@ -160,8 +161,8 @@ const rootStyle = computed<Record<string, string>>(() => {
 
         <!-- Banner ribbon (text on a solid plate — reads clear of the rim) -->
         <g v-if="bannerText" class="wp-patch__banner">
-          <rect x="16" y="62" width="68" height="15" rx="3" />
-          <text x="50" y="70" text-anchor="middle" dominant-baseline="central">{{ bannerText }}</text>
+          <rect x="14" y="60" width="72" height="17" rx="3" />
+          <text x="50" y="69" text-anchor="middle" dominant-baseline="central">{{ bannerText }}</text>
         </g>
 
         <!-- Numbered pastille — top-right corner, never collides with the banner -->
@@ -219,9 +220,9 @@ const rootStyle = computed<Record<string, string>>(() => {
 .wp-patch__banner text {
   fill:           var(--wp-color-navy, #1B2B56);
   font-family:    var(--wp-font-condensed, 'Barlow Condensed', sans-serif);
-  font-weight:    600;
-  font-size:      9px;
-  letter-spacing: 0.06em;
+  font-weight:    700;
+  font-size:      11px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 

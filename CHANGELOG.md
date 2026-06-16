@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.4
+
+- `WpPatch` (lisibilité) : emblème agrandi (~×1,3, ce qui épaissit aussi les icônes à traits
+  fins comme l'hélice et le globe), **hélice plus franche**, et **texte de bannière plus grand**
+  (9 → 11 px, gras) avec un ruban légèrement plus haut — le nom (ex. pays sur le rocker) se lit
+  sans zoomer. Corrige le rendu « tassé / illisible » des patchs Vols & Communauté.
+
 ## 0.5.3
 
 - `WpPatch` : nouvelle prop **`accent`** (couleur CSS) qui surcharge la couleur d'anneau/
