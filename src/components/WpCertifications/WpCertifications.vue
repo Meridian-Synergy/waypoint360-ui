@@ -44,6 +44,8 @@ const props = withDefaults(defineProps<{
   withDates?:        boolean
   /** Validity period in years (EU drone competency certs = 5). */
   validityYears?:    number
+  /** Per-cert validity in years; falls back to `validityYears` for any key not set. */
+  validityByKey?:    Partial<Record<CertKey, number>>
   /** Translated strings for the date UI (required when withDates is true). */
   dateLabels?:       WpCertificationsDateLabels
   /** Show an issuing-country selector for each held cert. */
@@ -61,6 +63,7 @@ const props = withDefaults(defineProps<{
   additionalLabels: undefined,
   withDates:        false,
   validityYears:    5,
+  validityByKey:    undefined,
   dateLabels:       undefined,
   withCountry:      false,
   countryOptions:   () => [],
@@ -104,7 +107,7 @@ function expiry(key: CertKey): Date | null {
   const obtained = obtainedOf(props.modelValue[key])
   if (!obtained) return null
   const d = new Date(obtained)
-  d.setFullYear(d.getFullYear() + props.validityYears)
+  d.setFullYear(d.getFullYear() + (props.validityByKey?.[key] ?? props.validityYears))
   return d
 }
 function fmtDate(d: Date): string {

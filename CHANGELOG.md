@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0
+
+- `WpCertifications` : nouvelle prop `validityByKey?: Partial<Record<CertKey, number>>` —
+  durée de validité par certification, avec repli sur le scalaire `validityYears` pour toute
+  clé non fournie. Permet de piloter l'expiration affichée depuis un référentiel central
+  (table `cert_validity`) au lieu du 5 ans codé en dur. Additif et rétrocompatible.
+
 ## 0.3.0
 
 - Nouveau composant `WpNotice` : bloc notice discret (icône ⓘ au trait + texte), tones
