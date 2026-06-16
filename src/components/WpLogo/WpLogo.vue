@@ -34,7 +34,9 @@ const w = computed(() => props.width ?? defaults[props.variant])
     aria-label="Waypoint360"
     role="img"
   >
-    <g>
+    <!-- Pin scaled to ~the wordmark height and recentred on the text's optical axis
+         (y≈43). Without this the pin (62.5u) dwarfs the two-line wordmark (~40u). -->
+    <g transform="translate(13.12, 16.65) scale(0.68)">
       <path d="M 41 70 C 23 53, 17 42, 17 31.5 A 24 24 0 1 1 65 31.5 C 65 42, 59 53, 41 70 Z" :fill="sky"/>
       <circle cx="41" cy="31.5" r="10.5" fill="#FFFFFF"/>
       <circle cx="41" cy="31.5" r="4" :fill="navy"/>

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1
+
+- `WpLogo` (horizontal) : rééquilibrage du pin. Il faisait 62,5u de haut contre ~40u
+  pour le wordmark (ratio 1,57:1) et débordait le texte en haut comme en bas, avec son
+  centre optique ~4u trop haut. Le pin est désormais mis à l'échelle ~×0,68 (hauteur ≈
+  bloc « WAYPOINT / 360 ») et recentré sur l'axe optique du texte (y≈43). Aucun changement
+  de prop ni de viewBox — purement visuel.
+
 ## 0.4.0
 
 - `WpCertifications` : nouvelle prop `validityByKey?: Partial<Record<CertKey, number>>` —
