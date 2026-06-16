@@ -1,4 +1,4 @@
-import{W as s}from"./WpBreadcrumb-BWfkmyav.js";import"./iframe-BeALUVUx.js";import"./preload-helper-PPVm8Dsz.js";import"./_plugin-vue_export-helper-DlAUqK2U.js";const n={title:"Components/WpBreadcrumb",component:s,tags:["autodocs"]},e={args:{crumbs:[{label:"Accueil",href:"/"},{label:"Services"}]}},r={args:{crumbs:[{label:"Accueil",href:"/"},{label:"Services",href:"/services"},{label:"Audit thermique"}]}};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:`{
+import{W as s}from"./WpBreadcrumb-BUvfC1z6.js";import"./iframe-D84g59GM.js";import"./preload-helper-PPVm8Dsz.js";import"./_plugin-vue_export-helper-DlAUqK2U.js";const n={title:"Components/WpBreadcrumb",component:s,tags:["autodocs"]},e={args:{crumbs:[{label:"Accueil",href:"/"},{label:"Services"}]}},r={args:{crumbs:[{label:"Accueil",href:"/"},{label:"Services",href:"/services"},{label:"Audit thermique"}]}};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:`{
   args: {
     crumbs: [{
       label: 'Accueil',
