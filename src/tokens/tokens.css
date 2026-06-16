@@ -31,6 +31,14 @@
   --wp-color-warning:  #f59e0b;
   --wp-color-error:    #ef4444;
 
+  /* === Achievement tiers (WpPatch) ===
+   * PROVISIONAL — community-badge palette pending the dedicated charter review.
+   * Classic medal heraldry, functional (not brand identity). Validate in charter review. */
+  --wp-tier-bronze:   #CD7F32;
+  --wp-tier-silver:   #AEB6BF;
+  --wp-tier-gold:     #D4AF37;
+  --wp-tier-platinum: #D9E2EC;
+
   /* === Typography === */
   --wp-font-display:   'Barlow', sans-serif;           /* Headings, titles, hero — Bold 700 / SemiBold 600 */
   --wp-font-body:      'Barlow', sans-serif;           /* Body text, buttons, labels — Regular 400 / SemiBold 600 */

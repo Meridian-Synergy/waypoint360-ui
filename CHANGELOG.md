@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.1
+
+- `WpPatch` (nouveau) : composant d'écusson communauté (achievement patch) en SVG
+  paramétrique — 5 formes catégorielles (`circle`/`shield`/`rocker`/`rosette`/`hexagon`),
+  4 paliers métal (`bronze`/`silver`/`gold`/`platinum` + `none`), emblème central
+  (registre d'icônes flat de départ), bannière en arc, pastille chiffrée et état `locked`
+  (grisé — non débloqué ou abo récurrent expiré). La bannière texte est un **ruban plein**
+  (fond métal + texte navy) pour rester lisible et détaché du liseré. Prop `flag` (code
+  pays ISO alpha-2) → médaillon drapeau en emblème pour les patchs géographie (rocker),
+  via `flag-icons` (la CSS est chargée par l'app consommatrice, comme `WpLocaleSwitcher` ;
+  ajoutée ici en devDependency pour Storybook). Ajoute les tokens **provisoires**
+  `--wp-tier-*` (palette badge, à valider en revue de charte). Première brique du système
+  de badges (cf `WAYPOINT360_BADGES_CADRAGE.md`).
+
 ## 0.5.0
 
 - `WpLogo` (horizontal) : resserrage du lockup pour rendre le wordmark lisible à taille
