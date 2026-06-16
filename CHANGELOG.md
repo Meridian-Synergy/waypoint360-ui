@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.2
+
+- `WpPatch` (fix) : rendu cassé chez les consommateurs qui ne déclarent pas les tokens
+  **provisoires** `--wp-tier-*` (anneau/ruban/pastille tombaient en noir → invisibles sur
+  fond sombre). Toutes les `var()` du composant ont désormais une **valeur de repli**
+  (couleurs métal des tiers, navy/white/silver, polices, ombre/transition). Le patch est
+  autoporteur et s'affiche correctement même sans tokens DS importés ; un thème peut
+  toujours surcharger en définissant les tokens. Aucun changement visuel quand les tokens
+  sont présents.
+
 ## 0.5.1
 
 - `WpPatch` (nouveau) : composant d'écusson communauté (achievement patch) en SVG
