@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.3
+
+- `WpPatch` : nouvelle prop **`accent`** (couleur CSS) qui surcharge la couleur d'anneau/
+  ruban/pastille — permet une couleur par catégorie sans casser la sémantique des tiers.
+- `WpPatch` (fix) : l'emblème (icône/drapeau) est désormais **centré verticalement quand il
+  n'y a pas de bannière** (avant : toujours remonté pour réserver la place du ruban → rendu
+  « tassé vers le haut » sur les patchs sans bannière). Remonté seulement si `bannerText`.
+
 ## 0.5.2
 
 - `WpPatch` (fix) : rendu cassé chez les consommateurs qui ne déclarent pas les tokens

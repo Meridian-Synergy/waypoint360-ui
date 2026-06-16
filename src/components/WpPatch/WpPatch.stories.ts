@@ -8,6 +8,7 @@ const meta: Meta<typeof WpPatch> = {
   argTypes: {
     shape:  { control: 'select', options: ['circle', 'shield', 'rocker', 'rosette', 'hexagon'] },
     tier:   { control: 'select', options: ['none', 'bronze', 'silver', 'gold', 'platinum'] },
+    accent: { control: 'color' },
     icon:   { control: 'select', options: [undefined, 'propeller', 'check', 'globe', 'star', 'heart', 'flag'] },
     count:  { control: 'number' },
     size:   { control: 'number' },
@@ -93,6 +94,27 @@ export const Small: Story = {
 }
 
 // --- Dark background ---
+
+// --- Category accent (overrides the tier ring color) ---
+
+export const CategoryAccents: Story = {
+  name: 'Category accents',
+  render: (args) => ({
+    components: { WpPatch },
+    setup: () => ({ args, cats: [
+      { shape: 'circle',  icon: 'propeller', accent: '#D4AF37' },
+      { shape: 'rocker',  icon: 'globe',     accent: '#00AAEF' },
+      { shape: 'shield',  icon: 'check',     accent: '#22c55e' },
+      { shape: 'rosette', icon: 'star',      accent: '#8b5cf6' },
+      { shape: 'hexagon', icon: 'flag',      accent: '#f59e0b' },
+    ] }),
+    template: `
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <WpPatch v-for="(c, i) in cats" :key="i" v-bind="args" :shape="c.shape" :icon="c.icon" :accent="c.accent" />
+      </div>`,
+  }),
+  args: { tier: 'none' },
+}
 
 export const OnDark: Story = {
   name: 'On dark background',
