@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.6
+
+- `WpPatch` : **bibliothèque d'icônes** étendue (6 → 25) pour que **chaque badge ait une icône
+  distincte** et soit identifiable au premier coup d'œil. Nouvelles : `takeoff`, `medal`,
+  `compass`, `route`, `stopwatch`, `mountain`, `flame`, `double_check`, `clock`, `user_plus`,
+  `users`, `podium`, `verified`, `crown`, `wings`, `sunrise`, `rocket`, `trophy`, `calendar`.
+  Le rendu de l'emblème passe par un **registre** (markup injecté), plus simple à étendre que
+  l'ancienne chaîne de `v-if`. Additif (`WpPatchIcon` élargi, valeurs existantes conservées).
+
 ## 0.5.5
 
 - `WpPatch` (fix) : suppression des « queues de ruban » de la rosette (Communauté/Soutien) —

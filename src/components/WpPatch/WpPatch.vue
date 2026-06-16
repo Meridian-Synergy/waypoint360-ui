@@ -13,7 +13,12 @@
  */
 export type WpPatchShape = 'circle' | 'shield' | 'rocker' | 'rosette' | 'hexagon'
 export type WpPatchTier = 'bronze' | 'silver' | 'gold' | 'platinum' | 'none'
-export type WpPatchIcon = 'propeller' | 'check' | 'globe' | 'star' | 'heart' | 'flag'
+export type WpPatchIcon =
+  | 'propeller' | 'takeoff' | 'medal' | 'compass' | 'globe' | 'route' | 'stopwatch' | 'mountain' | 'flame'
+  | 'check' | 'double_check' | 'clock'
+  | 'user_plus' | 'users' | 'podium' | 'verified'
+  | 'heart' | 'crown' | 'wings' | 'star' | 'sunrise'
+  | 'flag' | 'rocket' | 'trophy' | 'calendar'
 </script>
 
 <script setup lang="ts">
@@ -80,6 +85,36 @@ const innerPath = computed<string>(() => {
   }
 })
 
+// Flat emblem registry — one distinct icon per badge. Markup is injected into
+// the emblem <g>; fill/stroke are inherited from it (navy holes use #1B2B56).
+const ICONS: Record<WpPatchIcon, string> = {
+  propeller:    '<ellipse rx="5.5" ry="17"/><ellipse rx="17" ry="5.5"/><circle r="6" fill="#1B2B56"/>',
+  takeoff:      '<path d="M-16,8 L15,-12 L3,11 L-1,3 Z"/><path d="M-15,14 H9" fill="none" stroke-width="2.6" stroke-linecap="round"/>',
+  medal:        '<path d="M-7,-7 L-11,-16 L-3,-12 M7,-7 L11,-16 L3,-12" fill="none" stroke-width="2.6" stroke-linejoin="round"/><circle cy="4" r="11"/><circle cy="4" r="5" fill="#1B2B56"/>',
+  compass:      '<circle r="15" fill="none" stroke-width="2.4"/><path d="M0,-9 L4.5,0 L0,9 L-4.5,0 Z"/>',
+  globe:        '<g fill="none" stroke-width="2.2"><circle r="15"/><ellipse rx="6.5" ry="15"/><line x1="-15" y1="0" x2="15" y2="0"/><line x1="-13" y1="-7.5" x2="13" y2="-7.5"/><line x1="-13" y1="7.5" x2="13" y2="7.5"/></g>',
+  route:        '<path d="M-11,13 Q-11,0 0,0 Q11,0 11,-13" fill="none" stroke-width="2.8" stroke-linecap="round"/><circle cx="-11" cy="13" r="3.6"/><circle cx="11" cy="-13" r="3.6"/>',
+  stopwatch:    '<line x1="-5" y1="-16" x2="5" y2="-16" stroke-width="2.6" stroke-linecap="round"/><line x1="0" y1="-16" x2="0" y2="-12" stroke-width="2.6"/><circle cy="2" r="12" fill="none" stroke-width="2.4"/><line x1="0" y1="2" x2="0" y2="-5" stroke-width="2.4" stroke-linecap="round"/>',
+  mountain:     '<path d="M-16,12 L-5,-9 L1,0 L7,-13 L16,12 Z"/>',
+  flame:        '<path d="M0,-16 C8,-6 11,-1 6,7 C4,12 -4,12 -6,7 C-9,1 -2,-1 0,-16 Z"/>',
+  check:        '<polyline points="-13,1 -4,11 14,-12" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>',
+  double_check: '<polyline points="-15,1 -7,9 5,-12" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><polyline points="0,9 13,-12" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>',
+  clock:        '<circle r="14" fill="none" stroke-width="2.6"/><line x1="0" y1="0" x2="0" y2="-8" stroke-width="2.6" stroke-linecap="round"/><line x1="0" y1="0" x2="6" y2="3" stroke-width="2.6" stroke-linecap="round"/>',
+  user_plus:    '<circle cx="-4" cy="-6" r="6"/><path d="M-16,14 C-16,3 8,3 8,14 Z"/><line x1="12" y1="-9" x2="12" y2="-1" stroke-width="2.8" stroke-linecap="round"/><line x1="8" y1="-5" x2="16" y2="-5" stroke-width="2.8" stroke-linecap="round"/>',
+  users:        '<circle cx="-7" cy="-6" r="5.5"/><circle cx="8" cy="-4" r="4.5"/><path d="M-17,14 C-17,4 3,4 3,14 Z"/><path d="M5,14 C5,7 18,6 18,14 Z"/>',
+  podium:       '<rect x="-16.5" y="0" width="10" height="13"/><rect x="-5" y="-10" width="10" height="23"/><rect x="6.5" y="5" width="10" height="8"/>',
+  verified:     '<circle r="14" fill="none" stroke-width="2.6"/><polyline points="-7,0 -2,6 8,-6" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>',
+  heart:        '<path d="M0,13 C-13,3 -16,-6 -8.5,-12 C-3.5,-15.5 0,-10.5 0,-7.5 C0,-10.5 3.5,-15.5 8.5,-12 C16,-6 13,3 0,13 Z"/>',
+  crown:        '<path d="M-15,9 L-15,-7 L-6,1 L0,-12 L6,1 L15,-7 L15,9 Z"/>',
+  wings:        '<circle cy="-3" r="3.2"/><path d="M-3,-3 Q-12,-7 -17,-1 Q-9,-3 -4,1 Z"/><path d="M3,-3 Q12,-7 17,-1 Q9,-3 4,1 Z"/>',
+  star:         '<path d="M0,-16 L4.7,-4.9 16.5,-4.9 7,2.5 10.6,13.9 0,7 -10.6,13.9 -7,2.5 -16.5,-4.9 -4.7,-4.9 Z"/>',
+  sunrise:      '<path d="M-10,11 A10 10 0 0 1 10,11 Z"/><line x1="-16" y1="11" x2="16" y2="11" stroke-width="2.8" stroke-linecap="round"/><line x1="0" y1="-15" x2="0" y2="-9" stroke-width="2.4" stroke-linecap="round"/><line x1="-13" y1="-4" x2="-9" y2="0" stroke-width="2.4" stroke-linecap="round"/><line x1="13" y1="-4" x2="9" y2="0" stroke-width="2.4" stroke-linecap="round"/>',
+  flag:         '<rect x="-12" y="-15" width="3" height="30" rx="1"/><path d="M-9,-14 L13,-9 L-9,-1 Z"/>',
+  rocket:       '<path d="M0,-16 C7,-9 7,1 4,8 L-4,8 C-7,1 -7,-9 0,-16 Z"/><circle cy="-4" r="3" fill="#1B2B56"/><path d="M-4,7 L-10,15 L-3,12 Z M4,7 L10,15 L3,12 Z"/>',
+  trophy:       '<path d="M-9,-13 H9 V-7 C9,-1 -9,-1 -9,-7 Z"/><path d="M-9,-11 C-16,-11 -15,-3 -8,-4 M9,-11 C16,-11 15,-3 8,-4" fill="none" stroke-width="2.4"/><rect x="-2.5" y="-2" width="5" height="9"/><rect x="-8" y="9" width="16" height="4" rx="1"/>',
+  calendar:     '<rect x="-13" y="-11" width="26" height="24" rx="3" fill="none" stroke-width="2.6"/><line x1="-13" y1="-4" x2="13" y2="-4" stroke-width="2.6"/><line x1="-7" y1="-15" x2="-7" y2="-8" stroke-width="2.6" stroke-linecap="round"/><line x1="7" y1="-15" x2="7" y2="-8" stroke-width="2.6" stroke-linecap="round"/>',
+}
+
 const ariaLabel = computed<string>(() => props.name ?? props.bannerText ?? 'Achievement patch')
 
 // Emblem sits centered when there is no banner, higher when a banner is present.
@@ -121,37 +156,13 @@ const rootStyle = computed<Record<string, string>>(() => {
 
         <!-- Central emblem (icon) — hidden when a flag medallion is shown.
              Scaled up so thin-stroke icons stay legible at small sizes. -->
-        <g v-if="icon && !flag" class="wp-patch__emblem" :transform="`translate(50 ${emblemY}) scale(1.3)`">
-          <template v-if="icon === 'propeller'">
-            <ellipse cx="0" cy="0" rx="5.5" ry="17" />
-            <ellipse cx="0" cy="0" rx="17" ry="5.5" />
-            <circle cx="0" cy="0" r="6" class="wp-patch__emblem-hub" />
-          </template>
-          <polyline
-            v-else-if="icon === 'check'"
-            points="-13,1 -4,11 14,-12"
-            fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
-          />
-          <g v-else-if="icon === 'globe'" fill="none" stroke-width="2.2">
-            <circle cx="0" cy="0" r="15" />
-            <ellipse cx="0" cy="0" rx="6.5" ry="15" />
-            <line x1="-15" y1="0" x2="15" y2="0" />
-            <line x1="-13" y1="-7.5" x2="13" y2="-7.5" />
-            <line x1="-13" y1="7.5" x2="13" y2="7.5" />
-          </g>
-          <path
-            v-else-if="icon === 'star'"
-            d="M0,-16 L4.7,-4.9 16.5,-4.9 7,2.5 10.6,13.9 0,7 -10.6,13.9 -7,2.5 -16.5,-4.9 -4.7,-4.9 Z"
-          />
-          <path
-            v-else-if="icon === 'heart'"
-            d="M0,13 C-13,3 -16,-6 -8.5,-12 C-3.5,-15.5 0,-10.5 0,-7.5 C0,-10.5 3.5,-15.5 8.5,-12 C16,-6 13,3 0,13 Z"
-          />
-          <g v-else-if="icon === 'flag'">
-            <rect x="-12" y="-15" width="3" height="30" rx="1" />
-            <path d="M-9,-14 L13,-9 L-9,-1 Z" />
-          </g>
-        </g>
+        <!-- eslint-disable-next-line vue/no-v-html -- markup is from a static internal registry -->
+        <g
+          v-if="icon && !flag"
+          class="wp-patch__emblem"
+          :transform="`translate(50 ${emblemY}) scale(1.3)`"
+          v-html="ICONS[icon]"
+        />
 
         <!-- Banner ribbon (text on a solid plate — reads clear of the rim) -->
         <g v-if="bannerText" class="wp-patch__banner">
@@ -206,7 +217,6 @@ const rootStyle = computed<Record<string, string>>(() => {
 .wp-patch__pleat       { fill: none; stroke: var(--patch-ring); stroke-width: 5; stroke-dasharray: 3 4; opacity: 0.85; }
 
 .wp-patch__emblem      { fill: var(--patch-ink); stroke: var(--patch-ink); }
-.wp-patch__emblem-hub  { fill: var(--wp-color-navy, #1B2B56); stroke: none; }
 
 /* Banner plate + ink */
 .wp-patch__banner rect { fill: var(--patch-ring); }
