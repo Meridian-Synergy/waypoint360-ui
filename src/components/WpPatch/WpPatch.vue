@@ -24,6 +24,8 @@ const props = withDefaults(defineProps<{
   shape?: WpPatchShape
   /** Threshold metal — drives the ring/accent color */
   tier?: WpPatchTier
+  /** CSS color overriding the ring/banner/pastille color (e.g. a category accent) */
+  accent?: string
   /** Central emblem from the starter icon registry (ignored when `flag` is set) */
   icon?: WpPatchIcon
   /** ISO 3166-1 alpha-2 country code (lowercase) — renders a flag medallion as the emblem */
@@ -79,12 +81,21 @@ const innerPath = computed<string>(() => {
 })
 
 const ariaLabel = computed<string>(() => props.name ?? props.bannerText ?? 'Achievement patch')
+
+// Emblem sits centered when there is no banner, higher when a banner is present.
+const emblemY = computed<number>(() => (props.bannerText ? 36 : 50))
+
+const rootStyle = computed<Record<string, string>>(() => {
+  const s: Record<string, string> = { width: `${props.size}px`, height: `${props.size}px` }
+  if (props.accent) s['--patch-ring'] = props.accent
+  return s
+})
 </script>
 
 <template>
   <span
     :class="['wp-patch', `wp-patch--${tier}`, { 'wp-patch--locked': locked }]"
-    :style="{ width: `${size}px`, height: `${size}px` }"
+    :style="rootStyle"
   >
     <svg
       class="wp-patch__svg"
@@ -115,7 +126,7 @@ const ariaLabel = computed<string>(() => props.name ?? props.bannerText ?? 'Achi
         <path v-if="innerPath" class="wp-patch__inner" :d="innerPath" />
 
         <!-- Central emblem (icon) — hidden when a flag medallion is shown -->
-        <g v-if="icon && !flag" class="wp-patch__emblem" transform="translate(50 36)">
+        <g v-if="icon && !flag" class="wp-patch__emblem" :transform="`translate(50 ${emblemY})`">
           <template v-if="icon === 'propeller'">
             <ellipse cx="0" cy="0" rx="4" ry="16" />
             <ellipse cx="0" cy="0" rx="16" ry="4" />
@@ -166,6 +177,7 @@ const ariaLabel = computed<string>(() => props.name ?? props.bannerText ?? 'Achi
       v-if="flag"
       class="wp-patch__flag fi fis"
       :class="`fi-${flag}`"
+      :style="{ top: bannerText ? '36%' : '50%' }"
       role="img"
       :aria-label="name ?? flag"
     />
