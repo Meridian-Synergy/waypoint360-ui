@@ -7,7 +7,7 @@ import 'flag-icons/css/flag-icons.min.css'
 // Apps consuming this package must load the fonts themselves.
 const link = document.createElement('link')
 link.rel = 'stylesheet'
-link.href = 'https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@500&family=Space+Mono&display=swap'
+link.href = 'https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Semi+Condensed:wght@500&family=Space+Mono&display=swap'
 document.head.appendChild(link)
 
 export const parameters = {

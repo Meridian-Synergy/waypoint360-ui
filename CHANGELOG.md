@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.8
+
+- `WpLogo` : « WAYPOINT » passe en **800 (ExtraBold)** (horizontal + vertical) pour donner plus
+  de présence au nom de marque ; « 360 » reste en 700 → hiérarchie nette. Le logo garde ses
+  **2 couleurs** (navy + sky). **Consommateurs** : charger le poids **Barlow 800** (ajouté à
+  l'URL Google Fonts) sinon le navigateur retombe sur 700.
+
 ## 0.5.7
 
 - `WpPatch` (fix) : rendu des icônes via `<component :is>` sur des descripteurs d'éléments

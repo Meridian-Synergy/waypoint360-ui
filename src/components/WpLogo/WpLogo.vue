@@ -42,7 +42,7 @@ const w = computed(() => props.width ?? defaults[props.variant])
       <circle cx="41" cy="31.5" r="10.5" fill="#FFFFFF"/>
       <circle cx="41" cy="31.5" r="4" :fill="navy"/>
     </g>
-    <text x="58" y="38" font-family="'Barlow',Arial,sans-serif" font-weight="700" font-size="20.5" :fill="ink" letter-spacing="2.6">WAYPOINT</text>
+    <text x="58" y="38" font-family="'Barlow',Arial,sans-serif" font-weight="800" font-size="20.5" :fill="ink" letter-spacing="2.6">WAYPOINT</text>
     <text x="58" y="63" font-family="'Barlow',Arial,sans-serif" font-weight="700" font-size="20.5" :fill="sky" letter-spacing="5">360</text>
   </svg>
 
@@ -60,7 +60,7 @@ const w = computed(() => props.width ?? defaults[props.variant])
       <circle cx="41" cy="31.5" r="10.5" fill="#FFFFFF"/>
       <circle cx="41" cy="31.5" r="4" :fill="navy"/>
     </g>
-    <text x="100" y="130" text-anchor="middle" font-family="'Barlow',Arial,sans-serif" font-weight="700" font-size="21" :fill="ink" letter-spacing="2.8">WAYPOINT</text>
+    <text x="100" y="130" text-anchor="middle" font-family="'Barlow',Arial,sans-serif" font-weight="800" font-size="21" :fill="ink" letter-spacing="2.8">WAYPOINT</text>
     <text x="100" y="158" text-anchor="middle" font-family="'Barlow',Arial,sans-serif" font-weight="700" font-size="21" :fill="sky" letter-spacing="7">360</text>
   </svg>
 
