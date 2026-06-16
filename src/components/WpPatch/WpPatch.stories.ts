@@ -9,7 +9,7 @@ const meta: Meta<typeof WpPatch> = {
     shape:  { control: 'select', options: ['circle', 'shield', 'rocker', 'rosette', 'hexagon'] },
     tier:   { control: 'select', options: ['none', 'bronze', 'silver', 'gold', 'platinum'] },
     accent: { control: 'color' },
-    icon:   { control: 'select', options: [undefined, 'propeller', 'check', 'globe', 'star', 'heart', 'flag'] },
+    icon:   { control: 'select', options: [undefined, 'propeller', 'takeoff', 'medal', 'compass', 'globe', 'route', 'stopwatch', 'mountain', 'flame', 'check', 'double_check', 'clock', 'user_plus', 'users', 'podium', 'verified', 'heart', 'crown', 'wings', 'star', 'sunrise', 'flag', 'rocket', 'trophy', 'calendar'] },
     count:  { control: 'number' },
     size:   { control: 'number' },
     locked: { control: 'boolean' },
@@ -114,6 +114,28 @@ export const CategoryAccents: Story = {
       </div>`,
   }),
   args: { tier: 'none' },
+}
+
+// --- Full icon library ---
+
+export const IconLibrary: Story = {
+  name: 'Icon library',
+  render: (args) => ({
+    components: { WpPatch },
+    setup: () => ({ args, icons: [
+      'propeller', 'takeoff', 'medal', 'compass', 'globe', 'route', 'stopwatch', 'mountain', 'flame',
+      'check', 'double_check', 'clock', 'user_plus', 'users', 'podium', 'verified',
+      'heart', 'crown', 'wings', 'star', 'sunrise', 'flag', 'rocket', 'trophy', 'calendar',
+    ] }),
+    template: `
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <div v-for="ic in icons" :key="ic" style="text-align:center; width:88px;">
+          <WpPatch v-bind="args" :icon="ic" :size="72" />
+          <div style="font:11px monospace; margin-top:4px;">{{ ic }}</div>
+        </div>
+      </div>`,
+  }),
+  args: { shape: 'circle', tier: 'none' },
 }
 
 export const OnDark: Story = {
