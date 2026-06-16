@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.9
+
+- `WpCertifications` : ajout d'une **date de fin de validité** saisissable par cert (le brevet
+  DGAC imprime l'expiration, pas l'obtention). `CertEntry` accepte désormais `expires?` ;
+  l'expiration explicite est **prioritaire**, sinon dérivée de `obtained + validité`. Nouveaux
+  `dateLabels.expiresInput` (label du champ) et `dateLabels.validityInfo` (ligne « Validité : {years} ans »),
+  tous deux **optionnels** (rétrocompatible). Additif.
+
 ## 0.5.8
 
 - `WpLogo` : « WAYPOINT » passe en **800 (ExtraBold)** (horizontal + vertical) pour donner plus

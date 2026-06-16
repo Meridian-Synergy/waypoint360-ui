@@ -15,11 +15,13 @@ const additionalLabels = {
 }
 
 const dateLabels = {
-  obtained:  'Obtained on',
-  expiresOn: 'Expires on {date}',
-  valid:     'Valid',
-  soon:      'Expires soon',
-  expired:   'Expired',
+  obtained:     'Obtained on',
+  expiresInput: 'Valid until',
+  expiresOn:    'Expires on {date}',
+  validityInfo: 'Validity: {years} years',
+  valid:        'Valid',
+  soon:         'Expires soon',
+  expired:      'Expired',
 }
 
 const meta: Meta<typeof WpCertifications> = {
@@ -60,9 +62,9 @@ export const WithDates: Story = {
     countryLabel: 'Issued in',
     defaultCountry: 'FR',
     modelValue: {
-      a1_a3:   { held: true, obtained: '2022-03-15', country: 'FR' },
-      a2_cofc: { held: true, obtained: '2021-01-10', country: 'BE' }, // expired
-      cats:    { held: true, obtained: null, country: 'FR' },          // held, no date yet
+      a1_a3:   { held: true, obtained: '2022-03-15', country: 'FR' },           // expiry derived from obtention
+      a2_cofc: { held: true, obtained: null, expires: '2031-02-18', country: 'BE' }, // explicit expiry from the certificate
+      cats:    { held: true, obtained: null, country: 'FR' },                   // held, no date yet
       sts_01:  false,
     },
   },
