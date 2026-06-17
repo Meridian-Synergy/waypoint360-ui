@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import WpPageHero from './WpPageHero.vue'
+import WpButton from '../WpButton/WpButton.vue'
 
 const meta: Meta<typeof WpPageHero> = {
   title: 'Components/WpPageHero',
@@ -8,6 +9,7 @@ const meta: Meta<typeof WpPageHero> = {
   argTypes: {
     badgeVariant: { control: 'select', options: ['sky', 'navy', 'orange'] },
     size:         { control: 'select', options: ['lg', 'md'] },
+    tone:         { control: 'select', options: ['navy', 'light'] },
   },
 }
 export default meta
@@ -45,5 +47,39 @@ export const NoBreadcrumb: Story = {
     title: 'À propos de Waypoint360',
     badge: 'À propos',
     badgeVariant: 'navy',
+  },
+}
+
+/** Hero with a call-to-action via the `#actions` slot (e.g. landing pages). */
+export const WithActions: Story = {
+  args: {
+    title: 'Rejoignez la communauté Waypoint360',
+    desc:  'Suivez vos vols, débloquez des badges et grimpez dans les classements.',
+    badge: 'Communauté',
+  },
+  render: (args) => ({
+    components: { WpPageHero, WpButton },
+    setup: () => ({ args }),
+    template: `
+      <WpPageHero v-bind="args">
+        <template #actions>
+          <WpButton label="Créer un compte" variant="cta" />
+        </template>
+      </WpPageHero>
+    `,
+  }),
+}
+
+/** Light tone — legacy surface (navy text on a light band). */
+export const Light: Story = {
+  args: {
+    title: 'Hero en thème clair',
+    desc:  'Variante claire conservée pour compatibilité ascendante.',
+    badge: 'Variante',
+    tone:  'light',
+    crumbs: [
+      { label: 'Accueil', href: '/' },
+      { label: 'Exemple' },
+    ],
   },
 }

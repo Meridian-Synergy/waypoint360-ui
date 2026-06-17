@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.11
+
+- **`WpPageHero`** : nouvelle prop **`tone`** (`navy` \| `light`, défaut **`navy`**) pour
+  unifier les bandeaux Hero de la vitrine — le `navy` reproduit le bandeau sombre déjà en
+  ligne (badge sky translucide + fil d'Ariane clair lisibles sur navy), le `light` conserve
+  l'ancien rendu clair. Ajout d'un **slot `#actions`** pour les CTA (landings). Alignement
+  **toujours à gauche** (`text-align: start`) pour la robustesse i18n / RTL. Tokens via
+  `var(--token, fallback)` + `color-mix`. Additif, rétro-compatible (seul le défaut visuel
+  passe de clair à navy ; aucun consommateur n'utilisait encore le composant).
+
 ## 0.5.10
 
 - **`WpShareButton`** + **`WpShareSheet`** (nouveaux) : bouton de partage social natif.
