@@ -16,6 +16,8 @@ export type { LocaleOption }           from './components/WpLocaleSwitcher/WpLoc
 export { default as WpBreadcrumb     } from './components/WpBreadcrumb/WpBreadcrumb.vue'
 export type { BreadcrumbItem }         from './components/WpBreadcrumb/WpBreadcrumb.vue'
 
+export { default as WpContainer      } from './components/WpContainer/WpContainer.vue'
+
 export { default as WpPageHero       } from './components/WpPageHero/WpPageHero.vue'
 export { default as WpCtaBanner      } from './components/WpCtaBanner/WpCtaBanner.vue'
 
