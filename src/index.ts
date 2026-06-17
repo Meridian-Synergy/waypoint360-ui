@@ -24,6 +24,9 @@ export type { WpSpecItem }             from './components/WpSpecGrid/WpSpecGrid.
 
 export { default as WpValueCard      } from './components/WpValueCard/WpValueCard.vue'
 
+export { default as WpStatCard       } from './components/WpStatCard/WpStatCard.vue'
+export type { WpStatTone }             from './components/WpStatCard/WpStatCard.vue'
+
 export { default as WpContactBanner  } from './components/WpContactBanner/WpContactBanner.vue'
 export type { WpContactAction, WpContactActionType } from './components/WpContactBanner/WpContactBanner.vue'
 
