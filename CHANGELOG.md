@@ -1,6 +1,15 @@
 # Changelog
 
-## 0.5.9
+## 0.5.10
+
+- **`WpShareButton`** + **`WpShareSheet`** (nouveaux) : bouton de partage social natif.
+  `WpShareButton` privilégie l'API **Web Share** (`navigator.share`) → feuille de partage OS
+  native (mobile + navigateurs desktop compatibles) ; à défaut il ouvre `WpShareSheet`, un
+  panneau de repli avec intents LinkedIn / X / WhatsApp / Facebook / Email + copie du lien.
+  Props : `url` (requis), `title`, `text`, `networks`, `variant` (`icon`\|`labeled`), `dark`,
+  labels i18n (`label`, `sheetTitle`, `sheetLabels`, `copiedLabel`). Aucun script tiers /
+  tracker (équivalent ShareThis maison). SVG inline (pas de `v-html`), tokens avec fallback.
+  Additif.
 
 - `WpCertifications` : ajout d'une **date de fin de validité** saisissable par cert (le brevet
   DGAC imprime l'expiration, pas l'obtention). `CertEntry` accepte désormais `expires?` ;
