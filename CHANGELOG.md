@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.12
+
+- **`WpStatCard`** : nouvelle tuile KPI de tableau de bord, source unique remplaçant les
+  classes locales `.dash-stat` (app) et `.stat-card` (admin/stats). Props `label`, `value`,
+  `sub`, `link`, `loading`, `interactive` + prop **`tone`** (`neutral` \| `sky` \| `gold` \|
+  `warn` \| `ok`) qui teinte subtilement la surface (`color-mix` ~9 %) et colore la valeur —
+  reprend le test « tuile colorée » validé (gold = heures de vol, sky = identité/users,
+  warn = expirations, ok = conformité). Slots `#value` / `#sub`. Tokens via
+  `var(--token, fallback)` ; le ton `gold` utilise le token brand `--wp-color-gold` (et non
+  le `#facc15` du prototype admin) pour rester dans la charte.
+
 ## 0.5.11
 
 - **`WpPageHero`** : nouvelle prop **`tone`** (`navy` \| `light`, défaut **`navy`**) pour
