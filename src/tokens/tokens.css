@@ -53,6 +53,14 @@
   --wp-space-xl:  40px;
   --wp-space-2xl: 56px;
 
+  /* === Layout — shared content rail ===
+   * Single source of truth for the horizontal content rail (max-width + inline
+   * padding) shared by WpPageHero and page bodies, so the left edge of titles
+   * aligns vertically within a page and is identical across pages. */
+  --wp-rail-max:        1280px;  /* Canonical vitrine content width */
+  --wp-rail-pad:        24px;    /* Inline padding (desktop) */
+  --wp-rail-pad-mobile: 16px;    /* Inline padding (≤640px) */
+
   /* === Border radius === */
   --wp-radius-sm:   4px;
   --wp-radius-md:   8px;

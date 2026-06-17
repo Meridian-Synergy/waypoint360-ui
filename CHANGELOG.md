@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.13
+
+- **`WpContainer`** : nouveau primitif de mise en page — le **rail de contenu unique**
+  (max-width + padding inline) partagé par les heros et les corps de page. Sert à aligner
+  verticalement le bord gauche des titres avec le contenu en-dessous, et à garantir le même
+  bord gauche d'une page à l'autre. Prop `as` (`div` \| `section`, défaut `div`). Nouveaux
+  tokens `--wp-rail-max` (1280px), `--wp-rail-pad` (24px) et `--wp-rail-pad-mobile` (16px),
+  via `var(--token, fallback)`.
+- **`WpPageHero`** : son conteneur interne consomme désormais les tokens de rail
+  `--wp-rail-*` (au lieu des valeurs en dur 1280/24px). Aucun changement d'API ni de rendu.
+
 ## 0.5.12
 
 - **`WpStatCard`** : nouvelle tuile KPI de tableau de bord, source unique remplaçant les

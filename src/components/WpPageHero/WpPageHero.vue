@@ -43,10 +43,18 @@ withDefaults(defineProps<{
   padding: 56px 0 44px;
 }
 
+/* Shares the canonical content rail (--wp-rail-*) so the hero's left edge
+ * aligns with the page body below it. See WpContainer. */
 .wp-page-hero__container {
-  max-width: 1280px;
+  max-width: var(--wp-rail-max, 1280px);
   margin: 0 auto;
-  padding: 0 24px;
+  padding-inline: var(--wp-rail-pad, 24px);
+}
+
+@media (max-width: 640px) {
+  .wp-page-hero__container {
+    padding-inline: var(--wp-rail-pad-mobile, 16px);
+  }
 }
 
 .wp-page-hero__badge { margin-bottom: 0; }
