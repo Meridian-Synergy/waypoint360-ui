@@ -40,3 +40,7 @@ export type { WpCertificationsValue, WpCertificationsDateLabels, WpCertCountryOp
 
 export { default as WpPatch          } from './components/WpPatch/WpPatch.vue'
 export type { WpPatchShape, WpPatchTier, WpPatchIcon } from './components/WpPatch/WpPatch.vue'
+
+export { default as WpShareButton    } from './components/WpShareButton/WpShareButton.vue'
+export { default as WpShareSheet     } from './components/WpShareSheet/WpShareSheet.vue'
+export type { ShareNetwork }           from './components/WpShareSheet/WpShareSheet.vue'
