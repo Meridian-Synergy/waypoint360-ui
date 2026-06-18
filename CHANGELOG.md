@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.14
+
+- **`WpButton`** : ajouts additifs (rétro-compatibles).
+  - Nouvelle variante `outline` — bouton fantôme avec accent **sky** au survol (bordure + texte), reprenant le style hover du `WpShareButton`. Prop `dark` pour les fonds navy (texte blanc → sky + léger fond au survol).
+  - Prop polymorphe `as` (défaut `'button'`) : permet de rendre le bouton comme `<a>` ou `NuxtLink` pour l'utiliser en lien de navigation. `disabled` n'est appliqué qu'en rendu `button`.
+  - Stories `Outline`, `OutlineDark`, `AsLink`. Tokens via `var(--token, fallback)`.
+
 ## 0.5.13
 
 - **`WpContainer`** : nouveau primitif de mise en page — le **rail de contenu unique**
