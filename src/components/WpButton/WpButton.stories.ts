@@ -6,7 +6,7 @@ const meta: Meta<typeof WpButton> = {
   component: WpButton,
   tags: ['autodocs'],
   argTypes: {
-    variant: { control: 'select', options: ['primary', 'secondary', 'cta', 'critical'] },
+    variant: { control: 'select', options: ['primary', 'secondary', 'cta', 'critical', 'outline'] },
     size:    { control: 'select', options: ['sm', 'md', 'lg'] },
   },
 }
@@ -27,4 +27,20 @@ export const Dark: Story = {
 export const CTADark: Story = {
   args: { label: 'Créer un compte', variant: 'cta' },
   parameters: { backgrounds: { default: 'dark' } },
+}
+
+export const Outline: Story = { args: { label: 'Parrainage', variant: 'outline' } }
+
+export const OutlineDark: Story = {
+  args: { label: 'Parrainage', variant: 'outline', dark: true },
+  parameters: { backgrounds: { default: 'navy' } },
+}
+
+export const AsLink: Story = {
+  args: { label: 'Aller au parrainage', variant: 'outline', as: 'a' },
+  render: (args) => ({
+    components: { WpButton },
+    setup: () => ({ args }),
+    template: '<WpButton v-bind="args" href="#" />',
+  }),
 }
