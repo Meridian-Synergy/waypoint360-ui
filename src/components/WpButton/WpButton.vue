@@ -34,19 +34,19 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
 
 <style scoped>
 .wp-btn {
-  font-family:    var(--wp-font-body);
+  font-family:    var(--wp-font-body, 'Barlow', sans-serif);
   font-weight:    600;
   border:         none;
   cursor:         pointer;
-  border-radius:  var(--wp-radius-md);
+  border-radius:  var(--wp-radius-md, 8px);
   display:        inline-flex;
   align-items:    center;
   justify-content: center;
-  gap:            6px;
+  gap:            var(--wp-space-sm, 8px);
   white-space:    nowrap;
   line-height:    1;
   text-decoration: none;
-  transition:     opacity var(--wp-transition-base), transform var(--wp-transition-fast);
+  transition:     opacity var(--wp-transition-base, 0.2s ease), transform var(--wp-transition-fast, 0.1s ease);
 }
 .wp-btn:hover:not(:disabled) { opacity: 0.88; }
 .wp-btn:active:not(:disabled) { transform: scale(0.98); }
@@ -54,14 +54,14 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
 
 /* Sizes */
 .wp-btn--sm { padding: 6px 12px;  font-size: 13px; }
-.wp-btn--md { padding: var(--wp-space-sm) var(--wp-space-md);  font-size: 15px; }
-.wp-btn--lg { padding: var(--wp-space-md) var(--wp-space-lg);  font-size: 17px; }
+.wp-btn--md { padding: var(--wp-space-sm, 8px) var(--wp-space-md, 16px);  font-size: 15px; }
+.wp-btn--lg { padding: var(--wp-space-md, 16px) var(--wp-space-lg, 24px);  font-size: 17px; }
 
 /* Variants */
-.wp-btn--primary   { background: var(--wp-color-navy);   color: var(--wp-color-white); }
-.wp-btn--secondary { background: transparent;            color: var(--wp-color-navy);  border: 2px solid var(--wp-color-navy); }
-.wp-btn--cta       { background: var(--wp-color-gold);   color: var(--wp-color-navy); }
-.wp-btn--critical  { background: var(--wp-color-orange); color: var(--wp-color-white); }
+.wp-btn--primary   { background: var(--wp-color-navy, #1B2B56);   color: var(--wp-color-white, #FFFFFF); }
+.wp-btn--secondary { background: transparent;                     color: var(--wp-color-navy, #1B2B56);  border: 2px solid var(--wp-color-navy, #1B2B56); }
+.wp-btn--cta       { background: var(--wp-color-gold, #C9A84C);   color: var(--wp-color-navy, #1B2B56); }
+.wp-btn--critical  { background: var(--wp-color-orange, #F05A28); color: var(--wp-color-white, #FFFFFF); }
 
 /* Outline — ghost button with a sky accent on hover (mirrors WpShareButton) */
 .wp-btn--outline {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.15
+
+- **`WpButton` (fix)** : ajout des fallbacks `var(--token, valeur)` sur tous les tokens de base (`--wp-font-body`, `--wp-radius-md`, `--wp-space-*`, `--wp-transition-*`, couleurs des variantes). Sans ça, le bouton s'affichait **écrasé** (padding/rayon/typo nuls) chez un consommateur qui ne déclare pas ces tokens (cas `waypoint360-app`). `gap` aligné sur `--wp-space-sm` (8px) pour matcher le `WpShareButton`.
+
 ## 0.5.14
 
 - **`WpButton`** : ajouts additifs (rétro-compatibles).
