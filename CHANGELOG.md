@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.16
+
+- **`WpSocialCard` (fix)** : ajout des icônes manquantes `twitter` (logo X) et `telegram`. Le type `SocialNetwork` les déclarait déjà (et `WpSocialLinks` les gérait), mais `WpSocialCard` n'avait pas de branche SVG correspondante → icône vide (`<!---->`) sur la carte X de la page contact.
+
 ## 0.5.15
 
 - **`WpButton` (fix)** : ajout des fallbacks `var(--token, valeur)` sur tous les tokens de base (`--wp-font-body`, `--wp-radius-md`, `--wp-space-*`, `--wp-transition-*`, couleurs des variantes). Sans ça, le bouton s'affichait **écrasé** (padding/rayon/typo nuls) chez un consommateur qui ne déclare pas ces tokens (cas `waypoint360-app`). `gap` aligné sur `--wp-space-sm` (8px) pour matcher le `WpShareButton`.
