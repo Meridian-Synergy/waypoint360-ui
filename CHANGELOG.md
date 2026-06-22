@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.18
+
+- **`WpInstallBanner` (feat)** : nouvelle carte « Ajouter à l'écran d'accueil » — présentational, theme-adaptive (`dark` pour l'app communautaire, clair par défaut pour la vitrine). Props `title / description / installLabel / dismissLabel / iconSrc / showInstall` (masque le bouton sur iOS Safari où l'install est manuelle) + emits `install` / `dismiss`. Toute la logique (capture `beforeinstallprompt`, détection iOS, persistance du refus) reste côté consommateur. Stories Light / Dark / IosManual.
+
 ## 0.5.17
 
 - **`WpButton` (fix)** : le variant `outline` (sans `dark`) suit désormais le **thème** du consommateur — couleur du texte `var(--wp-color-text, var(--wp-color-navy, #1B2B56))` au lieu d'un navy en dur. Il était invisible en thème **sombre** sans `dark`, et le prop `dark` (pensé pour les **surfaces** sombres) le rendait invisible en thème **clair**. Fallback navy conservé pour la vitrine claire (token non déclaré). `dark` reste réservé aux surfaces foncées explicites (héros navy).

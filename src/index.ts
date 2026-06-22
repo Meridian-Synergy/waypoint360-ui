@@ -9,6 +9,7 @@ export { default as WpAlert          } from './components/WpAlert/WpAlert.vue'
 export { default as WpModal          } from './components/WpModal/WpModal.vue'
 export { default as WpNotice         } from './components/WpNotice/WpNotice.vue'
 export { default as WpThemeToggle    } from './components/WpThemeToggle/WpThemeToggle.vue'
+export { default as WpInstallBanner  } from './components/WpInstallBanner/WpInstallBanner.vue'
 
 export { default as WpLocaleSwitcher } from './components/WpLocaleSwitcher/WpLocaleSwitcher.vue'
 export type { LocaleOption }           from './components/WpLocaleSwitcher/WpLocaleSwitcher.vue'
