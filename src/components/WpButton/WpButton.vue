@@ -66,7 +66,11 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
 /* Outline — ghost button with a sky accent on hover (mirrors WpShareButton) */
 .wp-btn--outline {
   background:   transparent;
-  color:        var(--wp-color-navy, #1B2B56);
+  /* Theme-adaptive: follows the consumer's semantic text token (flips with
+     light/dark theme); falls back to navy where it is undefined (e.g. the
+     light-only vitrine). Use the `dark` modifier only for genuinely dark
+     surfaces (navy heroes), not for theme switching. */
+  color:        var(--wp-color-text, var(--wp-color-navy, #1B2B56));
   border:       1px solid var(--wp-color-border, #D5D9E4);
   transition:   border-color var(--wp-transition-fast, 0.1s ease),
                 background var(--wp-transition-fast, 0.1s ease),
