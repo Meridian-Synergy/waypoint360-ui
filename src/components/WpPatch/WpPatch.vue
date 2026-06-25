@@ -174,10 +174,10 @@ const ICONS: Record<WpPatchIcon, IconPart[]> = {
     { tag: 'path', attrs: { d: 'M-4,-6 Q-13,-9 -21,-6 Q-16,-4 -13,-3 Q-16,-2 -11,-1 Q-14,0 -9,0.8 Q-11,2 -5,2.5 Z' } },
     { tag: 'path', attrs: { d: 'M4,-6 Q13,-9 21,-6 Q16,-4 13,-3 Q16,-2 11,-1 Q14,0 9,0.8 Q11,2 5,2.5 Z' } },
   ],
-  // Two delta aircraft in formation — the "wingman" flying alongside the lead.
+  // Stacked squadron chevrons — the wingman's formation/rank insignia.
   wingman: [
-    { tag: 'path', attrs: { d: 'M-5,-11 L3,5 -5,1 -13,5 Z' } },
-    { tag: 'path', attrs: { d: 'M9,-3 L13,7 9,4.5 5,7 Z' } },
+    { tag: 'path', attrs: { d: 'M-11,-3 L0,-12 L11,-3 L11,2 L0,-7 L-11,2 Z' } },
+    { tag: 'path', attrs: { d: 'M-11,6 L0,-3 L11,6 L11,11 L0,2 L-11,11 Z' } },
   ],
   star: [{ tag: 'path', attrs: { d: 'M0,-16 L4.7,-4.9 16.5,-4.9 7,2.5 10.6,13.9 0,7 -10.6,13.9 -7,2.5 -16.5,-4.9 -4.7,-4.9 Z' } }],
   sunrise: [
