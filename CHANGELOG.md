@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.6.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.5.18...v0.6.0) (2026-06-25)
+
+
+### Features
+
+* add moon icon for the Night Flyer badge ([#31](https://github.com/Meridian-Synergy/waypoint360-ui/issues/31)) ([956e991](https://github.com/Meridian-Synergy/waypoint360-ui/commit/956e991c528f13c62ec841a73070abcc63dd6e64))
+* clearer badge emblems — pilot brevet wings, two-tone flame, wingman ([#27](https://github.com/Meridian-Synergy/waypoint360-ui/issues/27)) ([2e4ec4f](https://github.com/Meridian-Synergy/waypoint360-ui/commit/2e4ec4f3358183598ad3de2ba1749b06c4990bd2))
+
+
+### Bug Fixes
+
+* redraw wingman icon as stacked squadron chevrons ([#30](https://github.com/Meridian-Synergy/waypoint360-ui/issues/30)) ([fdf6028](https://github.com/Meridian-Synergy/waypoint360-ui/commit/fdf6028939ebae734cc35ddb2b5123febe62c292))
+* stop country-flag medallion from collapsing once flag-icons CSS loads ([#28](https://github.com/Meridian-Synergy/waypoint360-ui/issues/28)) ([da8c31e](https://github.com/Meridian-Synergy/waypoint360-ui/commit/da8c31eb5808d5f9ced50ce628a8f52af7b96c12))
+
 ## 0.5.18
 
 - **`WpInstallBanner` (feat)** : nouvelle carte « Ajouter à l'écran d'accueil » — présentational, theme-adaptive (`dark` pour l'app communautaire, clair par défaut pour la vitrine). Props `title / description / installLabel / dismissLabel / iconSrc / showInstall` (masque le bouton sur iOS Safari où l'install est manuelle) + emits `install` / `dismiss`. Toute la logique (capture `beforeinstallprompt`, détection iOS, persistance du refus) reste côté consommateur. Stories Light / Dark / IosManual.
