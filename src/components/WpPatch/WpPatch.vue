@@ -17,7 +17,7 @@ export type WpPatchIcon =
   | 'propeller' | 'takeoff' | 'medal' | 'compass' | 'globe' | 'route' | 'stopwatch' | 'mountain' | 'flame'
   | 'check' | 'double_check' | 'clock'
   | 'user_plus' | 'users' | 'podium' | 'verified'
-  | 'heart' | 'crown' | 'wings' | 'wingman' | 'star' | 'sunrise'
+  | 'heart' | 'crown' | 'wings' | 'wingman' | 'star' | 'sunrise' | 'moon'
   | 'flag' | 'rocket' | 'trophy' | 'calendar'
 </script>
 
@@ -187,6 +187,7 @@ const ICONS: Record<WpPatchIcon, IconPart[]> = {
     { tag: 'line', attrs: { x1: -13, y1: -4, x2: -9, y2: 0, 'stroke-width': 2.4, 'stroke-linecap': 'round' } },
     { tag: 'line', attrs: { x1: 13, y1: -4, x2: 9, y2: 0, 'stroke-width': 2.4, 'stroke-linecap': 'round' } },
   ],
+  moon: [{ tag: 'path', attrs: { d: 'M3,-13 A14 14 0 1 0 3,13 A10 10 0 1 1 3,-13 Z' } }],
   flag: [
     { tag: 'rect', attrs: { x: -12, y: -15, width: 3, height: 30, rx: 1 } },
     { tag: 'path', attrs: { d: 'M-9,-14 L13,-9 L-9,-1 Z' } },

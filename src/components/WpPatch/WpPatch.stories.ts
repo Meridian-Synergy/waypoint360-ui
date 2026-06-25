@@ -9,7 +9,7 @@ const meta: Meta<typeof WpPatch> = {
     shape:  { control: 'select', options: ['circle', 'shield', 'rocker', 'rosette', 'hexagon'] },
     tier:   { control: 'select', options: ['none', 'bronze', 'silver', 'gold', 'platinum'] },
     accent: { control: 'color' },
-    icon:   { control: 'select', options: [undefined, 'propeller', 'takeoff', 'medal', 'compass', 'globe', 'route', 'stopwatch', 'mountain', 'flame', 'check', 'double_check', 'clock', 'user_plus', 'users', 'podium', 'verified', 'heart', 'crown', 'wings', 'wingman', 'star', 'sunrise', 'flag', 'rocket', 'trophy', 'calendar'] },
+    icon:   { control: 'select', options: [undefined, 'propeller', 'takeoff', 'medal', 'compass', 'globe', 'route', 'stopwatch', 'mountain', 'flame', 'check', 'double_check', 'clock', 'user_plus', 'users', 'podium', 'verified', 'heart', 'crown', 'wings', 'wingman', 'star', 'sunrise', 'moon', 'flag', 'rocket', 'trophy', 'calendar'] },
     count:  { control: 'number' },
     size:   { control: 'number' },
     locked: { control: 'boolean' },
@@ -125,7 +125,7 @@ export const IconLibrary: Story = {
     setup: () => ({ args, icons: [
       'propeller', 'takeoff', 'medal', 'compass', 'globe', 'route', 'stopwatch', 'mountain', 'flame',
       'check', 'double_check', 'clock', 'user_plus', 'users', 'podium', 'verified',
-      'heart', 'crown', 'wings', 'wingman', 'star', 'sunrise', 'flag', 'rocket', 'trophy', 'calendar',
+      'heart', 'crown', 'wings', 'wingman', 'star', 'sunrise', 'moon', 'flag', 'rocket', 'trophy', 'calendar',
     ] }),
     template: `
       <div style="display:flex; gap:12px; flex-wrap:wrap;">
