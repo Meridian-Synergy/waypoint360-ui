@@ -17,7 +17,7 @@ export type WpPatchIcon =
   | 'propeller' | 'takeoff' | 'medal' | 'compass' | 'globe' | 'route' | 'stopwatch' | 'mountain' | 'flame'
   | 'check' | 'double_check' | 'clock'
   | 'user_plus' | 'users' | 'podium' | 'verified'
-  | 'heart' | 'crown' | 'wings' | 'star' | 'sunrise'
+  | 'heart' | 'crown' | 'wings' | 'wingman' | 'star' | 'sunrise'
   | 'flag' | 'rocket' | 'trophy' | 'calendar'
 </script>
 
@@ -129,7 +129,10 @@ const ICONS: Record<WpPatchIcon, IconPart[]> = {
     { tag: 'line', attrs: { x1: 0, y1: 2, x2: 0, y2: -5, 'stroke-width': 2.4, 'stroke-linecap': 'round' } },
   ],
   mountain: [{ tag: 'path', attrs: { d: 'M-16,12 L-5,-9 L1,0 L7,-13 L16,12 Z' } }],
-  flame: [{ tag: 'path', attrs: { d: 'M0,-16 C8,-6 11,-1 6,7 C4,12 -4,12 -6,7 C-9,1 -2,-1 0,-16 Z' } }],
+  flame: [
+    { tag: 'path', attrs: { d: 'M0,-16 C8,-6 11,-1 6,7 C4,12 -4,12 -6,7 C-9,1 -2,-1 0,-16 Z' } },
+    { tag: 'path', attrs: { d: 'M1,-5 C5,0 6,4 3.5,7.5 C2,10 -3,9.5 -3,5.5 C-3,2 0.5,0.5 1,-5 Z', fill: '#1B2B56' } },
+  ],
   check: [{ tag: 'polyline', attrs: { points: '-13,1 -4,11 14,-12', fill: 'none', 'stroke-width': 5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' } }],
   double_check: [
     { tag: 'polyline', attrs: { points: '-15,1 -7,9 5,-12', fill: 'none', 'stroke-width': 3.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' } },
@@ -163,10 +166,18 @@ const ICONS: Record<WpPatchIcon, IconPart[]> = {
   ],
   heart: [{ tag: 'path', attrs: { d: 'M0,13 C-13,3 -16,-6 -8.5,-12 C-3.5,-15.5 0,-10.5 0,-7.5 C0,-10.5 3.5,-15.5 8.5,-12 C16,-6 13,3 0,13 Z' } }],
   crown: [{ tag: 'path', attrs: { d: 'M-15,9 L-15,-7 L-6,1 L0,-12 L6,1 L15,-7 L15,9 Z' } }],
+  // Pilot brevet: central escutcheon flanked by symmetric feathered wings
+  // (scalloped trailing edge reads as feathers at small sizes).
   wings: [
-    { tag: 'circle', attrs: { cy: -3, r: 3.2 } },
-    { tag: 'path', attrs: { d: 'M-3,-3 Q-12,-7 -17,-1 Q-9,-3 -4,1 Z' } },
-    { tag: 'path', attrs: { d: 'M3,-3 Q12,-7 17,-1 Q9,-3 4,1 Z' } },
+    { tag: 'path', attrs: { d: 'M0,-11 L3.6,-8 V3 L0,9 -3.6,3 V-8 Z' } },
+    { tag: 'circle', attrs: { cy: -4, r: 1.6, fill: '#1B2B56' } },
+    { tag: 'path', attrs: { d: 'M-4,-6 Q-13,-9 -21,-6 Q-16,-4 -13,-3 Q-16,-2 -11,-1 Q-14,0 -9,0.8 Q-11,2 -5,2.5 Z' } },
+    { tag: 'path', attrs: { d: 'M4,-6 Q13,-9 21,-6 Q16,-4 13,-3 Q16,-2 11,-1 Q14,0 9,0.8 Q11,2 5,2.5 Z' } },
+  ],
+  // Two delta aircraft in formation — the "wingman" flying alongside the lead.
+  wingman: [
+    { tag: 'path', attrs: { d: 'M-5,-11 L3,5 -5,1 -13,5 Z' } },
+    { tag: 'path', attrs: { d: 'M9,-3 L13,7 9,4.5 5,7 Z' } },
   ],
   star: [{ tag: 'path', attrs: { d: 'M0,-16 L4.7,-4.9 16.5,-4.9 7,2.5 10.6,13.9 0,7 -10.6,13.9 -7,2.5 -16.5,-4.9 -4.7,-4.9 Z' } }],
   sunrise: [
