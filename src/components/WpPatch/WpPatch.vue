@@ -321,14 +321,18 @@ const rootStyle = computed<Record<string, string>>(() => {
   font-size:   11px;
 }
 
-/* Flag medallion — overlaid on the emblem position (center x, ~36% y) */
-.wp-patch__flag {
+/* Flag medallion — overlaid on the emblem position (center x, ~36% y).
+   Prefixed with .wp-patch so this rule outranks flag-icons' `.fi.fis { width: 1em }`
+   (equal specificity → it would otherwise win on load order and squash the flag). */
+.wp-patch .wp-patch__flag {
   position:           absolute;
   left:               50%;
   top:                36%;
   transform:          translate(-50%, -50%);
+  box-sizing:         border-box;
   width:              38%;
   height:             38%;
+  aspect-ratio:       1 / 1;
   border-radius:      50%;
   border:             2.5px solid var(--patch-ring);
   background-size:    cover;
