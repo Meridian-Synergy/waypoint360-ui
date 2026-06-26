@@ -37,8 +37,8 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
   font-family:   var(--wp-font-body, 'Barlow', sans-serif);
   font-size:     14px;
   font-weight:   400;
-  color:         var(--wp-color-navy, #1B2B56);
-  background:    var(--wp-color-white, #FFFFFF);
+  color:         var(--wp-color-input-text, var(--wp-color-navy, #1B2B56));
+  background:    var(--wp-color-input-bg, var(--wp-color-white, #FFFFFF));
   border:        1.5px solid var(--wp-color-border, #D5D9E4);
   border-radius: var(--wp-radius-md, 8px);
   padding:       var(--wp-space-sm, 8px) var(--wp-space-md, 16px);
@@ -47,7 +47,7 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
   resize:        vertical;
   transition:    border-color var(--wp-transition-base, 0.2s ease), box-shadow var(--wp-transition-base, 0.2s ease);
 }
-.wp-textarea::placeholder { color: var(--wp-color-muted, #8C95AA); }
+.wp-textarea::placeholder { color: var(--wp-color-text-sub, var(--wp-color-muted, #8C95AA)); }
 .wp-textarea:focus {
   border-color: var(--wp-color-sky, #00AAEF);
   box-shadow:   0 0 0 3px rgba(0, 170, 239, 0.15);
@@ -58,7 +58,7 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 }
 .wp-textarea:disabled {
   background: var(--wp-color-bg, #ECEEF3);
-  color:      var(--wp-color-muted, #8C95AA);
+  color:      var(--wp-color-text-sub, var(--wp-color-muted, #8C95AA));
   cursor:     not-allowed;
 }
 </style>

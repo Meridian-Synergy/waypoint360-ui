@@ -56,7 +56,7 @@ const name = useId()
   gap:         6px;
   font-family: var(--wp-font-body, 'Barlow', sans-serif);
   font-size:   14px;
-  color:       var(--wp-color-navy, #1B2B56);
+  color:       var(--wp-color-text, var(--wp-color-navy, #1B2B56));
   cursor:      pointer;
 }
 .wp-radio input { accent-color: var(--wp-color-sky, #00AAEF); cursor: pointer; }
