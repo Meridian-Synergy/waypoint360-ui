@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.7.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.6.0...v0.7.0) (2026-07-01)
+
+
+### Features
+
+* form primitives (WpField, WpTextarea, WpSelect, WpRadioGroup, WpCheckbox) + WpInput token fallbacks ([#33](https://github.com/Meridian-Synergy/waypoint360-ui/issues/33)) ([603b72a](https://github.com/Meridian-Synergy/waypoint360-ui/commit/603b72aef37f9d0a1ebb67758b6f54f0c961d36b))
+
+
+### Bug Fixes
+
+* make form primitives theme-adaptive (readable on dark surfaces) ([#35](https://github.com/Meridian-Synergy/waypoint360-ui/issues/35)) ([1001444](https://github.com/Meridian-Synergy/waypoint360-ui/commit/1001444f5c364277401578de4aa201ef42053498))
+* make WpButton primary variant theme-adaptive (visible on dark) ([#36](https://github.com/Meridian-Synergy/waypoint360-ui/issues/36)) ([292660d](https://github.com/Meridian-Synergy/waypoint360-ui/commit/292660d1bb9bc21a0308b2dbeac21dbe1a48c14e))
+
 ## [0.6.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.5.18...v0.6.0) (2026-06-25)
 
 
