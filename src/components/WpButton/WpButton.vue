@@ -6,7 +6,7 @@ withDefaults(defineProps<{
   variant?: 'primary' | 'secondary' | 'cta' | 'critical' | 'outline'
   size?:    'sm' | 'md' | 'lg'
   disabled?: boolean
-  /** Dark-surface styling (navy backgrounds) — currently affects the `outline` variant. */
+  /** Dark-surface styling for fixed navy backgrounds — affects the `primary` and `outline` variants. */
   dark?:    boolean
   /** Render as another tag/component (e.g. 'a' or NuxtLink) to use the button as a navigation link. */
   as?:      string | Component
@@ -58,7 +58,14 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
 .wp-btn--lg { padding: var(--wp-space-md, 16px) var(--wp-space-lg, 24px);  font-size: 17px; }
 
 /* Variants */
-.wp-btn--primary   { background: var(--wp-color-navy, #1B2B56);   color: var(--wp-color-white, #FFFFFF); }
+/* Theme-adaptive filled button: the fill follows the consumer's --wp-color-text
+   token (dark on a light theme, light on a dark theme) and the label takes its
+   inverse (--wp-color-bg). Falls back to navy fill / white label where those
+   tokens are undefined (light-only vitrine), preserving the original look.
+   Without this, a fixed navy fill is invisible on the app's dark navy surface. */
+.wp-btn--primary   { background: var(--wp-color-text, var(--wp-color-navy, #1B2B56)); color: var(--wp-color-bg, var(--wp-color-white, #FFFFFF)); }
+/* Genuinely dark fixed surfaces (navy hero) via the `dark` prop — force a light fill. */
+.wp-btn--primary.wp-btn--dark { background: var(--wp-color-white, #FFFFFF); color: var(--wp-color-navy, #1B2B56); }
 .wp-btn--secondary { background: transparent;                     color: var(--wp-color-navy, #1B2B56);  border: 2px solid var(--wp-color-navy, #1B2B56); }
 .wp-btn--cta       { background: var(--wp-color-gold, #C9A84C);   color: var(--wp-color-navy, #1B2B56); }
 .wp-btn--critical  { background: var(--wp-color-orange, #F05A28); color: var(--wp-color-white, #FFFFFF); }
