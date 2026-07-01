@@ -21,8 +21,8 @@ export const Critical:  Story = { args: { label: 'Supprimer',        variant: 'c
 export const Disabled:  Story = { args: { label: 'Indisponible',     disabled: true       } }
 
 export const Dark: Story = {
-  args: { label: 'Démarrer', variant: 'primary' },
-  parameters: { backgrounds: { default: 'dark' } },
+  args: { label: 'Démarrer', variant: 'primary', dark: true },
+  parameters: { backgrounds: { default: 'navy' } },
 }
 export const CTADark: Story = {
   args: { label: 'Créer un compte', variant: 'cta' },
