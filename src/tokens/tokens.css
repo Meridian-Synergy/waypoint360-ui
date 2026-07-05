@@ -77,4 +77,20 @@
   /* === Transitions === */
   --wp-transition-fast: 0.1s ease;
   --wp-transition-base: 0.2s ease;
+
+  /* === Accessibility ===
+   * User-facing text-size control: WpTextSizeToggle writes --wp-font-scale on
+   * <html> at runtime; base.css multiplies the root font-size by it, so anything
+   * sized in rem scales. Keep at 1 here (no visual change until the user opts in).
+   * The rem scale below is the canonical typographic ramp for migrating px→rem. */
+  --wp-font-scale: 1;
+  --wp-text-xs: calc(0.75rem  * var(--wp-font-scale)); /* 12px */
+  --wp-text-sm: calc(0.875rem * var(--wp-font-scale)); /* 14px */
+  --wp-text-md: calc(1rem     * var(--wp-font-scale)); /* 16px */
+  --wp-text-lg: calc(1.25rem  * var(--wp-font-scale)); /* 20px */
+  --wp-text-xl: calc(1.5rem   * var(--wp-font-scale)); /* 24px */
+
+  /* Keyboard focus ring — applied globally via base.css :focus-visible. */
+  --wp-focus-ring:   2px solid var(--wp-color-sky);
+  --wp-focus-offset: 2px;
 }

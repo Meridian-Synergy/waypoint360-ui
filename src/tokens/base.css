@@ -1,0 +1,47 @@
+/*
+ * Waypoint360 accessibility base layer.
+ *
+ * Global rules that scoped component styles cannot express. Import this ONCE per
+ * consumer app, after (or alongside) the app's own token layer:
+ *
+ *   @import "waypoint360-ui/src/tokens/base.css";
+ *
+ * Self-contained: every token used here has a literal fallback, so this file works
+ * even in apps that maintain their own token layer and do not import tokens.css.
+ */
+
+:root {
+  /* Default so consumers that don't import tokens.css still resolve the scale. */
+  --wp-font-scale: 1;
+}
+
+/* User text-size control (WpTextSizeToggle) — multiplies the root font-size, so
+ * everything sized in rem scales. `1rem` on the root element resolves to the
+ * browser's default font size, so this ALSO honors the user's browser/OS
+ * font-size preference (never hard-code html { font-size } in px). */
+html {
+  font-size: calc(1rem * var(--wp-font-scale, 1));
+}
+
+/* Visible keyboard focus. Only for keyboard/programmatic focus (`:focus-visible`),
+ * never on mouse click — so pointer users don't see a ring, keyboard users always do. */
+:focus-visible {
+  outline: var(--wp-focus-ring, 2px solid #00AAEF);
+  outline-offset: var(--wp-focus-offset, 2px);
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Respect reduced-motion: neutralize transitions/animations for users who ask the
+ * OS to minimize motion (vestibular disorders). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
