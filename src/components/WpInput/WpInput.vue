@@ -36,19 +36,19 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 
 .wp-field__label {
   font-family:  var(--wp-font-body);
-  font-size:    12px;
+  font-size:    0.75rem;
   font-weight:  600;
   color:        var(--wp-color-text, var(--wp-color-navy, #1B2B56));
 }
 
-.wp-field__hint  { font-size: 11px; color: var(--wp-color-text-sub, var(--wp-color-muted, #8C95AA)); }
-.wp-field__error { font-size: 11px; color: var(--wp-color-error, #ef4444); }
+.wp-field__hint  { font-size: 0.6875rem; color: var(--wp-color-text-sub, var(--wp-color-muted, #8C95AA)); }
+.wp-field__error { font-size: 0.6875rem; color: var(--wp-color-error, #ef4444); }
 
 /* Theme-adaptive: consumer semantic token first (app dark theme), then DS token,
    then hardcoded value (same layering as WpStatCard). */
 .wp-input {
   font-family:   var(--wp-font-body, 'Barlow', sans-serif);
-  font-size:     14px;
+  font-size:     0.875rem;
   font-weight:   400;
   color:         var(--wp-color-input-text, var(--wp-color-navy, #1B2B56));
   background:    var(--wp-color-input-bg, var(--wp-color-white, #FFFFFF));

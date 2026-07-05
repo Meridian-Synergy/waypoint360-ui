@@ -248,7 +248,7 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
 
 <style scoped>
 .wp-certs__title {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -309,7 +309,7 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
 }
 
 .wp-certs__label {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--wp-color-text);
   line-height: 1.4;
 }
@@ -321,13 +321,13 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
   flex-wrap: wrap;
 }
 .wp-certs__meta-label {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--wp-color-text-sub);
   white-space: nowrap;
 }
 .wp-certs__date-input,
 .wp-certs__select {
-  font-size: 13px;
+  font-size: 0.8125rem;
   padding: 5px 8px;
   border: 1px solid var(--wp-color-border);
   border-radius: var(--wp-radius);
@@ -335,18 +335,18 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
   color: var(--wp-color-input-text, var(--wp-color-text));
 }
 .wp-certs__expiry {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--wp-color-text-sub);
   white-space: nowrap;
 }
 .wp-certs__validity {
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--wp-color-text-sub);
   white-space: nowrap;
   opacity: 0.8;
 }
 .wp-certs__status {
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -357,7 +357,7 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
 
 .wp-certs__hint {
   margin-top: 10px;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--wp-color-text-sub);
   opacity: 0.7;
 }

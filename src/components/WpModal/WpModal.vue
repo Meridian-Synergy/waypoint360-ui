@@ -73,7 +73,7 @@ const onOverlayClick = (e: MouseEvent) => {
 
 .wp-modal__title {
   font-family: var(--wp-font-display);
-  font-size:   16px;
+  font-size:   1rem;
   font-weight: 600;
   color:       var(--wp-color-navy);
 }
@@ -87,7 +87,7 @@ const onOverlayClick = (e: MouseEvent) => {
   background:    var(--wp-color-bg);
   color:         var(--wp-color-muted);
   cursor:        pointer;
-  font-size:     13px;
+  font-size:     0.8125rem;
   display:       flex;
   align-items:   center;
   justify-content: center;
@@ -99,7 +99,7 @@ const onOverlayClick = (e: MouseEvent) => {
 .wp-modal__body {
   padding:     var(--wp-space-md) var(--wp-space-lg);
   font-family: var(--wp-font-body);
-  font-size:   13.5px;
+  font-size:   0.84375rem;
   color:       var(--wp-color-silver);
   line-height: 1.6;
 }

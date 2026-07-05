@@ -88,7 +88,7 @@ defineProps<{
 
 .wp-contact-channel__label {
   font-family: var(--wp-font-condensed);
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -108,7 +108,7 @@ defineProps<{
 }
 
 .wp-contact-channel__cta {
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
 }
 .wp-contact-channel--whatsapp .wp-contact-channel__cta { color: #25D366; }

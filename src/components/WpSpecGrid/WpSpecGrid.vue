@@ -48,7 +48,7 @@ withDefaults(defineProps<{
 
 .wp-spec-grid__label {
   font-family: var(--wp-font-condensed);
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -87,7 +87,7 @@ withDefaults(defineProps<{
 
 .wp-spec-grid__key {
   font-family: var(--wp-font-condensed);
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -95,7 +95,7 @@ withDefaults(defineProps<{
 }
 
 .wp-spec-grid__val {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--wp-color-white);
   line-height: 1.45;

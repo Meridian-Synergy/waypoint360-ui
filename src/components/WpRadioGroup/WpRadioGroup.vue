@@ -55,7 +55,7 @@ const name = useId()
   align-items: center;
   gap:         6px;
   font-family: var(--wp-font-body, 'Barlow', sans-serif);
-  font-size:   14px;
+  font-size:   0.875rem;
   color:       var(--wp-color-text, var(--wp-color-navy, #1B2B56));
   cursor:      pointer;
 }

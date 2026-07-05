@@ -33,7 +33,7 @@ withDefaults(defineProps<{
   padding:       12px 16px;
   border:        1px solid;
   border-radius: var(--wp-radius-md, 8px);
-  font-size:     13px;
+  font-size:     0.8125rem;
   line-height:   1.5;
   color:         var(--wp-color-silver);
 }

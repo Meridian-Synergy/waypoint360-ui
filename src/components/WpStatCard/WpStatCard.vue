@@ -99,7 +99,7 @@ defineEmits<{ (e: 'click', ev: MouseEvent): void }>()
 }
 
 .wp-stat-card__label {
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -107,7 +107,7 @@ defineEmits<{ (e: 'click', ev: MouseEvent): void }>()
 }
 
 .wp-stat-card__value {
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1.1;
   color: var(--wp-color-text, #fff);
@@ -119,12 +119,12 @@ defineEmits<{ (e: 'click', ev: MouseEvent): void }>()
 }
 
 .wp-stat-card__sub {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--wp-color-text-sub, var(--wp-color-muted, #8C95AA));
 }
 
 .wp-stat-card__link {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--wp-color-sky, #00AAEF);
   margin-top: auto;
   padding-top: 10px;

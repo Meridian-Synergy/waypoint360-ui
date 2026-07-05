@@ -100,13 +100,13 @@ defineProps<{
 }
 
 .wp-social-card__label {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 700;
   color: var(--wp-color-navy);
 }
 
 .wp-social-card__handle {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--wp-color-muted);
 }
 </style>

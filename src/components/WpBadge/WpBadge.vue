@@ -27,7 +27,7 @@ const STATUS_VARIANTS = ['active', 'inactive', 'pending', 'alert', 'warning']
   gap:             5px;
   font-family:     var(--wp-font-condensed);
   font-weight:     600;
-  font-size:       11px;
+  font-size:       0.6875rem;
   letter-spacing:  0.06em;
   text-transform:  uppercase;
   padding:         3px 10px;
