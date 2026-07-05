@@ -35,6 +35,20 @@ const withSample = (extra = '') => ({
 
 export const Default: Story = { render: () => withSample() }
 
+export const Compact: Story = {
+  render: () => ({
+    components: { WpTextSizeToggle },
+    template: `
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <WpTextSizeToggle compact />
+        <p style="font-size:1rem; margin:0; max-width:38ch;">
+          Forme compacte (A− / A+ sans bouton reset) — pour les barres étroites (mobile).
+        </p>
+      </div>
+    `,
+  }),
+}
+
 export const Navy: Story = {
   render: () => withSample('color:#fff;'),
   parameters: { backgrounds: { default: 'navy' } },
