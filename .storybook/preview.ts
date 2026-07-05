@@ -1,4 +1,5 @@
 import '../src/tokens/tokens.css'
+import '../src/tokens/base.css'
 // Country flags (WpPatch, WpLocaleSwitcher). Consumer apps load this CSS themselves;
 // imported here only so flags render in Storybook.
 import 'flag-icons/css/flag-icons.min.css'
