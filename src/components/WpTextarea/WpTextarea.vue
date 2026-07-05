@@ -35,7 +35,7 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 <style scoped>
 .wp-textarea {
   font-family:   var(--wp-font-body, 'Barlow', sans-serif);
-  font-size:     14px;
+  font-size:     0.875rem;
   font-weight:   400;
   color:         var(--wp-color-input-text, var(--wp-color-navy, #1B2B56));
   background:    var(--wp-color-input-bg, var(--wp-color-white, #FFFFFF));

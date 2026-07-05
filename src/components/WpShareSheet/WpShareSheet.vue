@@ -176,7 +176,7 @@ const displayUrl = computed(() => props.url.replace(/^https?:\/\//, ''))
 
 .wp-share__title {
   font-family: var(--wp-font-display, 'Barlow', sans-serif);
-  font-size:   16px;
+  font-size:   1rem;
   font-weight: 600;
   color:       var(--wp-color-navy, #1B2B56);
 }
@@ -190,7 +190,7 @@ const displayUrl = computed(() => props.url.replace(/^https?:\/\//, ''))
   background:    var(--wp-color-bg, #ECEEF3);
   color:         var(--wp-color-muted, #8C95AA);
   cursor:        pointer;
-  font-size:     13px;
+  font-size:     0.8125rem;
   display:       flex;
   align-items:   center;
   justify-content: center;
@@ -239,7 +239,7 @@ const displayUrl = computed(() => props.url.replace(/^https?:\/\//, ''))
 
 .wp-share__label {
   font-family: var(--wp-font-body, 'Barlow', sans-serif);
-  font-size:   12px;
+  font-size:   0.75rem;
   font-weight: 600;
   text-align:  center;
 }
@@ -250,7 +250,7 @@ const displayUrl = computed(() => props.url.replace(/^https?:\/\//, ''))
   border-radius: var(--wp-radius-md, 8px);
   background:    var(--wp-color-bg, #ECEEF3);
   font-family:   var(--wp-font-data, 'Space Mono', monospace);
-  font-size:     12px;
+  font-size:     0.75rem;
   color:         var(--wp-color-muted-strong, #636B82);
   overflow:      hidden;
   text-overflow: ellipsis;

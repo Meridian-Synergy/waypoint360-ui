@@ -37,7 +37,7 @@ defineProps<{
 }
 
 .wp-bc-link {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--wp-color-muted);
   text-decoration: none;
   white-space: nowrap;
@@ -47,12 +47,12 @@ defineProps<{
 
 .wp-bc-sep {
   color: var(--wp-color-border);
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1;
 }
 
 .wp-bc-current {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--wp-color-navy);
   font-weight: 500;
   white-space: nowrap;

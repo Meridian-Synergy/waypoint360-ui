@@ -94,7 +94,7 @@ async function onClick() {
   color:           var(--wp-color-navy, #1B2B56);
   cursor:          pointer;
   font-family:     var(--wp-font-body, 'Barlow', sans-serif);
-  font-size:       14px;
+  font-size:       0.875rem;
   font-weight:     600;
   transition:      border-color var(--wp-transition-fast, 0.1s ease),
                    background var(--wp-transition-fast, 0.1s ease),

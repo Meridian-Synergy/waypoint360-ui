@@ -320,7 +320,7 @@ const rootStyle = computed<Record<string, string>>(() => {
   fill:           var(--wp-color-navy, #1B2B56);
   font-family:    var(--wp-font-condensed, 'Barlow Condensed', sans-serif);
   font-weight:    700;
-  font-size:      11px;
+  font-size:      0.6875rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -330,7 +330,7 @@ const rootStyle = computed<Record<string, string>>(() => {
   fill:        var(--wp-color-navy, #1B2B56);
   font-family: var(--wp-font-data, 'Space Mono', monospace);
   font-weight: 700;
-  font-size:   11px;
+  font-size:   0.6875rem;
 }
 
 /* Flag medallion — overlaid on the emblem position (center x, ~36% y).

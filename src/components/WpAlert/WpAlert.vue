@@ -40,15 +40,15 @@ const icons: Record<string, string> = {
   border-radius: var(--wp-radius-md);
   border:      1px solid transparent;
   font-family: var(--wp-font-body);
-  font-size:   13px;
+  font-size:   0.8125rem;
   line-height: 1.5;
 }
-.wp-alert__icon    { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.wp-alert__icon    { font-size: 0.9375rem; flex-shrink: 0; margin-top: 1px; }
 .wp-alert__content { flex: 1; }
-.wp-alert__title   { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
-.wp-alert__body    { font-size: 12px; opacity: 0.85; }
+.wp-alert__title   { font-weight: 600; font-size: 0.8125rem; margin-bottom: 2px; }
+.wp-alert__body    { font-size: 0.75rem; opacity: 0.85; }
 .wp-alert__action  {
-  font-weight: 600; font-size: 12px; text-decoration: underline;
+  font-weight: 600; font-size: 0.75rem; text-decoration: underline;
   cursor: pointer; margin-left: auto; padding-left: var(--wp-space-sm);
   flex-shrink: 0; align-self: center; opacity: 0.85;
 }

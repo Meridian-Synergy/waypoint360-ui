@@ -53,9 +53,9 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
 .wp-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* Sizes */
-.wp-btn--sm { padding: 6px 12px;  font-size: 13px; }
-.wp-btn--md { padding: var(--wp-space-sm, 8px) var(--wp-space-md, 16px);  font-size: 15px; }
-.wp-btn--lg { padding: var(--wp-space-md, 16px) var(--wp-space-lg, 24px);  font-size: 17px; }
+.wp-btn--sm { padding: 6px 12px;  font-size: 0.8125rem; }
+.wp-btn--md { padding: var(--wp-space-sm, 8px) var(--wp-space-md, 16px);  font-size: 0.9375rem; }
+.wp-btn--lg { padding: var(--wp-space-md, 16px) var(--wp-space-lg, 24px);  font-size: 1.0625rem; }
 
 /* Variants */
 /* Theme-adaptive filled button: the fill follows the consumer's --wp-color-text

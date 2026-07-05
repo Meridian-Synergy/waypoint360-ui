@@ -49,7 +49,7 @@ withDefaults(defineProps<{
 
 .wp-card__title {
   font-family: var(--wp-font-display);
-  font-size:   14px;
+  font-size:   0.875rem;
   font-weight: 600;
   color:       var(--wp-color-navy);
 }

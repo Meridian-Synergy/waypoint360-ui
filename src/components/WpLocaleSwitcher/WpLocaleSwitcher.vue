@@ -94,7 +94,7 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
   border: 1px solid transparent;
   background: transparent;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 600;
   white-space: nowrap;
   transition: background var(--wp-transition-fast, 0.1s ease), border-color var(--wp-transition-fast, 0.1s ease);
@@ -131,7 +131,7 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
   gap: 10px;
   padding: 8px 16px;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
   transition: background var(--wp-transition-fast, 0.1s ease);
 }

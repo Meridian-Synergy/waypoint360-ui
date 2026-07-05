@@ -96,7 +96,7 @@ defineProps<{
   gap: 8px;
   padding: 12px 20px;
   border-radius: var(--wp-radius-md);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
