@@ -8,11 +8,14 @@ const props = withDefaults(defineProps<{
   increaseLabel?: string
   /** localStorage key holding the chosen scale (shared across pages). */
   storageKey?: string
+  /** Compact form: hide the middle reset button (A- / A+ only). For tight bars. */
+  compact?: boolean
 }>(), {
   decreaseLabel: 'Decrease text size',
   resetLabel: 'Reset text size',
   increaseLabel: 'Increase text size',
   storageKey: 'wp-font-scale',
+  compact: false,
 })
 
 const emit = defineEmits<{ change: [scale: number] }>()
@@ -61,6 +64,7 @@ onMounted(() => {
       A<span class="wp-text-size__sign" aria-hidden="true">−</span>
     </button>
     <button
+      v-if="!compact"
       type="button"
       class="wp-text-size__btn wp-text-size__btn--reset"
       :aria-label="resetLabel"
