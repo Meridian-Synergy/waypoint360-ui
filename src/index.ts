@@ -22,6 +22,9 @@ export { default as WpInstallBanner  } from './components/WpInstallBanner/WpInst
 export { default as WpLocaleSwitcher } from './components/WpLocaleSwitcher/WpLocaleSwitcher.vue'
 export type { LocaleOption }           from './components/WpLocaleSwitcher/WpLocaleSwitcher.vue'
 
+export { default as WpContextSwitcher } from './components/WpContextSwitcher/WpContextSwitcher.vue'
+export type { ContextOption, Universe } from './components/WpContextSwitcher/WpContextSwitcher.vue'
+
 export { default as WpBreadcrumb     } from './components/WpBreadcrumb/WpBreadcrumb.vue'
 export type { BreadcrumbItem }         from './components/WpBreadcrumb/WpBreadcrumb.vue'
 
