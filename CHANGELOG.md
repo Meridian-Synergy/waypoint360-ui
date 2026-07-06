@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.8.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.7.0...v0.8.0) (2026-07-06)
+
+
+### Features
+
+* accessibility foundation (text-size control, focus-visible, reduced-motion) ([#37](https://github.com/Meridian-Synergy/waypoint360-ui/issues/37)) ([7d6de48](https://github.com/Meridian-Synergy/waypoint360-ui/commit/7d6de48dbdca9cc940eb2091478abab453888065))
+* migrate component font-size from px to rem ([#40](https://github.com/Meridian-Synergy/waypoint360-ui/issues/40)) ([934758e](https://github.com/Meridian-Synergy/waypoint360-ui/commit/934758eb45d84f6c332825dd01bc6624f3a1c1b4))
+* WpContextSwitcher — nav workspace/universe switcher ([#41](https://github.com/Meridian-Synergy/waypoint360-ui/issues/41)) ([3fffb9d](https://github.com/Meridian-Synergy/waypoint360-ui/commit/3fffb9db4ba93f0b58dcc8fb86fad0e76e5a71b7))
+* WpTextSizeToggle compact prop (A-/A+ only, no reset) ([#39](https://github.com/Meridian-Synergy/waypoint360-ui/issues/39)) ([adba253](https://github.com/Meridian-Synergy/waypoint360-ui/commit/adba2530f9551e023e0e12470af2a05be7614fe9))
+
 ## [0.7.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.6.0...v0.7.0) (2026-07-01)
 
 
