@@ -18,6 +18,8 @@ export const WithHint: Story = { args: { label: 'Zone de vol', placeholder: '48.
 export const WithError: Story = { args: { label: 'Référence client', modelValue: 'REF-INVALID', error: 'Format invalide — utilisez REF-AAAA-XXXXX.' } }
 export const Disabled: Story = { args: { label: 'Altitude maximale', modelValue: '120 m (limité par SORA)', disabled: true } }
 
+export const Password: Story = { args: { label: 'Mot de passe', type: 'password', modelValue: 'S3cr3t!', placeholder: '••••••••' } }
+
 export const Dark: Story = {
   args: { label: 'Nom de la mission', placeholder: 'Ex: Inspection A47' },
   parameters: { backgrounds: { default: 'dark' } },
