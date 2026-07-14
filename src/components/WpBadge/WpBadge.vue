@@ -1,5 +1,7 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+import { computed } from 'vue'
+
+const props = withDefaults(defineProps<{
   label:    string
   variant?: 'active' | 'inactive' | 'pending' | 'alert' | 'warning' | 'navy' | 'sky' | 'orange'
   dot?:     boolean
@@ -7,6 +9,9 @@ withDefaults(defineProps<{
   variant: 'active',
   dot:     true,
 })
+
+// The status dot only makes sense on status variants (not navy/sky/orange labels).
+const isStatusVariant = computed(() => STATUS_VARIANTS.includes(props.variant))
 </script>
 
 <template>
