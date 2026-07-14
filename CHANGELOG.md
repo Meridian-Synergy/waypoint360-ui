@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.10.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.9.0...v0.10.0) (2026-07-14)
+
+
+### Features
+
+* add password reveal toggle + native attr forwarding to WpInput ([#45](https://github.com/Meridian-Synergy/waypoint360-ui/issues/45)) ([53733a0](https://github.com/Meridian-Synergy/waypoint360-ui/commit/53733a07d25a40e68e5a5ce733a658b74b100edb))
+
+
+### Bug Fixes
+
+* adopt GOV.UK reveal a11y pattern on WpInput password toggle ([#47](https://github.com/Meridian-Synergy/waypoint360-ui/issues/47)) ([fe8c333](https://github.com/Meridian-Synergy/waypoint360-ui/commit/fe8c33343992a610dd6e52b7edd383c644518137))
+
 ## [0.9.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.8.0...v0.9.0) (2026-07-07)
 
 
