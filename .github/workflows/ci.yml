@@ -19,5 +19,7 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install
+      - name: Lint
+        run: pnpm lint
       - name: Build Storybook
         run: pnpm build-storybook
