@@ -94,7 +94,9 @@ onMounted(() => {
 }
 .wp-text-size__btn {
   display: inline-flex;
-  align-items: baseline;
+  /* center (not baseline): baseline pushed the "A" toward the top of the 34px box, so the
+     A- / A+ controls sat higher than the sibling icons in a center-aligned bar. */
+  align-items: center;
   justify-content: center;
   min-width: 34px;
   height: 34px;
