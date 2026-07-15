@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.10.0...v0.11.0) (2026-07-15)
+
+
+### Features
+
+* WpActionCard + WpActionSection for CRUD++ Actions sections ([#49](https://github.com/Meridian-Synergy/waypoint360-ui/issues/49)) ([23b6468](https://github.com/Meridian-Synergy/waypoint360-ui/commit/23b6468c1cd92649451d1f85e54430dd67388b6c))
+
 ## [0.10.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.9.0...v0.10.0) (2026-07-14)
 
 
