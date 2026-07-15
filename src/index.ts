@@ -43,6 +43,10 @@ export { default as WpValueCard      } from './components/WpValueCard/WpValueCar
 export { default as WpStatCard       } from './components/WpStatCard/WpStatCard.vue'
 export type { WpStatTone }             from './components/WpStatCard/WpStatCard.vue'
 
+export { default as WpActionSection  } from './components/WpActionSection/WpActionSection.vue'
+export { default as WpActionCard     } from './components/WpActionCard/WpActionCard.vue'
+export type { WpActionTone }           from './components/WpActionCard/WpActionCard.vue'
+
 export { default as WpContactBanner  } from './components/WpContactBanner/WpContactBanner.vue'
 export type { WpContactAction, WpContactActionType } from './components/WpContactBanner/WpContactBanner.vue'
 
