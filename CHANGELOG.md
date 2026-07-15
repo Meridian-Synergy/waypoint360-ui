@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.12.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.11.0...v0.12.0) (2026-07-15)
+
+
+### Features
+
+* **WpActionCard:** semibold CTA label + solid destructive confirm ([#51](https://github.com/Meridian-Synergy/waypoint360-ui/issues/51)) ([a13c904](https://github.com/Meridian-Synergy/waypoint360-ui/commit/a13c9046658ee81a083ebe7ea618fe9d4ed1c976))
+
+
+### Bug Fixes
+
+* vertically center the A-/A+ text-size buttons ([#53](https://github.com/Meridian-Synergy/waypoint360-ui/issues/53)) ([5c261cb](https://github.com/Meridian-Synergy/waypoint360-ui/commit/5c261cb4225f9995760ec1fd9191e6bb01bef2bf))
+
 ## [0.11.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.10.0...v0.11.0) (2026-07-15)
 
 
