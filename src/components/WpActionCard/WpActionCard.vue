@@ -71,7 +71,7 @@ function cancel() { confirming.value = false }
           <span v-if="confirmPrompt" class="wp-action-card__prompt">{{ confirmPrompt }}</span>
           <button
             type="button"
-            :class="['wp-action-btn', `wp-action-btn--${tone}`]"
+            :class="['wp-action-btn', tone === 'danger' ? 'wp-action-btn--danger-solid' : `wp-action-btn--${tone}`]"
             :disabled="loading"
             @click="doConfirm"
           >
@@ -109,7 +109,7 @@ function cancel() { confirming.value = false }
 .wp-action-btn {
   padding: 5px 12px;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 600;
   font-family: inherit;
   border-radius: var(--wp-radius, 10px);
   cursor: pointer;
@@ -138,6 +138,15 @@ function cancel() { confirming.value = false }
   border: 1px solid rgba(248, 113, 113, 0.3);
 }
 .wp-action-btn--danger:not(:disabled):hover { background: rgba(248, 113, 113, 0.08); }
+
+/* At the confirmation step, the destructive button turns solid so "about to
+   permanently delete" reads unambiguously — the resting state stays quiet. */
+.wp-action-btn--danger-solid {
+  background: #dc2626;
+  color: #fff;
+  border: 1px solid #dc2626;
+}
+.wp-action-btn--danger-solid:not(:disabled):hover { background: #b91c1c; border-color: #b91c1c; }
 
 @media (max-width: 560px) {
   .wp-action-card { flex-direction: column; align-items: stretch; }
