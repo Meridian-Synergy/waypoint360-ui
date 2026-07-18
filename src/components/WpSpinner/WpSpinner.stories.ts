@@ -9,10 +9,11 @@ const meta: Meta<typeof WpSpinner> = {
     docs: {
       description: {
         component:
-          'The single loading indicator for all Waypoint360 surfaces. Self-contained ' +
-          '(ships its own keyframes), inherits `currentColor`, and respects ' +
-          'prefers-reduced-motion. Decorative by default — pass `label` to announce it ' +
-          'as a live status. Use it inside the canonical `.empty-state` loading block.',
+          'The single loading indicator for all Waypoint360 surfaces: a ring of brand-blue (sky) ' +
+          'dots fading around the circle as it rotates. Theme-safe — the trail fades via opacity, ' +
+          'not a fixed light/dark colour, so it reads the same on dark and light backgrounds. ' +
+          'Self-contained (ships its own keyframes) and respects prefers-reduced-motion. ' +
+          'Decorative by default — pass `label` to announce it as a live status.',
       },
     },
   },
@@ -45,12 +46,28 @@ export const Sizes: Story = {
   }),
 }
 
+// Reads on both themes: the dots are the sky accent, the fade is opacity-only.
+export const OnLight: Story = {
+  parameters: { backgrounds: { default: 'light' } },
+  render: () => ({ components: { WpSpinner }, template: '<WpSpinner :size="48" />' }),
+}
+
+export const OnDark: Story = {
+  parameters: { backgrounds: { default: 'dark' } },
+  render: () => ({ components: { WpSpinner }, template: '<WpSpinner :size="48" />' }),
+}
+
+export const OnNavy: Story = {
+  parameters: { backgrounds: { default: 'navy' } },
+  render: () => ({ components: { WpSpinner }, template: '<WpSpinner :size="48" />' }),
+}
+
 export const LoadingBlock: Story = {
   render: () => ({
     components: { WpSpinner },
     template: `
       <div style="display:flex; flex-direction:column; align-items:center; gap:12px; padding:56px 24px; text-align:center;">
-        <div style="opacity:0.5;"><WpSpinner /></div>
+        <WpSpinner :size="40" />
         <p style="font-size:0.9375rem; font-weight:700; margin:0;">Chargement…</p>
       </div>
     `,
