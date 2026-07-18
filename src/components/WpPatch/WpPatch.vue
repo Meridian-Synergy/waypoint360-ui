@@ -18,7 +18,7 @@ export type WpPatchIcon =
   | 'check' | 'double_check' | 'clock'
   | 'user_plus' | 'users' | 'podium' | 'verified'
   | 'heart' | 'crown' | 'wings' | 'wingman' | 'star' | 'sunrise' | 'moon'
-  | 'flag' | 'rocket' | 'trophy' | 'calendar'
+  | 'flag' | 'rocket' | 'trophy' | 'calendar' | 'gamepad'
 </script>
 
 <script setup lang="ts">
@@ -208,6 +208,15 @@ const ICONS: Record<WpPatchIcon, IconPart[]> = {
     { tag: 'line', attrs: { x1: -13, y1: -4, x2: 13, y2: -4, 'stroke-width': 2.6 } },
     { tag: 'line', attrs: { x1: -7, y1: -15, x2: -7, y2: -8, 'stroke-width': 2.6, 'stroke-linecap': 'round' } },
     { tag: 'line', attrs: { x1: 7, y1: -15, x2: 7, y2: -8, 'stroke-width': 2.6, 'stroke-linecap': 'round' } },
+  ],
+  // Retro controller: capsule body with a navy D-pad cross (left) and two navy
+  // face buttons (right) — the emblem for the secret Konami-code badge.
+  gamepad: [
+    { tag: 'rect', attrs: { x: -17, y: -8, width: 34, height: 16, rx: 8 } },
+    { tag: 'rect', attrs: { x: -12.5, y: -1.8, width: 10, height: 3.6, rx: 0.8, fill: '#1B2B56' } },
+    { tag: 'rect', attrs: { x: -9.3, y: -5, width: 3.6, height: 10, rx: 0.8, fill: '#1B2B56' } },
+    { tag: 'circle', attrs: { cx: 7, cy: -3, r: 2.4, fill: '#1B2B56' } },
+    { tag: 'circle', attrs: { cx: 11.5, cy: 2.5, r: 2.4, fill: '#1B2B56' } },
   ],
 }
 

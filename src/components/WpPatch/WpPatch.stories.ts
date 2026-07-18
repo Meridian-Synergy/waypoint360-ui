@@ -9,7 +9,7 @@ const meta: Meta<typeof WpPatch> = {
     shape:  { control: 'select', options: ['circle', 'shield', 'rocker', 'rosette', 'hexagon'] },
     tier:   { control: 'select', options: ['none', 'bronze', 'silver', 'gold', 'platinum'] },
     accent: { control: 'color' },
-    icon:   { control: 'select', options: [undefined, 'propeller', 'takeoff', 'medal', 'compass', 'globe', 'route', 'stopwatch', 'mountain', 'flame', 'check', 'double_check', 'clock', 'user_plus', 'users', 'podium', 'verified', 'heart', 'crown', 'wings', 'wingman', 'star', 'sunrise', 'moon', 'flag', 'rocket', 'trophy', 'calendar'] },
+    icon:   { control: 'select', options: [undefined, 'propeller', 'takeoff', 'medal', 'compass', 'globe', 'route', 'stopwatch', 'mountain', 'flame', 'check', 'double_check', 'clock', 'user_plus', 'users', 'podium', 'verified', 'heart', 'crown', 'wings', 'wingman', 'star', 'sunrise', 'moon', 'flag', 'rocket', 'trophy', 'calendar', 'gamepad'] },
     count:  { control: 'number' },
     size:   { control: 'number' },
     locked: { control: 'boolean' },
@@ -62,6 +62,11 @@ export const SocialRosette: Story = {
 export const EventHexagon: Story = {
   name: 'Hexagon — event',
   args: { shape: 'hexagon', tier: 'platinum', icon: 'flag', bannerText: '2026', name: '2026 Pioneer', description: 'Inscrit en 2026.' },
+}
+
+export const KonamiHexagon: Story = {
+  name: 'Hexagon — Konami (secret)',
+  args: { shape: 'hexagon', tier: 'platinum', icon: 'gamepad', bannerText: 'Konami', name: 'Konami', description: 'Easter egg débloqué via le Konami code.' },
 }
 
 // --- Tier ladder ---
@@ -125,7 +130,7 @@ export const IconLibrary: Story = {
     setup: () => ({ args, icons: [
       'propeller', 'takeoff', 'medal', 'compass', 'globe', 'route', 'stopwatch', 'mountain', 'flame',
       'check', 'double_check', 'clock', 'user_plus', 'users', 'podium', 'verified',
-      'heart', 'crown', 'wings', 'wingman', 'star', 'sunrise', 'moon', 'flag', 'rocket', 'trophy', 'calendar',
+      'heart', 'crown', 'wings', 'wingman', 'star', 'sunrise', 'moon', 'flag', 'rocket', 'trophy', 'calendar', 'gamepad',
     ] }),
     template: `
       <div style="display:flex; gap:12px; flex-wrap:wrap;">
