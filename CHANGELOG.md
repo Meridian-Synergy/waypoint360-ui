@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.12.0...v0.13.0) (2026-07-18)
+
+
+### Features
+
+* add gamepad patch icon for the secret Konami badge ([#56](https://github.com/Meridian-Synergy/waypoint360-ui/issues/56)) ([921e3de](https://github.com/Meridian-Synergy/waypoint360-ui/commit/921e3de0bc057cd31e71425f719b18e009bead9b))
+* WpSpinner as a rotating ring of fading sky-blue dots ([#54](https://github.com/Meridian-Synergy/waypoint360-ui/issues/54)) ([43d9c55](https://github.com/Meridian-Synergy/waypoint360-ui/commit/43d9c55e05dac4e10d590a5aebeff5b4d856fdb5))
+
 ## [0.12.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.11.0...v0.12.0) (2026-07-15)
 
 
