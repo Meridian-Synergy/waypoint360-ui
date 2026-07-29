@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.2](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.13.1...v0.13.2) (2026-07-29)
+
+
+### Bug Fixes
+
+* faire suivre le thème au color-scheme des cases et boutons radio ([#60](https://github.com/Meridian-Synergy/waypoint360-ui/issues/60)) ([5404c00](https://github.com/Meridian-Synergy/waypoint360-ui/commit/5404c00c5bc8c63ad1721cf5422bc9c67092d9fb))
+
 ## [0.13.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.13.0...v0.13.1) (2026-07-29)
 
 
