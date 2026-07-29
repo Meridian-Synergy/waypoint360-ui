@@ -59,7 +59,13 @@ const name = useId()
   color:       var(--wp-color-text, var(--wp-color-navy, #1B2B56));
   cursor:      pointer;
 }
-.wp-radio input { accent-color: var(--wp-color-sky, #00AAEF); cursor: pointer; }
+/* accent-color only paints the selected state — the empty circle is drawn by the browser
+   and follows the scheme, so on a dark surface a light scheme leaves a white dot. */
+.wp-radio input {
+  accent-color: var(--wp-color-sky, #00AAEF);
+  color-scheme: var(--wp-scheme, light);
+  cursor:       pointer;
+}
 .wp-radio--disabled { opacity: 0.45; cursor: not-allowed; }
 .wp-radio--disabled input { cursor: not-allowed; }
 </style>

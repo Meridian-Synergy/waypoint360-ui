@@ -33,7 +33,13 @@ const emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()
   color:       var(--wp-color-text, var(--wp-color-navy, #1B2B56));
   cursor:      pointer;
 }
-.wp-checkbox input { accent-color: var(--wp-color-sky, #00AAEF); cursor: pointer; }
+/* accent-color only paints the checked state — the empty box is drawn by the browser
+   and follows the scheme, so on a dark surface a light scheme leaves a white square. */
+.wp-checkbox input {
+  accent-color: var(--wp-color-sky, #00AAEF);
+  color-scheme: var(--wp-scheme, light);
+  cursor:       pointer;
+}
 .wp-checkbox--disabled { opacity: 0.45; cursor: not-allowed; }
 .wp-checkbox--disabled input { cursor: not-allowed; }
 </style>
