@@ -46,6 +46,8 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
   width:         100%;
   resize:        vertical;
   transition:    border-color var(--wp-transition-base, 0.2s ease), box-shadow var(--wp-transition-base, 0.2s ease);
+  /* Scrollbar and resize grip are browser-drawn — same reason as WpInput/WpSelect. */
+  color-scheme:  var(--wp-scheme, light);
 }
 .wp-textarea::placeholder { color: var(--wp-color-text-sub, var(--wp-color-muted, #8C95AA)); }
 .wp-textarea:focus {

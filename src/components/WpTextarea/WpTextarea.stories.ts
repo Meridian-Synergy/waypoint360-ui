@@ -17,4 +17,5 @@ export const Disabled: Story = { args: { label: 'Notes', modelValue: 'Lecture se
 export const Dark: Story = {
   args: { label: 'Autres informations utiles', placeholder: 'Nombre de vols, durée moyenne…' },
   parameters: { backgrounds: { default: 'dark' } },
+  decorators: [() => ({ template: '<div style="--wp-scheme: dark; --wp-color-input-bg: rgba(255,255,255,0.04); --wp-color-input-text: #fff; --wp-color-text-sub: #f2f2f7; --wp-color-border: rgba(255,255,255,0.08);"><story /></div>' })],
 }

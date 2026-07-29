@@ -52,6 +52,10 @@ const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
   width:         100%;
   cursor:        pointer;
   transition:    border-color var(--wp-transition-base, 0.2s ease), box-shadow var(--wp-transition-base, 0.2s ease);
+  /* The dropdown arrow and the option popup are drawn by the browser (no appearance:
+     none here), so they follow the scheme rather than our tokens: on a dark surface a
+     light scheme leaves a dark-on-dark arrow and a white popup. */
+  color-scheme:  var(--wp-scheme, light);
 }
 .wp-select:focus {
   border-color: var(--wp-color-sky, #00AAEF);
