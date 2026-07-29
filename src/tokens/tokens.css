@@ -78,6 +78,12 @@
   --wp-transition-fast: 0.1s ease;
   --wp-transition-base: 0.2s ease;
 
+  /* === Color scheme ===
+   * Consumers override this per theme. Form controls read it so the browser's own
+   * chrome — autofill background, date/time pickers, scrollbars — follows the theme
+   * instead of defaulting to light. The vitrine is light, hence this default. */
+  --wp-scheme: light;
+
   /* === Accessibility ===
    * User-facing text-size control: WpTextSizeToggle writes --wp-font-scale on
    * <html> at runtime; base.css multiplies the root font-size by it, so anything

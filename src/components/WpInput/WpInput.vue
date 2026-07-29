@@ -128,6 +128,10 @@ onBeforeUnmount(() => formEl?.removeEventListener('submit', remask))
   outline:       none;
   width:         100%;
   transition:    border-color var(--wp-transition-base, 0.2s ease), box-shadow var(--wp-transition-base, 0.2s ease);
+  /* Chrome repaints an autofilled field with a background of its own, and picks the
+     light variant unless the element resolves to a dark scheme. On a dark surface that
+     pale fill swallowed the reveal icon whole — the field looked empty of its toggle. */
+  color-scheme:  var(--wp-scheme, light);
 }
 /* Room for the reveal button so it never overlaps the text. */
 .wp-input--revealable { padding-right: 44px; }

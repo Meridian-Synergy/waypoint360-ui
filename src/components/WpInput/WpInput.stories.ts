@@ -24,3 +24,11 @@ export const Dark: Story = {
   args: { label: 'Nom de la mission', placeholder: 'Ex: Inspection A47' },
   parameters: { backgrounds: { default: 'dark' } },
 }
+
+// A dark consumer must set --wp-scheme, otherwise the browser draws its autofill
+// background and native pickers light — on this surface that hides the reveal icon.
+export const PasswordOnDark: Story = {
+  args: { label: 'Mot de passe', type: 'password', modelValue: 'S3cr3t!' },
+  parameters: { backgrounds: { default: 'dark' } },
+  decorators: [() => ({ template: '<div style="--wp-scheme: dark; --wp-color-input-bg: rgba(255,255,255,0.04); --wp-color-input-text: #fff; --wp-color-text-sub: #f2f2f7; --wp-color-border: rgba(255,255,255,0.08);"><story /></div>' })],
+}
