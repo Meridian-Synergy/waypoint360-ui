@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.13.0...v0.13.1) (2026-07-29)
+
+
+### Bug Fixes
+
+* faire suivre le thème au color-scheme de WpSelect et WpTextarea ([#59](https://github.com/Meridian-Synergy/waypoint360-ui/issues/59)) ([dc2f0b2](https://github.com/Meridian-Synergy/waypoint360-ui/commit/dc2f0b2ef360508548f53dd357d935f756347301))
+* faire suivre le thème au color-scheme des champs (œil de mot de passe invisible) ([#57](https://github.com/Meridian-Synergy/waypoint360-ui/issues/57)) ([1163062](https://github.com/Meridian-Synergy/waypoint360-ui/commit/116306256be4d6ed2d1e6fd4b09f31573e522523))
+
 ## [0.13.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.12.0...v0.13.0) (2026-07-18)
 
 
