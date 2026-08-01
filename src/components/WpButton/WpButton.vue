@@ -36,7 +36,14 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
 .wp-btn {
   font-family:    var(--wp-font-body, 'Barlow', sans-serif);
   font-weight:    600;
-  border:         none;
+  /* Bordure TOUJOURS présente, transparente par défaut : les variantes ne
+     changent que sa couleur.
+     Sans ça, `primary` n'avait aucune bordure, `outline` 1px et `secondary` 2px
+     pour un padding identique — soit trois hauteurs (31 / 33 / 35 px). Sur une
+     rangée, l'étirement du flex le masque à l'échelle 1 ; à une échelle d'écran
+     fractionnaire (Windows à 125 %), ces bordures s'arrondissent différemment et
+     les boutons cessent d'être alignés. Mesuré le 2026-08-01. */
+  border:         2px solid transparent;
   cursor:         pointer;
   border-radius:  var(--wp-radius-md, 8px);
   display:        inline-flex;
@@ -66,7 +73,11 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
 .wp-btn--primary   { background: var(--wp-color-text, var(--wp-color-navy, #1B2B56)); color: var(--wp-color-bg, var(--wp-color-white, #FFFFFF)); }
 /* Genuinely dark fixed surfaces (navy hero) via the `dark` prop — force a light fill. */
 .wp-btn--primary.wp-btn--dark { background: var(--wp-color-white, #FFFFFF); color: var(--wp-color-navy, #1B2B56); }
-.wp-btn--secondary { background: transparent;                     color: var(--wp-color-navy, #1B2B56);  border: 2px solid var(--wp-color-navy, #1B2B56); }
+/* Theme-adaptive comme `outline` : le navy en dur rendait ce bouton INVISIBLE
+   sur une surface sombre, où la surface EST le navy — texte navy et bordure navy
+   sur fond navy. Constaté au rendu le 2026-08-01 dans Sync : le CTA « Publier
+   dans Waypoint360 » n'existait tout simplement pas en thème sombre. */
+.wp-btn--secondary { background: transparent;                     color: var(--wp-color-text, var(--wp-color-navy, #1B2B56)); border-color: currentColor; }
 .wp-btn--cta       { background: var(--wp-color-gold, #C9A84C);   color: var(--wp-color-navy, #1B2B56); }
 .wp-btn--critical  { background: var(--wp-color-orange, #F05A28); color: var(--wp-color-white, #FFFFFF); }
 
@@ -78,7 +89,7 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
      light-only vitrine). Use the `dark` modifier only for genuinely dark
      surfaces (navy heroes), not for theme switching. */
   color:        var(--wp-color-text, var(--wp-color-navy, #1B2B56));
-  border:       1px solid var(--wp-color-border, #D5D9E4);
+  border-color: var(--wp-color-border, #D5D9E4);
   transition:   border-color var(--wp-transition-fast, 0.1s ease),
                 background var(--wp-transition-fast, 0.1s ease),
                 color var(--wp-transition-fast, 0.1s ease);
