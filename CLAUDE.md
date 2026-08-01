@@ -134,6 +134,23 @@ Les tokens sont définis dans `src/tokens/tokens.css` et importés globalement v
 
 Préfixe des tokens : `--wp-*`. Valeurs actuelles = iso-charte Meridian (voir note "État actuel").
 
+### Polices — le DS les FOURNIT, il ne fait pas que les déclarer
+
+`tokens.css` nomme `Barlow`, `Barlow Condensed` et `Space Mono` ; les `.woff2` vivent dans
+`src/fonts/` et leurs `@font-face` dans `src/tokens/fonts.css`. **Tout consommateur doit
+l'importer une fois, à l'entrée de son app :**
+
+```ts
+import 'waypoint360-ui/src/tokens/fonts.css'
+```
+
+**Pourquoi c'est une règle et pas un détail** : déclarer une famille sans la fournir est un piège
+silencieux — l'app croit hériter de la typo de marque et hérite du fallback système. Il a mordu
+**trois fois** : `waypoint360-web` (auto-hébergement dès l'origine), `waypoint360-app` (corrigé le
+2026-06-16) et `waypoint360-sync-desktop` (2026-08-01, où il se lisait « on dirait une vieille
+application Windows » — c'était littéralement la police de Windows). Ajouter un poids = ajouter le
+`.woff2` dans `src/fonts/` **et** son `@font-face` ici, une seule fois pour tous les projets.
+
 ---
 
 ## Conventions de code
