@@ -252,7 +252,7 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--wp-color-text-sub);
+  color: var(--wp-color-text-sub, var(--wp-color-silver, #7A7D8A));
   margin-bottom: 12px;
 }
 
@@ -272,7 +272,7 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
 
 .wp-certs__divider {
   margin: 16px 0;
-  border-top: 1px solid var(--wp-color-border);
+  border-top: 1px solid var(--wp-color-border, #D5D9E4);
   opacity: 0.4;
 }
 
@@ -291,26 +291,26 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  border: 1.5px solid var(--wp-color-border);
+  border: 1.5px solid var(--wp-color-border, #D5D9E4);
   border-radius: 4px;
-  background: var(--wp-color-input-bg);
+  background: var(--wp-color-input-bg, var(--wp-color-white, #FFFFFF));
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background var(--wp-transition), border-color var(--wp-transition);
+  transition: background var(--wp-transition, 0.2s ease), border-color var(--wp-transition, 0.2s ease);
 }
 .wp-certs__check--on {
-  background: var(--wp-color-sky);
-  border-color: var(--wp-color-sky);
+  background: var(--wp-color-sky, #00AAEF);
+  border-color: var(--wp-color-sky, #00AAEF);
   color: #fff;
 }
 .wp-certs__item:hover .wp-certs__check:not(.wp-certs__check--on) {
-  border-color: var(--wp-color-sky);
+  border-color: var(--wp-color-sky, #00AAEF);
 }
 
 .wp-certs__label {
   font-size: 0.8125rem;
-  color: var(--wp-color-text);
+  color: var(--wp-color-text, var(--wp-color-navy, #1B2B56));
   line-height: 1.4;
 }
 
@@ -322,26 +322,26 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
 }
 .wp-certs__meta-label {
   font-size: 0.75rem;
-  color: var(--wp-color-text-sub);
+  color: var(--wp-color-text-sub, var(--wp-color-silver, #7A7D8A));
   white-space: nowrap;
 }
 .wp-certs__date-input,
 .wp-certs__select {
   font-size: 0.8125rem;
   padding: 5px 8px;
-  border: 1px solid var(--wp-color-border);
-  border-radius: var(--wp-radius);
-  background: var(--wp-color-input-bg);
-  color: var(--wp-color-input-text, var(--wp-color-text));
+  border: 1px solid var(--wp-color-border, #D5D9E4);
+  border-radius: var(--wp-radius, 8px);
+  background: var(--wp-color-input-bg, var(--wp-color-white, #FFFFFF));
+  color: var(--wp-color-input-text, var(--wp-color-text, var(--wp-color-navy, #1B2B56)));
 }
 .wp-certs__expiry {
   font-size: 0.75rem;
-  color: var(--wp-color-text-sub);
+  color: var(--wp-color-text-sub, var(--wp-color-silver, #7A7D8A));
   white-space: nowrap;
 }
 .wp-certs__validity {
   font-size: 0.6875rem;
-  color: var(--wp-color-text-sub);
+  color: var(--wp-color-text-sub, var(--wp-color-silver, #7A7D8A));
   white-space: nowrap;
   opacity: 0.8;
 }
@@ -358,7 +358,7 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
 .wp-certs__hint {
   margin-top: 10px;
   font-size: 0.6875rem;
-  color: var(--wp-color-text-sub);
+  color: var(--wp-color-text-sub, var(--wp-color-silver, #7A7D8A));
   opacity: 0.7;
 }
 </style>

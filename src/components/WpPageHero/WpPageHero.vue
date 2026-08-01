@@ -60,7 +60,7 @@ withDefaults(defineProps<{
 .wp-page-hero__badge { margin-bottom: 0; }
 
 .wp-page-hero__title {
-  font-family: var(--wp-font-display);
+  font-family: var(--wp-font-display, 'Barlow', sans-serif);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.15;

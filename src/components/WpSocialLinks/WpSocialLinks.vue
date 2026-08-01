@@ -93,14 +93,14 @@ withDefaults(defineProps<{
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--wp-radius-md);
+  border-radius: var(--wp-radius-md, 8px);
   border: 1px solid;
   text-decoration: none;
   flex-shrink: 0;
   transition:
-    color var(--wp-transition-fast),
-    border-color var(--wp-transition-fast),
-    background-color var(--wp-transition-fast);
+    color var(--wp-transition-fast, 0.1s ease),
+    border-color var(--wp-transition-fast, 0.1s ease),
+    background-color var(--wp-transition-fast, 0.1s ease);
 }
 
 .wp-social-link svg {
@@ -119,19 +119,19 @@ withDefaults(defineProps<{
   color: rgba(255, 255, 255, 0.5);
 }
 .wp-social-links--dark .wp-social-link:hover {
-  color: var(--wp-color-white);
+  color: var(--wp-color-white, #FFFFFF);
   border-color: rgba(255, 255, 255, 0.35);
   background-color: rgba(255, 255, 255, 0.06);
 }
 
 /* Light variant — for use on white/light backgrounds */
 .wp-social-links--light .wp-social-link {
-  border-color: var(--wp-color-border);
-  color: var(--wp-color-muted);
+  border-color: var(--wp-color-border, #D5D9E4);
+  color: var(--wp-color-muted, #8C95AA);
 }
 .wp-social-links--light .wp-social-link:hover {
-  color: var(--wp-color-navy);
-  border-color: var(--wp-color-navy);
-  background-color: var(--wp-color-bg);
+  color: var(--wp-color-navy, #1B2B56);
+  border-color: var(--wp-color-navy, #1B2B56);
+  background-color: var(--wp-color-bg, #ECEEF3);
 }
 </style>

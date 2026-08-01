@@ -38,22 +38,22 @@ defineProps<{
 
 .wp-bc-link {
   font-size: 0.8125rem;
-  color: var(--wp-color-muted);
+  color: var(--wp-color-muted, #8C95AA);
   text-decoration: none;
   white-space: nowrap;
-  transition: color var(--wp-transition-fast);
+  transition: color var(--wp-transition-fast, 0.1s ease);
 }
-.wp-bc-link:hover { color: var(--wp-color-navy); }
+.wp-bc-link:hover { color: var(--wp-color-navy, #1B2B56); }
 
 .wp-bc-sep {
-  color: var(--wp-color-border);
+  color: var(--wp-color-border, #D5D9E4);
   font-size: 0.875rem;
   line-height: 1;
 }
 
 .wp-bc-current {
   font-size: 0.8125rem;
-  color: var(--wp-color-navy);
+  color: var(--wp-color-navy, #1B2B56);
   font-weight: 500;
   white-space: nowrap;
 }

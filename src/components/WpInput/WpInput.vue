@@ -103,7 +103,7 @@ onBeforeUnmount(() => formEl?.removeEventListener('submit', remask))
 .wp-field { display: flex; flex-direction: column; gap: 5px; }
 
 .wp-field__label {
-  font-family:  var(--wp-font-body);
+  font-family:  var(--wp-font-body, 'Barlow', sans-serif);
   font-size:    0.75rem;
   font-weight:  600;
   color:        var(--wp-color-text, var(--wp-color-navy, #1B2B56));

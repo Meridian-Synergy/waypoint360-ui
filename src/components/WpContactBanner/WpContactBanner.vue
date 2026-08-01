@@ -48,7 +48,7 @@ defineProps<{
 
 <style scoped>
 .wp-contact-banner {
-  background: var(--wp-color-navy);
+  background: var(--wp-color-navy, #1B2B56);
   padding: 64px 0;
 }
 
@@ -69,10 +69,10 @@ defineProps<{
 }
 
 .wp-contact-banner__title {
-  font-family: var(--wp-font-display);
+  font-family: var(--wp-font-display, 'Barlow', sans-serif);
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 800;
-  color: var(--wp-color-white);
+  color: var(--wp-color-white, #FFFFFF);
   letter-spacing: -0.02em;
   margin: 0 0 10px;
 }
@@ -95,12 +95,12 @@ defineProps<{
   align-items: center;
   gap: 8px;
   padding: 12px 20px;
-  border-radius: var(--wp-radius-md);
+  border-radius: var(--wp-radius-md, 8px);
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
-  transition: opacity var(--wp-transition-fast), transform var(--wp-transition-fast);
+  transition: opacity var(--wp-transition-fast, 0.1s ease), transform var(--wp-transition-fast, 0.1s ease);
 }
 .wp-contact-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
@@ -111,7 +111,7 @@ defineProps<{
 
 .wp-contact-btn--email {
   background: rgba(255, 255, 255, 0.1);
-  color: var(--wp-color-white);
+  color: var(--wp-color-white, #FFFFFF);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .wp-contact-btn--email:hover { background: rgba(255, 255, 255, 0.16); }
