@@ -46,26 +46,26 @@ defineProps<{
   flex-direction: column;
   gap: 12px;
   padding: 28px;
-  border: 1px solid var(--wp-color-border);
-  border-radius: var(--wp-radius-lg);
+  border: 1px solid var(--wp-color-border, #D5D9E4);
+  border-radius: var(--wp-radius-lg, 16px);
   text-decoration: none;
   transition:
-    border-color var(--wp-transition-fast),
-    box-shadow var(--wp-transition-fast),
-    transform var(--wp-transition-fast);
+    border-color var(--wp-transition-fast, 0.1s ease),
+    box-shadow var(--wp-transition-fast, 0.1s ease),
+    transform var(--wp-transition-fast, 0.1s ease);
 }
 .wp-contact-channel:hover {
   transform: translateY(-2px);
-  box-shadow: var(--wp-shadow-md);
+  box-shadow: var(--wp-shadow-md, 0 4px 24px rgba(27, 43, 86, 0.10));
 }
 
 .wp-contact-channel--whatsapp:hover { border-color: #25D366; }
-.wp-contact-channel--email:hover    { border-color: var(--wp-color-sky); }
+.wp-contact-channel--email:hover    { border-color: var(--wp-color-sky, #00AAEF); }
 
 .wp-contact-channel__icon {
   width: 48px;
   height: 48px;
-  border-radius: var(--wp-radius-md);
+  border-radius: var(--wp-radius-md, 8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,7 +76,7 @@ defineProps<{
 }
 .wp-contact-channel--email .wp-contact-channel__icon {
   background: rgba(0, 170, 239, 0.1);
-  color: var(--wp-color-sky);
+  color: var(--wp-color-sky, #00AAEF);
 }
 
 .wp-contact-channel__body {
@@ -87,23 +87,23 @@ defineProps<{
 }
 
 .wp-contact-channel__label {
-  font-family: var(--wp-font-condensed);
+  font-family: var(--wp-font-condensed, 'Barlow Condensed', sans-serif);
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--wp-color-muted);
+  color: var(--wp-color-muted, #8C95AA);
 }
 
 .wp-contact-channel__value {
   font-size: 1.0625rem;
   font-weight: 700;
-  color: var(--wp-color-navy);
+  color: var(--wp-color-navy, #1B2B56);
 }
 
 .wp-contact-channel__desc {
   font-size: 0.875rem;
-  color: var(--wp-color-muted);
+  color: var(--wp-color-muted, #8C95AA);
   line-height: 1.5;
 }
 
@@ -112,5 +112,5 @@ defineProps<{
   font-weight: 600;
 }
 .wp-contact-channel--whatsapp .wp-contact-channel__cta { color: #25D366; }
-.wp-contact-channel--email    .wp-contact-channel__cta { color: var(--wp-color-sky); }
+.wp-contact-channel--email    .wp-contact-channel__cta { color: var(--wp-color-sky, #00AAEF); }
 </style>

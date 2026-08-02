@@ -25,7 +25,7 @@ defineProps<{
 
 <style scoped>
 .wp-cta-banner {
-  background: var(--wp-color-navy);
+  background: var(--wp-color-navy, #1B2B56);
   padding: 64px 0;
 }
 
@@ -46,17 +46,17 @@ defineProps<{
 }
 
 .wp-cta-banner__title {
-  font-family: var(--wp-font-display);
+  font-family: var(--wp-font-display, 'Barlow', sans-serif);
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 800;
-  color: var(--wp-color-white);
+  color: var(--wp-color-white, #FFFFFF);
   letter-spacing: -0.02em;
   margin: 0 0 10px;
 }
 
 .wp-cta-banner__desc {
   font-size: 1rem;
-  color: var(--wp-color-muted);
+  color: var(--wp-color-muted, #8C95AA);
   margin: 0;
   opacity: 0.8;
 }

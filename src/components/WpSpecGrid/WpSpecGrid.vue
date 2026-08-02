@@ -36,7 +36,7 @@ withDefaults(defineProps<{
 
 <style scoped>
 .wp-spec-grid {
-  background: var(--wp-color-navy);
+  background: var(--wp-color-navy, #1B2B56);
   padding: 40px 0;
 }
 
@@ -47,7 +47,7 @@ withDefaults(defineProps<{
 }
 
 .wp-spec-grid__label {
-  font-family: var(--wp-font-condensed);
+  font-family: var(--wp-font-condensed, 'Barlow Condensed', sans-serif);
   font-size: 0.625rem;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -69,7 +69,7 @@ withDefaults(defineProps<{
 .wp-spec-grid__card {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--wp-radius-md);
+  border-radius: var(--wp-radius-md, 8px);
   padding: 18px 16px;
   display: flex;
   flex-direction: column;
@@ -79,14 +79,14 @@ withDefaults(defineProps<{
 .wp-spec-grid__icon {
   width: 20px;
   height: 20px;
-  color: var(--wp-color-sky);
+  color: var(--wp-color-sky, #00AAEF);
   flex-shrink: 0;
   stroke: currentColor;
   stroke-width: 1.75;
 }
 
 .wp-spec-grid__key {
-  font-family: var(--wp-font-condensed);
+  font-family: var(--wp-font-condensed, 'Barlow Condensed', sans-serif);
   font-size: 0.625rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -97,7 +97,7 @@ withDefaults(defineProps<{
 .wp-spec-grid__val {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--wp-color-white);
+  color: var(--wp-color-white, #FFFFFF);
   line-height: 1.45;
 }
 </style>

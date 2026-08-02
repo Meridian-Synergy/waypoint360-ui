@@ -30,13 +30,13 @@ const STATUS_VARIANTS = ['active', 'inactive', 'pending', 'alert', 'warning']
   display:         inline-flex;
   align-items:     center;
   gap:             5px;
-  font-family:     var(--wp-font-condensed);
+  font-family:     var(--wp-font-condensed, 'Barlow Condensed', sans-serif);
   font-weight:     600;
   font-size:       0.6875rem;
   letter-spacing:  0.06em;
   text-transform:  uppercase;
   padding:         3px 10px;
-  border-radius:   var(--wp-radius-sm);
+  border-radius:   var(--wp-radius-sm, 4px);
   border:          1px solid transparent;
   white-space:     nowrap;
 }
@@ -58,7 +58,7 @@ const STATUS_VARIANTS = ['active', 'inactive', 'pending', 'alert', 'warning']
 .wp-badge--warning  { background: #fef9c3; color: #a16207; border-color: #fde68a; }
 
 /* Solid variants */
-.wp-badge--navy   { background: var(--wp-color-navy);   color: var(--wp-color-white); }
-.wp-badge--sky    { background: var(--wp-color-sky);    color: var(--wp-color-white); }
-.wp-badge--orange { background: var(--wp-color-orange); color: var(--wp-color-white); }
+.wp-badge--navy   { background: var(--wp-color-navy, #1B2B56);   color: var(--wp-color-white, #FFFFFF); }
+.wp-badge--sky    { background: var(--wp-color-sky, #00AAEF);    color: var(--wp-color-white, #FFFFFF); }
+.wp-badge--orange { background: var(--wp-color-orange, #F05A28); color: var(--wp-color-white, #FFFFFF); }
 </style>

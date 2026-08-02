@@ -4,7 +4,7 @@
   "description": "Waypoint360 design system — shared UI library (Vue 3 + Storybook)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run --config vitest.guards.config.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint .",

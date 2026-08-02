@@ -35,7 +35,7 @@ withDefaults(defineProps<{
   border-radius: var(--wp-radius-md, 8px);
   font-size:     0.8125rem;
   line-height:   1.5;
-  color:         var(--wp-color-silver);
+  color:         var(--wp-color-silver, #7A7D8A);
 }
 
 .wp-notice__icon {
@@ -50,19 +50,19 @@ withDefaults(defineProps<{
   border-color:  rgba(0, 170, 239, 0.2);
 }
 .wp-notice--info .wp-notice__icon,
-.wp-notice--beta .wp-notice__icon { color: var(--wp-color-sky); }
+.wp-notice--beta .wp-notice__icon { color: var(--wp-color-sky, #00AAEF); }
 
 /* warning — gold/amber accent */
 .wp-notice--warning {
   background:    rgba(201, 168, 76, 0.08);
   border-color:  rgba(201, 168, 76, 0.28);
 }
-.wp-notice--warning .wp-notice__icon { color: var(--wp-color-gold); }
+.wp-notice--warning .wp-notice__icon { color: var(--wp-color-gold, #C9A84C); }
 
 /* danger — orange accent */
 .wp-notice--danger {
   background:    rgba(240, 90, 40, 0.07);
   border-color:  rgba(240, 90, 40, 0.25);
 }
-.wp-notice--danger .wp-notice__icon { color: var(--wp-color-orange); }
+.wp-notice--danger .wp-notice__icon { color: var(--wp-color-orange, #F05A28); }
 </style>

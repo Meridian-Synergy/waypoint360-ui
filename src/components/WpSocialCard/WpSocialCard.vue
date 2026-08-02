@@ -63,34 +63,34 @@ defineProps<{
   align-items: center;
   gap: 14px;
   padding: 20px;
-  background: var(--wp-color-white);
-  border: 1px solid var(--wp-color-border);
-  border-radius: var(--wp-radius-lg);
+  background: var(--wp-color-white, #FFFFFF);
+  border: 1px solid var(--wp-color-border, #D5D9E4);
+  border-radius: var(--wp-radius-lg, 16px);
   text-decoration: none;
   transition:
-    border-color var(--wp-transition-fast),
-    transform var(--wp-transition-fast);
+    border-color var(--wp-transition-fast, 0.1s ease),
+    transform var(--wp-transition-fast, 0.1s ease);
 }
 .wp-social-card:hover {
-  border-color: var(--wp-color-sky);
+  border-color: var(--wp-color-sky, #00AAEF);
   transform: translateY(-2px);
 }
 
 .wp-social-card__icon {
   width: 40px;
   height: 40px;
-  border-radius: var(--wp-radius-md);
+  border-radius: var(--wp-radius-md, 8px);
   background: rgba(0, 170, 239, 0.08);
-  color: var(--wp-color-navy);
+  color: var(--wp-color-navy, #1B2B56);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background var(--wp-transition-fast), color var(--wp-transition-fast);
+  transition: background var(--wp-transition-fast, 0.1s ease), color var(--wp-transition-fast, 0.1s ease);
 }
 .wp-social-card:hover .wp-social-card__icon {
   background: rgba(0, 170, 239, 0.14);
-  color: var(--wp-color-sky);
+  color: var(--wp-color-sky, #00AAEF);
 }
 
 .wp-social-card__info {
@@ -102,11 +102,11 @@ defineProps<{
 .wp-social-card__label {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--wp-color-navy);
+  color: var(--wp-color-navy, #1B2B56);
 }
 
 .wp-social-card__handle {
   font-size: 0.75rem;
-  color: var(--wp-color-muted);
+  color: var(--wp-color-muted, #8C95AA);
 }
 </style>
