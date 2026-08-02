@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.14.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.13.2...v0.14.0) (2026-08-02)
+
+
+### Features
+
+* **tokens:** le design system fournit enfin ses polices ([#62](https://github.com/Meridian-Synergy/waypoint360-ui/issues/62)) ([b09ff97](https://github.com/Meridian-Synergy/waypoint360-ui/commit/b09ff9745c56e1c019120e204dc747ec697869a0))
+
+
+### Bug Fixes
+
+* **button:** métriques identiques entre variantes, et secondary lisible en sombre ([#64](https://github.com/Meridian-Synergy/waypoint360-ui/issues/64)) ([53e3095](https://github.com/Meridian-Synergy/waypoint360-ui/commit/53e309554b29c3319d3b397076cbb19f80496029))
+
 ## [0.13.2](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.13.1...v0.13.2) (2026-07-29)
 
 
