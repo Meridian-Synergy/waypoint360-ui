@@ -27,23 +27,25 @@ const INTERACTIVE = /^(button|a|input|select|textarea|label|component|[A-Z])/
 const OVERLAY_EXCEPTION = /class="[^"]*(overlay)[^"]*"/
 
 /**
- * Dette CONNUE, pas tolérée : deux composants livrés avant cette garde portent le
- * défaut. Ils sont nommés ici pour rester visibles, avec un plafond qui ne peut
- * que descendre — même mécanique que le TOUR_BACKLOG de l'app.
- *
- * - `WpLocaleSwitcher` : les options sont des `<li role="option">` SANS gestion
- *   clavier ni tabindex. Le sélecteur de langue s'ouvre au clavier mais ne se
- *   choisit pas. Corriger demande le motif listbox complet (flèches, Entrée,
- *   Échap, focus rendu au déclencheur).
- * - `WpStatCard` : `<div @click>` avec `interactive` à VRAI par défaut. Le passer
- *   en `<button>` change le rendu par défaut du navigateur sur trois produits —
- *   à faire avec une relecture visuelle, pas au détour d'un autre lot.
+ * Un rôle ARIA interactif explicite est un chemin clavier LÉGITIME, à condition
+ * que son conteneur gère les touches — c'est le motif listbox : les options ne
+ * sont pas des boutons, le clavier est piloté par la liste qui porte le focus et
+ * `aria-activedescendant`. Cette garde lit des fichiers, elle ne peut pas vérifier
+ * cette condition ; elle fait confiance au rôle et laisse le composant en
+ * répondre.
  */
-const KNOWN_DEBT = [
-  'WpLocaleSwitcher/WpLocaleSwitcher.vue → <li>',
-  'WpStatCard/WpStatCard.vue → <div>',
-]
-const KNOWN_DEBT_MAX = 2
+const ARIA_INTERACTIVE_ROLE = /role="(option|menuitem|menuitemradio|menuitemcheckbox|tab|button|link|switch|treeitem)"/
+
+/**
+ * Dette CONNUE, pas tolérée. Vide depuis le 2026-08-04 : `WpLocaleSwitcher` a reçu
+ * le motif listbox complet, et `WpStatCard` a perdu son `@click` mort (la tuile
+ * n'a jamais été l'élément interactif — c'est le lien qui l'enveloppe).
+ *
+ * Le plafond à zéro fait le cliquet : rien ne peut s'y ajouter sans le lever, ce
+ * qui se voit en revue.
+ */
+const KNOWN_DEBT: string[] = []
+const KNOWN_DEBT_MAX = 0
 
 function vueFiles(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
@@ -65,6 +67,7 @@ describe('éléments cliquables', () => {
         const [name, attrs] = [m[1], m[2]]
         if (!/@click/.test(attrs)) continue
         if (INTERACTIVE.test(name)) continue
+        if (ARIA_INTERACTIVE_ROLE.test(attrs)) continue
         if (OVERLAY_EXCEPTION.test(attrs)) continue
         offenders.push(`${file.split('/').slice(-2).join('/')} → <${name}>`)
       }

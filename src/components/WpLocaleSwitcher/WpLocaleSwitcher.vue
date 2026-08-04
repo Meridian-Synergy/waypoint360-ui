@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, nextTick, onMounted, onUnmounted, useId } from 'vue'
 
 export interface LocaleOption {
   code: string
@@ -11,25 +11,110 @@ const props = withDefaults(defineProps<{
   locales: LocaleOption[]
   currentLocale: string
   theme?: 'dark' | 'light'
-}>(), { theme: 'dark' })
+  /** Nom de la liste pour les lecteurs d'écran. Anglais par défaut : le composant
+   *  ne connaît pas la locale de l'application qui l'affiche. */
+  listboxLabel?: string
+}>(), { theme: 'dark', listboxLabel: 'Select language' })
 
 const emit = defineEmits<{ select: [code: string] }>()
 
 const open = ref(false)
 const containerRef = ref<HTMLElement | null>(null)
+const triggerRef   = ref<HTMLElement | null>(null)
+const listboxRef   = ref<HTMLElement | null>(null)
+
+// L'option PARCOURUE au clavier, distincte de l'option SÉLECTIONNÉE : on traverse
+// la liste sans rien changer tant qu'on n'a pas validé.
+const activeIndex = ref(-1)
+
+const uid = useId()
+const listboxId = `${uid}-listbox`
+const optionId  = (index: number) => `${uid}-option-${index}`
 
 const current = computed(() => props.locales.find(l => l.code === props.currentLocale))
+const currentIndex = computed(() => props.locales.findIndex(l => l.code === props.currentLocale))
 
-function toggle() { open.value = !open.value }
+async function openList() {
+  open.value = true
+  // On entre sur la langue courante, pas en tête de liste : c'est le repère de
+  // l'utilisateur, et avec 29 langues repartir du haut lui coûte le trajet entier.
+  activeIndex.value = currentIndex.value >= 0 ? currentIndex.value : 0
+  await nextTick()
+  // Le focus passe DANS la liste : `aria-activedescendant` n'est annoncé que par
+  // l'élément qui a réellement le focus.
+  listboxRef.value?.focus()
+  scrollActiveIntoView()
+}
+
+function closeList(returnFocus = true) {
+  if (!open.value) return
+  open.value = false
+  activeIndex.value = -1
+  if (returnFocus) triggerRef.value?.focus()
+}
+
+function toggle() {
+  if (open.value) closeList()
+  else openList()
+}
 
 function select(code: string) {
-  open.value = false
+  closeList()
   emit('select', code)
+}
+
+function scrollActiveIntoView() {
+  if (activeIndex.value < 0) return
+  const el = listboxRef.value?.children[activeIndex.value] as HTMLElement | undefined
+  // La liste défile (29 langues dans 340 px) : sans ça l'option parcourue sortirait
+  // du cadre et le repère visuel disparaîtrait.
+  el?.scrollIntoView({ block: 'nearest' })
+}
+
+function moveActive(delta: number) {
+  const count = props.locales.length
+  if (!count) return
+  activeIndex.value = (activeIndex.value + delta + count) % count
+  scrollActiveIntoView()
+}
+
+function onTriggerKeydown(e: KeyboardEvent) {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault()
+    openList()
+  }
+}
+
+function onListboxKeydown(e: KeyboardEvent) {
+  switch (e.key) {
+    case 'ArrowDown': e.preventDefault(); moveActive(1); break
+    case 'ArrowUp':   e.preventDefault(); moveActive(-1); break
+    case 'Home':      e.preventDefault(); activeIndex.value = 0; scrollActiveIntoView(); break
+    case 'End':       e.preventDefault(); activeIndex.value = props.locales.length - 1; scrollActiveIntoView(); break
+    case 'Enter':
+    case ' ':
+      e.preventDefault()
+      if (activeIndex.value >= 0) select(props.locales[activeIndex.value].code)
+      break
+    case 'Escape':
+      e.preventDefault()
+      closeList()
+      break
+    case 'Tab':
+      // La liste disparaît en se fermant : laisser la tabulation suivre son cours
+      // abandonnerait le focus au `<body>`. On le rend au déclencheur, d'où la
+      // tabulation suivante repart normalement.
+      e.preventDefault()
+      closeList()
+      break
+  }
 }
 
 function onOutsideClick(e: MouseEvent) {
   if (containerRef.value && !containerRef.value.contains(e.target as Node)) {
-    open.value = false
+    // Sans retour de focus : l'utilisateur a cliqué ailleurs, le lui reprendre
+    // contrarierait son geste.
+    closeList(false)
   }
 }
 
@@ -40,12 +125,18 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
 <template>
   <div ref="containerRef" class="wp-ls" :class="`wp-ls--${theme}`">
     <button
+      ref="triggerRef"
+      type="button"
       class="wp-ls__trigger"
       :aria-expanded="open"
       aria-haspopup="listbox"
+      :aria-controls="open ? listboxId : undefined"
       @click.stop="toggle"
+      @keydown="onTriggerKeydown"
     >
-      <span class="fi" :class="`fi-${current?.flag}`" role="img" :aria-label="current?.name" />
+      <!-- Le drapeau est décoratif : le nom de la langue est juste à côté, et
+           l'annoncer deux fois n'apprend rien. -->
+      <span class="fi" :class="`fi-${current?.flag}`" aria-hidden="true" />
       <span class="wp-ls__name">{{ current?.name }}</span>
       <svg
         class="wp-ls__chevron"
@@ -56,17 +147,32 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
       </svg>
     </button>
 
-    <ul v-if="open" class="wp-ls__dropdown" role="listbox" :aria-label="'Select language'">
+    <ul
+      v-if="open"
+      :id="listboxId"
+      ref="listboxRef"
+      class="wp-ls__dropdown"
+      role="listbox"
+      tabindex="-1"
+      :aria-label="listboxLabel"
+      :aria-activedescendant="activeIndex >= 0 ? optionId(activeIndex) : undefined"
+      @keydown="onListboxKeydown"
+    >
       <li
-        v-for="locale in locales"
+        v-for="(locale, index) in locales"
+        :id="optionId(index)"
         :key="locale.code"
         role="option"
         :aria-selected="locale.code === currentLocale"
         class="wp-ls__option"
-        :class="{ 'wp-ls__option--active': locale.code === currentLocale }"
+        :class="{
+          'wp-ls__option--active':  locale.code === currentLocale,
+          'wp-ls__option--focused': index === activeIndex,
+        }"
         @click="select(locale.code)"
+        @mousemove="activeIndex = index"
       >
-        <span class="fi" :class="`fi-${locale.flag}`" role="img" :aria-label="locale.name" />
+        <span class="fi" :class="`fi-${locale.flag}`" aria-hidden="true" />
         <span class="wp-ls__option-name">{{ locale.name }}</span>
       </li>
     </ul>
@@ -94,6 +200,7 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
   border: 1px solid transparent;
   background: transparent;
   cursor: pointer;
+  font-family: inherit;
   font-size: 0.8125rem;
   font-weight: 600;
   white-space: nowrap;
@@ -123,6 +230,9 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
   z-index: 200;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
+/* La liste reçoit le focus sans être elle-même un contrôle : c'est l'option
+   parcourue qui porte le repère, un anneau sur le cadre ferait doublon. */
+.wp-ls__dropdown:focus { outline: none; }
 
 /* Option */
 .wp-ls__option {
@@ -146,6 +256,12 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
   background-size: cover;
 }
 
+/* Le repère clavier doit se distinguer du survol : sans lui, l'option parcourue
+   à la flèche et l'option sous la souris seraient indiscernables. */
+.wp-ls__option--focused {
+  box-shadow: inset 2px 0 0 var(--wp-color-sky, #00AAEF);
+}
+
 /* ── Dark theme (SaaS app) ───────────────────────────────────── */
 .wp-ls--dark .wp-ls__trigger {
   color: var(--wp-color-silver, #7A7D8A);
@@ -162,7 +278,8 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
 .wp-ls--dark .wp-ls__option {
   color: var(--wp-color-silver, #7A7D8A);
 }
-.wp-ls--dark .wp-ls__option:hover {
+.wp-ls--dark .wp-ls__option:hover,
+.wp-ls--dark .wp-ls__option--focused {
   background: rgba(255,255,255,.06);
   color: var(--wp-color-white, #fff);
 }
@@ -186,7 +303,8 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
 .wp-ls--light .wp-ls__option {
   color: #444;
 }
-.wp-ls--light .wp-ls__option:hover {
+.wp-ls--light .wp-ls__option:hover,
+.wp-ls--light .wp-ls__option--focused {
   background: #f3f4f6;
   color: var(--wp-color-navy, #1B2B56);
 }
