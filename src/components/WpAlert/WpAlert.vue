@@ -20,14 +20,18 @@ const icons: Record<string, string> = {
 
 <template>
   <div :class="['wp-alert', `wp-alert--${variant}`]">
-    <span class="wp-alert__icon">{{ icons[variant] }}</span>
+    <span class="wp-alert__icon" aria-hidden="true">{{ icons[variant] }}</span>
     <div class="wp-alert__content">
       <div v-if="title" class="wp-alert__title">{{ title }}</div>
       <div v-if="$slots.default" class="wp-alert__body">
         <slot></slot>
       </div>
     </div>
-    <span v-if="action" class="wp-alert__action" @click="emit('action')">{{ action }}</span>
+    <!-- Un `<span>` cliquable n'existe pas au clavier ni pour un lecteur d'écran :
+         l'action était invisible pour qui ne tient pas de souris. -->
+    <button v-if="action" type="button" class="wp-alert__action" @click="emit('action')">
+      {{ action }}
+    </button>
   </div>
 </template>
 
@@ -48,9 +52,20 @@ const icons: Record<string, string> = {
 .wp-alert__title   { font-weight: 600; font-size: 0.8125rem; margin-bottom: 2px; }
 .wp-alert__body    { font-size: 0.75rem; opacity: 0.85; }
 .wp-alert__action  {
-  font-weight: 600; font-size: 0.75rem; text-decoration: underline;
+  font-family: inherit; font-weight: 600; font-size: 0.75rem; text-decoration: underline;
   cursor: pointer; margin-left: auto; padding-left: var(--wp-space-sm, 8px);
   flex-shrink: 0; align-self: center; opacity: 0.85;
+  /* Le bouton hérite la couleur de la variante, comme le faisait le span. */
+  background: none; border: 0; color: inherit; padding-top: 0; padding-bottom: 0;
+}
+.wp-alert__action:hover { opacity: 1; }
+/* `currentColor` : chaque variante a son fond, un anneau figé serait illisible
+   sur l'une d'elles. */
+.wp-alert__action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: var(--wp-radius-sm, 4px);
+  opacity: 1;
 }
 
 .wp-alert--info    { background: #e6f6fd; border-color: #bae8fb; color: #0369a1; }
