@@ -8,6 +8,9 @@ withDefaults(defineProps<{
   link?: string
   tone?: WpStatTone
   loading?: boolean
+  /** Affordance VISUELLE seulement — curseur et relief au survol. La tuile n'est
+   *  jamais l'élément interactif : un consommateur qui veut la rendre cliquable
+   *  l'enveloppe dans un lien, comme le font tous les tableaux de bord. */
   interactive?: boolean
 }>(), {
   label: '',
@@ -19,6 +22,10 @@ withDefaults(defineProps<{
   interactive: true,
 })
 
+/** @deprecated Jamais écouté par aucun consommateur, et une tuile cliquable au
+ *  clavier doit être un `<a>` ou un `<button>` — ce que le consommateur pose
+ *  autour. Conservé pour ne casser aucune signature ; il ne se déclenche plus.
+ *  Un clic sur la tuile remonte de toute façon au lien qui l'enveloppe. */
 defineEmits<{ (e: 'click', ev: MouseEvent): void }>()
 </script>
 
@@ -29,7 +36,6 @@ defineEmits<{ (e: 'click', ev: MouseEvent): void }>()
       `wp-stat-card--${tone}`,
       { 'wp-stat-card--interactive': interactive },
     ]"
-    @click="$emit('click', $event)"
   >
     <span v-if="label" class="wp-stat-card__label">{{ label }}</span>
 
