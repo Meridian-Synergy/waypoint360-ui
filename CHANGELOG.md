@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.14.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.14.0...v0.14.1) (2026-08-04)
+
+
+### Bug Fixes
+
+* **a11y:** rendre le sélecteur de langue utilisable au clavier ([#67](https://github.com/Meridian-Synergy/waypoint360-ui/issues/67)) ([c9ca64a](https://github.com/Meridian-Synergy/waypoint360-ui/commit/c9ca64af78bf3b5af7f2497b7e92fd00086fd382))
+* **alert:** rendre l'action atteignable au clavier ([#65](https://github.com/Meridian-Synergy/waypoint360-ui/issues/65)) ([3372ad0](https://github.com/Meridian-Synergy/waypoint360-ui/commit/3372ad08a36afe1c5d997cb9383c7763029710d5))
+
 ## [0.14.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.13.2...v0.14.0) (2026-08-02)
 
 
