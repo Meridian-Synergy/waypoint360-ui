@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.14.1...v0.15.0) (2026-08-17)
+
+
+### Features
+
+* **textarea:** compteur de caractères gradué ([#68](https://github.com/Meridian-Synergy/waypoint360-ui/issues/68)) ([852d769](https://github.com/Meridian-Synergy/waypoint360-ui/commit/852d7693e0588e111d8fff7f32204c52917aeed4))
+
 ## [0.14.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.14.0...v0.14.1) (2026-08-04)
 
 
