@@ -14,6 +14,20 @@ export const Default:  Story = { args: { label: 'Autres informations utiles', pl
 export const WithError: Story = { args: { label: 'Notes', modelValue: '...', error: 'Champ requis.' } }
 export const Disabled: Story = { args: { label: 'Notes', modelValue: 'Lecture seule', disabled: true } }
 
+// Les trois paliers du compteur, côte à côte : c'est en les voyant ensemble
+// qu'on juge si l'alerte arrive assez tôt.
+export const AvecCompteur: Story = {
+  args: { label: 'Description', maxlength: 500, modelValue: 'Trois lignes de présentation.' },
+}
+export const CompteurProcheDeLaLimite: Story = {
+  args: { label: 'Description', maxlength: 100, modelValue: 'x'.repeat(85) },
+}
+export const CompteurALaLimite: Story = {
+  // ⚠️ Le texte accompagne la couleur : elle seule ne dit rien à un lecteur
+  // d'écran, ni à qui ne distingue pas le rouge de l'orange.
+  args: { label: 'Description', maxlength: 100, modelValue: 'x'.repeat(100), limitLabel: 'limite atteinte' },
+}
+
 export const Dark: Story = {
   args: { label: 'Autres informations utiles', placeholder: 'Nombre de vols, durée moyenne…' },
   parameters: { backgrounds: { default: 'dark' } },

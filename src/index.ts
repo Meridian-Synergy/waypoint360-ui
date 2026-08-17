@@ -67,3 +67,7 @@ export type { WpPatchShape, WpPatchTier, WpPatchIcon } from './components/WpPatc
 export { default as WpShareButton    } from './components/WpShareButton/WpShareButton.vue'
 export { default as WpShareSheet     } from './components/WpShareSheet/WpShareSheet.vue'
 export type { ShareNetwork }           from './components/WpShareSheet/WpShareSheet.vue'
+
+// Le seuil du compteur de caractères, exporté pour que l'app n'en garde pas sa
+// propre définition : deux quotas qui divergent, c'est un compteur qui ment.
+export { wpCharCountLevel, WP_CHAR_WARN_RATIO, type WpCharCountLevel } from './utils/char-count'
