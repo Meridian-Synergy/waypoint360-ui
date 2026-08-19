@@ -6,6 +6,7 @@ export { default as WpBadge          } from './components/WpBadge/WpBadge.vue'
 export { default as WpInput          } from './components/WpInput/WpInput.vue'
 export { default as WpField          } from './components/WpField/WpField.vue'
 export { default as WpTextarea       } from './components/WpTextarea/WpTextarea.vue'
+export { default as WpPhoneInput     } from './components/WpPhoneInput/WpPhoneInput.vue'
 export { default as WpSelect         } from './components/WpSelect/WpSelect.vue'
 export type { WpSelectOption }         from './components/WpSelect/WpSelect.vue'
 export { default as WpRadioGroup     } from './components/WpRadioGroup/WpRadioGroup.vue'
@@ -71,3 +72,4 @@ export type { ShareNetwork }           from './components/WpShareSheet/WpShareSh
 // Le seuil du compteur de caractères, exporté pour que l'app n'en garde pas sa
 // propre définition : deux quotas qui divergent, c'est un compteur qui ment.
 export { wpCharCountLevel, WP_CHAR_WARN_RATIO, type WpCharCountLevel } from './utils/char-count'
+export { toE164, formatPhone } from './utils/phone'
