@@ -105,3 +105,16 @@ export const WrapsAround: Story = {
     await expect(listbox).toHaveAttribute('aria-activedescendant', options[3].id)
   },
 }
+
+/**
+ * Drapeau seul. Sert quand la barre de navigation manque de place : le nom de la
+ * langue coûte une place que le drapeau n'occupe pas.
+ *
+ * ⚠️ Le nom reste dans le DOM, masqué visuellement. Le drapeau est décoratif
+ * (`aria-hidden`) : sans ce texte, le bouton n'aurait aucun nom accessible.
+ * À vérifier avec un lecteur d'écran, pas à l'œil — c'est précisément ce qui ne
+ * se voit pas.
+ */
+export const Compact: Story = {
+  args: { locales, currentLocale: 'fr', theme: 'light', compact: true },
+}
