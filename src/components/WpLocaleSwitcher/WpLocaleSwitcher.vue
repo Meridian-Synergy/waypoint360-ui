@@ -14,7 +14,18 @@ const props = withDefaults(defineProps<{
   /** Nom de la liste pour les lecteurs d'écran. Anglais par défaut : le composant
    *  ne connaît pas la locale de l'application qui l'affiche. */
   listboxLabel?: string
-}>(), { theme: 'dark', listboxLabel: 'Select language' })
+  /** Réduit le déclencheur au drapeau seul. Le nom de la langue reste dans la
+   *  LISTE, où le choix se fait réellement — un drapeau ne nomme pas une langue
+   *  (« gb » pour l'anglais, « es-ct » pour le catalan), il ne peut donc pas
+   *  porter seul le choix. Sur le déclencheur en revanche, il rappelle une
+   *  langue DÉJÀ choisie, ce que le drapeau suffit à faire.
+   *
+   *  ⚠️ Le nom n'est pas retiré du DOM, il est masqué visuellement : c'est le
+   *  seul texte du bouton, le drapeau étant décoratif. Le supprimer laisserait
+   *  un bouton sans nom accessible — un lecteur d'écran annoncerait « bouton »,
+   *  sans dire lequel ni dans quelle langue on se trouve. */
+  compact?: boolean
+}>(), { theme: 'dark', listboxLabel: 'Select language', compact: false })
 
 const emit = defineEmits<{ select: [code: string] }>()
 
@@ -137,7 +148,7 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
       <!-- Le drapeau est décoratif : le nom de la langue est juste à côté, et
            l'annoncer deux fois n'apprend rien. -->
       <span class="fi" :class="`fi-${current?.flag}`" aria-hidden="true" />
-      <span class="wp-ls__name">{{ current?.name }}</span>
+      <span class="wp-ls__name" :class="{ 'wp-ls__name--sr': compact }">{{ current?.name }}</span>
       <svg
         class="wp-ls__chevron"
         :class="{ 'wp-ls__chevron--open': open }"
@@ -311,5 +322,18 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
 .wp-ls--light .wp-ls__option--active {
   color: var(--wp-color-sky, #00AAEF);
   font-weight: 700;
+}
+
+/* Masqué à l'œil, PAS au lecteur d'écran. Le drapeau du déclencheur est
+   `aria-hidden` : sans ce texte, le bouton n'aurait plus de nom accessible du
+   tout. Même recette que `.wp-sr-only` dans WpInput. */
+.wp-ls__name--sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>
