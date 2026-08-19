@@ -73,3 +73,4 @@ export type { ShareNetwork }           from './components/WpShareSheet/WpShareSh
 // propre définition : deux quotas qui divergent, c'est un compteur qui ment.
 export { wpCharCountLevel, WP_CHAR_WARN_RATIO, type WpCharCountLevel } from './utils/char-count'
 export { toE164, formatPhone } from './utils/phone'
+export { pilotDisplayName, pilotInitials, type NamedPilot } from './utils/pilot-name'
