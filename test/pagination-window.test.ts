@@ -143,3 +143,21 @@ describe('WpDataTable — ce qu\'il expose, et ce qu\'il refuse', () => {
     expect(source).toContain('emptyLabel')
   })
 })
+
+describe('WpDataTable — état vide et colonne d\'actions', () => {
+  const source = readFileSync(
+    join(process.cwd(), 'src/components/WpDataTable/WpDataTable.vue'), 'utf8')
+
+  it('l\'état vide accepte plus qu\'une ligne', () => {
+    // « Aucun document » ne suffit pas quand il faut aussi dire OÙ on les
+    // fabrique. Un état vide muet renvoie chercher un bouton inexistant.
+    expect(source).toContain('<slot name="empty">{{ emptyLabel }}</slot>')
+  })
+
+  it('les boutons d\'actions ne se touchent pas', () => {
+    // Chaque page reposait sa propre règle d'écart : `.txt-r .btn + .btn`,
+    // `.actions-cell { gap: 8px }`… trois copies pour un besoin universel.
+    const css = source.slice(source.indexOf('<style'))
+    expect(css).toMatch(/td\.wp-data-table__actions \{[^}]*gap: 8px/s)
+  })
+})

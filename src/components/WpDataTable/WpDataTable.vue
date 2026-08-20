@@ -81,7 +81,12 @@ function classesCellule(c: WpColumn): Record<string, boolean> {
   <div :class="['wp-data-table-wrap', { 'wp-data-table-wrap--surface': surface }]">
     <WpLoadingState v-if="loading" :label="loadingLabel" />
 
-    <p v-else-if="!rows.length" class="wp-data-table__empty">{{ emptyLabel }}</p>
+    <div v-else-if="!rows.length" class="wp-data-table__empty">
+      <!-- Certains écrans ont plus à dire qu'une ligne : « aucun document » et,
+           en dessous, où on les fabrique. Un état vide muet renvoie chercher un
+           bouton qui n'existe pas. -->
+      <slot name="empty">{{ emptyLabel }}</slot>
+    </div>
 
     <!-- Le défilement est celui du TABLEAU, jamais celui de la page : sinon la
          colonne d'actions part hors de l'écran et toute la mise en page suit. -->
@@ -151,7 +156,17 @@ function classesCellule(c: WpColumn): Record<string, boolean> {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-.wp-data-table__actions {
+/* Une colonne d'actions porte presque toujours DEUX boutons. Sans écart, ils
+   se touchent — et chaque page reposait sa propre règle pour l'éviter. */
+.wp-data-table td.wp-data-table__actions {
+  text-align: right;
+  white-space: nowrap;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+.wp-data-table th.wp-data-table__actions {
   text-align: right;
   white-space: nowrap;
 }
