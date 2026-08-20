@@ -3,7 +3,17 @@ import type { Component } from 'vue'
 
 withDefaults(defineProps<{
   label:    string
-  variant?: 'primary' | 'secondary' | 'cta' | 'critical' | 'outline'
+  /**
+   * `accent` et `danger` existent pour ce que l'application utilise vraiment.
+   *
+   * ⚠️ Ils ne remplacent PAS `primary` et `critical` : ce sont d'autres
+   * intentions, pas d'autres teintes. `primary` inverse le fond selon le thème
+   * — c'est un correctif d'incident, pas un choix esthétique — tandis que
+   * l'application veut un bouton bleu constant. Repeindre `primary` en bleu
+   * défairait la correction et rendrait le bouton invisible là où la surface
+   * est déjà claire.
+   */
+  variant?: 'primary' | 'secondary' | 'cta' | 'critical' | 'accent' | 'danger' | 'ghost' | 'outline'
   size?:    'sm' | 'md' | 'lg'
   disabled?: boolean
   /** Dark-surface styling for fixed navy backgrounds — affects the `primary` and `outline` variants. */
@@ -80,6 +90,35 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
 .wp-btn--secondary { background: transparent;                     color: var(--wp-color-text, var(--wp-color-navy, #1B2B56)); border-color: currentColor; }
 .wp-btn--cta       { background: var(--wp-color-gold, #C9A84C);   color: var(--wp-color-navy, #1B2B56); }
 .wp-btn--critical  { background: var(--wp-color-orange, #F05A28); color: var(--wp-color-white, #FFFFFF); }
+
+/* ── Variantes reprises de l'application ──────────────────────────────────────
+   Elles existaient en classes locales (`.btn-primary`, `.btn-danger`,
+   `.btn-ghost`), écrites une seconde fois hors du design system. Elles sont
+   reprises ICI à l'identique pour qu'une migration ne change RIEN à l'écran :
+   une migration qui repeint 200 boutons n'est pas une migration, c'est une
+   refonte — et aucun test ne voit une régression visuelle.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Bleu constant, indépendant du thème : c'est une couleur de marque, elle ne
+   s'inverse pas. Lisible sur clair comme sur sombre, le libellé restant blanc. */
+.wp-btn--accent    { background: var(--wp-color-sky-btn, var(--wp-color-sky, #0077A8)); color: var(--wp-color-white, #FFFFFF); }
+
+/* Destructif DISCRET : contour, pas aplat. Le rouge plein de `critical` réclame
+   l'attention en permanence ; dans une liste où chaque ligne porte un
+   « Supprimer », il la réclamerait pour chaque ligne. */
+.wp-btn--danger {
+  background:   transparent;
+  color:        var(--wp-color-error, #f87171);
+  border-color: color-mix(in srgb, var(--wp-color-error, #f87171) 30%, transparent);
+}
+.wp-btn--danger:not(:disabled):hover { background: color-mix(in srgb, var(--wp-color-error, #f87171) 8%, transparent); }
+
+/* Neutre, en retrait : le bord suit le thème, le texte est le gris secondaire. */
+.wp-btn--ghost {
+  background:   transparent;
+  color:        var(--wp-color-text-sub, var(--wp-color-muted, #8C95AA));
+  border-color: var(--wp-color-border, rgba(255, 255, 255, 0.18));
+}
 
 /* Outline — ghost button with a sky accent on hover (mirrors WpShareButton) */
 .wp-btn--outline {
