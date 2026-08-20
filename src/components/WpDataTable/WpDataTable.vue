@@ -42,6 +42,15 @@ const props = withDefaults(defineProps<{
   /** Message quand il n'y a rien à montrer — jamais un tableau vide et muet. */
   emptyLabel?: string
   /**
+   * Classe posée sur chaque ligne — un état qui teinte la LIGNE entière, comme
+   * une fiche retirée de l'annuaire, ne s'exprime pas dans une cellule.
+   *
+   * ⚠️ Il n'y a volontairement PAS de `@click` de ligne. Une ligne cliquable
+   * n'est atteignable qu'à la souris : ni tabulation, ni Entrée, rien d'annoncé
+   * par un lecteur d'écran. Le lien va dans une cellule, où il est un vrai lien.
+   */
+  rowClass?: (row: T, index: number) => string | Record<string, boolean> | undefined
+  /**
    * Dessine la carte. À passer à `false` quand le tableau partage déjà une
    * surface avec d'autres éléments : une carte dans une carte se voit.
    */
@@ -86,7 +95,7 @@ function classesCellule(c: WpColumn): Record<string, boolean> {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, i) in rows" :key="cle(row, i)">
+          <tr v-for="(row, i) in rows" :key="cle(row, i)" :class="rowClass?.(row, i)">
             <td v-for="c in columns" :key="c.key" :class="classesCellule(c)">
               <slot :name="`cell-${c.key}`" :row="row" :column="c" :index="i">
                 {{ row[c.key] }}
