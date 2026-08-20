@@ -6,7 +6,7 @@ const meta: Meta<typeof WpButton> = {
   component: WpButton,
   tags: ['autodocs'],
   argTypes: {
-    variant: { control: 'select', options: ['primary', 'secondary', 'cta', 'critical', 'accent', 'danger', 'ghost', 'outline'] },
+    variant: { control: 'select', options: ['primary', 'secondary', 'cta', 'critical', 'accent', 'danger', 'ghost', 'soft', 'outline'] },
     size:    { control: 'select', options: ['sm', 'md', 'lg'] },
   },
 }
@@ -61,6 +61,7 @@ export const VariantesApplication: Story = {
         <WpButton label="Enregistrer" variant="accent" />
         <WpButton label="Supprimer"   variant="danger" />
         <WpButton label="Annuler"     variant="ghost" />
+        <WpButton label="Retour"      variant="soft" />
         <WpButton label="Enregistrer" variant="accent" size="sm" />
       </div>`,
   }),

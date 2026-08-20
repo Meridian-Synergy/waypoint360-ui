@@ -13,7 +13,7 @@ withDefaults(defineProps<{
    * défairait la correction et rendrait le bouton invisible là où la surface
    * est déjà claire.
    */
-  variant?: 'primary' | 'secondary' | 'cta' | 'critical' | 'accent' | 'danger' | 'ghost' | 'outline'
+  variant?: 'primary' | 'secondary' | 'cta' | 'critical' | 'accent' | 'danger' | 'ghost' | 'soft' | 'outline'
   size?:    'sm' | 'md' | 'lg'
   disabled?: boolean
   /** Dark-surface styling for fixed navy backgrounds — affects the `primary` and `outline` variants. */
@@ -112,6 +112,29 @@ const emit = defineEmits<{ click: [event: MouseEvent] }>()
   border-color: color-mix(in srgb, var(--wp-color-error, #f87171) 30%, transparent);
 }
 .wp-btn--danger:not(:disabled):hover { background: color-mix(in srgb, var(--wp-color-error, #f87171) 8%, transparent); }
+
+/* Secondaire à fond léger — le « btn-secondary » de l'application.
+ *
+ * ⚠️ La base porte les valeurs du thème CLAIR, et le thème sombre les remplace,
+ * alors que l'application faisait l'inverse. C'est délibéré : un composant de
+ * design system doit s'afficher correctement « nu », sans attribut de thème —
+ * dans Storybook, sur la vitrine, et pendant le rendu serveur avant que le
+ * sélecteur de thème ne soit posé. Avec les valeurs sombres en base, un fond
+ * blanc à 7 % sur du blanc donne un bouton invisible.
+ *
+ * En sombre, la teinte est un ÉCLAIRCISSEMENT au-dessus de la surface, pas la
+ * surface elle-même : `--wp-color-surface` y vaut le navy sur lequel le bouton
+ * est posé, et le bouton disparaîtrait dans son propre fond.
+ */
+.wp-btn--soft {
+  background:   var(--wp-color-surface, var(--wp-color-white, #FFFFFF));
+  color:        var(--wp-color-text, var(--wp-color-navy, #1B2B56));
+  border-color: var(--wp-color-border, #D8DEE9);
+}
+[data-theme="dark"] .wp-btn--soft {
+  background:   rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.18);
+}
 
 /* Neutre, en retrait : le bord suit le thème, le texte est le gris secondaire. */
 .wp-btn--ghost {
