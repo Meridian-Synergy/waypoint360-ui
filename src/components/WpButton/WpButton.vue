@@ -2,7 +2,11 @@
 import type { Component } from 'vue'
 
 withDefaults(defineProps<{
-  label:    string
+  /** Libellé texte. Facultatif : le contenu peut aussi venir du slot par défaut,
+   *  ce qui est nécessaire dès qu'un bouton porte une icône ou du balisage. Le
+   *  rendre obligatoire interdisait la forme avec slot que le composant sait
+   *  pourtant faire — `<slot>{{ label }}</slot>`. */
+  label?:   string
   /**
    * `accent` et `danger` existent pour ce que l'application utilise vraiment.
    *
@@ -21,6 +25,7 @@ withDefaults(defineProps<{
   /** Render as another tag/component (e.g. 'a' or NuxtLink) to use the button as a navigation link. */
   as?:      string | Component
 }>(), {
+  label:    '',
   variant:  'primary',
   size:     'md',
   disabled: false,
