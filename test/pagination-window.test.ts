@@ -117,3 +117,29 @@ describe('le composant applique bien cette fenêtre', () => {
     expect(css).toMatch(/@media \(max-width: 599px\)[\s\S]*\.wp-pagination__list \{ display: none; \}/)
   })
 })
+
+describe('WpDataTable — ce qu\'il expose, et ce qu\'il refuse', () => {
+  const source = readFileSync(
+    join(process.cwd(), 'src/components/WpDataTable/WpDataTable.vue'), 'utf8')
+
+  it('permet de teinter une LIGNE entière', () => {
+    // Une fiche retirée de l'annuaire s'estompe en entier ; ça ne s'exprime
+    // pas dans une cellule.
+    expect(source).toContain('rowClass?: (row: T, index: number)')
+    expect(source).toContain(':class="rowClass?.(row, i)"')
+  })
+
+  it('n\'expose AUCUN clic de ligne', () => {
+    // ⚠️ Un `<tr @click>` n'est atteignable qu'à la souris : ni tabulation, ni
+    // Entrée, rien d'annoncé. Un composant partagé multiplierait ce défaut par
+    // le nombre de ses usages. Le lien va dans une cellule, où c'est un lien.
+    const tbody = source.slice(source.indexOf('<tbody>'), source.indexOf('</tbody>'))
+    expect(tbody).not.toContain('@click')
+    expect(source).not.toContain("'row-click'")
+  })
+
+  it('dit ce qu\'il n\'a rien à montrer plutôt que de rendre un tableau muet', () => {
+    expect(source).toContain('v-else-if="!rows.length"')
+    expect(source).toContain('emptyLabel')
+  })
+})
