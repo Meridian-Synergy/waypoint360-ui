@@ -6,7 +6,7 @@ const meta: Meta<typeof WpButton> = {
   component: WpButton,
   tags: ['autodocs'],
   argTypes: {
-    variant: { control: 'select', options: ['primary', 'secondary', 'cta', 'critical', 'outline'] },
+    variant: { control: 'select', options: ['primary', 'secondary', 'cta', 'critical', 'accent', 'danger', 'ghost', 'outline'] },
     size:    { control: 'select', options: ['sm', 'md', 'lg'] },
   },
 }
@@ -42,5 +42,26 @@ export const AsLink: Story = {
     components: { WpButton },
     setup: () => ({ args }),
     template: '<WpButton v-bind="args" href="#" />',
+  }),
+}
+
+/**
+ * Les variantes reprises de l'application : `accent` (bleu de marque, constant),
+ * `danger` (destructif discret, contour) et `ghost` (neutre en retrait).
+ *
+ * ⚠️ À REGARDER DANS LES DEUX THÈMES. `danger` et `ghost` tirent leur couleur des
+ * jetons du consommateur : ce sont exactement les variantes qui disparaissent
+ * quand on ne les vérifie que sur fond clair.
+ */
+export const VariantesApplication: Story = {
+  render: () => ({
+    components: { WpButton },
+    template: `
+      <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center">
+        <WpButton label="Enregistrer" variant="accent" />
+        <WpButton label="Supprimer"   variant="danger" />
+        <WpButton label="Annuler"     variant="ghost" />
+        <WpButton label="Enregistrer" variant="accent" size="sm" />
+      </div>`,
   }),
 }

@@ -26,10 +26,24 @@
   --wp-color-muted-strong: #636B82;   /* Accessible muted on light bg — WCAG AA 5.1:1 on white */
   --wp-color-sky-dark:     #0074A8;   /* Accessible sky on light bg — WCAG AA 5.2:1 on white */
 
-  /* Status */
-  --wp-color-success:  #22c55e;
-  --wp-color-warning:  #f59e0b;
-  --wp-color-error:    #ef4444;
+  /* === Statut ===
+   *
+   * ⚠️ CES VALEURS SONT CELLES DU THÈME CLAIR, et elles servent de couleur de
+   * TEXTE — dans `.wp-field__error`, dans le compteur de caractères, dans les
+   * alertes. Le seuil applicable est donc 4,5:1, pas 3:1.
+   *
+   * Mesuré le 2026-08-20, les valeurs précédentes échouaient toutes sur blanc :
+   * success #22c55e à 2,28:1, warning #f59e0b à 2,15:1, error #ef4444 à 3,76:1.
+   * Et #ef4444 échouait AUSSI sur navy (3,66:1) — donc dans les deux thèmes à la
+   * fois. Un message d'erreur illisible est le pire endroit où économiser du
+   * contraste : c'est celui qu'on lit quand quelque chose ne va déjà pas.
+   *
+   * Rien ne le signalait : une couleur trop pâle s'affiche, simplement elle ne
+   * se lit pas. Les valeurs sombres ci-dessous sont celles que l'application
+   * avait déjà trouvées d'elle-même, à la main, sans jamais remonter ici. */
+  --wp-color-success:  #15803d;   /* 5,02:1 sur blanc */
+  --wp-color-warning:  #a16207;   /* 4,92:1 sur blanc */
+  --wp-color-error:    #dc2626;   /* 4,83:1 sur blanc */
 
   /* === Achievement tiers (WpPatch) ===
    * PROVISIONAL — community-badge palette pending the dedicated charter review.
@@ -99,4 +113,17 @@
   /* Keyboard focus ring — applied globally via base.css :focus-visible. */
   --wp-focus-ring:   2px solid var(--wp-color-sky);
   --wp-focus-offset: 2px;
+}
+
+/* === Statut, thème sombre ===================================================
+ * Sur une surface navy, les rouges et verts foncés du thème clair deviennent
+ * illisibles à leur tour. La bascule suit le mécanisme du consommateur
+ * (`[data-theme="dark"]`), pas `prefers-color-scheme` : l'application a son
+ * propre sélecteur de thème, et se fier à la préférence système donnerait un
+ * jeu de couleurs qui ne correspond pas au thème réellement affiché.
+ * ========================================================================== */
+[data-theme="dark"] {
+  --wp-color-success:  #34d399;   /* 7,16:1 sur navy */
+  --wp-color-warning:  #fbbf24;   /* 8,24:1 sur navy */
+  --wp-color-error:    #f87171;   /* 4,97:1 sur navy */
 }
