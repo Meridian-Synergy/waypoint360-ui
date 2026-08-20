@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.17.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.16.0...v0.17.0) (2026-08-20)
+
+
+### Features
+
+* **ds:** WpDataTable et WpPagination, la forme une seule fois ([#78](https://github.com/Meridian-Synergy/waypoint360-ui/issues/78)) ([783ddf8](https://github.com/Meridian-Synergy/waypoint360-ui/commit/783ddf80e78ab6a3fc985b1bbd693b96f6c47fde))
+* **WpDataTable:** teinter une ligne, sans jamais la rendre cliquable ([#80](https://github.com/Meridian-Synergy/waypoint360-ui/issues/80)) ([266368e](https://github.com/Meridian-Synergy/waypoint360-ui/commit/266368e9b20cf0bd40c310a30aec696669a229fe))
+* **WpDataTable:** un etat vide qui peut parler, des actions qui respirent ([#81](https://github.com/Meridian-Synergy/waypoint360-ui/issues/81)) ([f596f17](https://github.com/Meridian-Synergy/waypoint360-ui/commit/f596f17f0a9184a8d8a71c4484b2df388a5eaf44))
+
 ## [0.16.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.15.0...v0.16.0) (2026-08-20)
 
 
