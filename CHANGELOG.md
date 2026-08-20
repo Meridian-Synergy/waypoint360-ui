@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.16.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.15.0...v0.16.0) (2026-08-20)
+
+
+### Features
+
+* **ds:** messages et boutons lisibles dans les DEUX thèmes ([#74](https://github.com/Meridian-Synergy/waypoint360-ui/issues/74)) ([d3fba67](https://github.com/Meridian-Synergy/waypoint360-ui/commit/d3fba670f732d9137ab65633b6b02f2bca91ab26))
+* **utils:** pilotDisplayName / pilotInitials, une seule maison ([#73](https://github.com/Meridian-Synergy/waypoint360-ui/issues/73)) ([bd9157b](https://github.com/Meridian-Synergy/waypoint360-ui/commit/bd9157b5c03ff2e222b74ae0757d6212066208e3))
+* **WpButton:** variante `soft`, dernier chaînon avant la migration globale ([#75](https://github.com/Meridian-Synergy/waypoint360-ui/issues/75)) ([59e701c](https://github.com/Meridian-Synergy/waypoint360-ui/commit/59e701cae4fbc287d5c7ef5ee98a8091181997cb))
+* **WpEmailInput:** un champ e-mail qui vérifie au bon moment ([#77](https://github.com/Meridian-Synergy/waypoint360-ui/issues/77)) ([4d0f420](https://github.com/Meridian-Synergy/waypoint360-ui/commit/4d0f4207317bc97f9fd6df55ae63d3255dc29e86))
+* **WpLocaleSwitcher:** un mode drapeau seul, sans perdre le nom accessible ([#72](https://github.com/Meridian-Synergy/waypoint360-ui/issues/72)) ([6af17ec](https://github.com/Meridian-Synergy/waypoint360-ui/commit/6af17eceb0d17ad57cf178eb256d2039358c9ab6))
+* **WpPhoneInput:** un champ téléphone qui comprend au lieu de contraindre ([#70](https://github.com/Meridian-Synergy/waypoint360-ui/issues/70)) ([b017848](https://github.com/Meridian-Synergy/waypoint360-ui/commit/b017848693de43aa0702f14cdfb974054c306cfc))
+
+
+### Bug Fixes
+
+* **WpButton:** `label` facultatif, le slot suffit ([#76](https://github.com/Meridian-Synergy/waypoint360-ui/issues/76)) ([6a57bf3](https://github.com/Meridian-Synergy/waypoint360-ui/commit/6a57bf3bb342a070abb5ca79bc9276e9d80ddd46))
+
 ## [0.15.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.14.1...v0.15.0) (2026-08-17)
 
 
