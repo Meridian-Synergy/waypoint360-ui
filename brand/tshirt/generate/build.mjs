@@ -1,7 +1,7 @@
 import { writeFileSync } from 'fs'
 import sharp from 'sharp'
 import { PDFDocument, cmyk, rgb } from 'pdf-lib'
-import { textPath, circlePath, PIN, mapPath, union, hexToCmyk, SKY, NAVY, WHITE } from './lib.mjs'
+import { textPath, PIN, mapPath, union, hexToCmyk, SKY, NAVY, WHITE } from './lib.mjs'
 
 const OUT = '..'
 const MM2PT = 72 / 25.4, DPI = 300, r2 = (v) => Math.round(v * 100) / 100

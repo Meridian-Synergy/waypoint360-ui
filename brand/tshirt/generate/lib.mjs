@@ -51,14 +51,6 @@ export const PIN = {
   box:  { x0: 17, y0: 7.5, x1: 65, y1: 70 },
 }
 
-/** Transforms an absolute path (M/L/C/Q/Z): x'=x*s+tx, y'=y*s+ty. */
-export function transformPath(d, s, tx, ty) {
-  return d.replace(/([MLCQZmlcqz])|(-?\d*\.?\d+(?:e-?\d+)?)/g, (m, cmd, num, off, str) => {
-    if (cmd) { if (/[mlcqz]/.test(cmd)) throw new Error('path relatif non supporte'); return cmd }
-    return num // remplace au second passage
-  })
-}
-
 /** Applies an affine transform to an absolute path, alternating x and y. */
 export function mapPath(d, fx, fy) {
   const toks = d.match(/[A-Za-z]|-?\d*\.?\d+(?:e-?\d+)?/g) || []

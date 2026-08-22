@@ -1,5 +1,5 @@
 import sharp from 'sharp'
-import { readFileSync, writeFileSync } from 'fs'
+import { readFileSync } from 'fs'
 const M = JSON.parse(readFileSync('../manifest.json'))
 const g = (n) => M.find(m => m.name === n)
 
