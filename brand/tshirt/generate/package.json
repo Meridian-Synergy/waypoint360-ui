@@ -1,0 +1,15 @@
+{
+  "name": "waypoint360-brand-tshirt",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Fichiers d'impression textile derives de WpLogo.vue (texte converti en courbes)",
+  "scripts": {
+    "generate": "node build.mjs && node planche.mjs && node apercu.mjs"
+  },
+  "dependencies": {
+    "fontkit": "^2.0.4",
+    "pdf-lib": "^1.17.1",
+    "sharp": "^0.34.4"
+  }
+}
