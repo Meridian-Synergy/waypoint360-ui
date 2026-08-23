@@ -75,7 +75,7 @@ export type { ShareNetwork }           from './components/WpShareSheet/WpShareSh
 // Le seuil du compteur de caractères, exporté pour que l'app n'en garde pas sa
 // propre définition : deux quotas qui divergent, c'est un compteur qui ment.
 export { wpCharCountLevel, WP_CHAR_WARN_RATIO, type WpCharCountLevel } from './utils/char-count'
-export { toE164, formatPhone } from './utils/phone'
+export { toE164, formatPhone, phoneCountryMismatch, DIAL_CODES } from './utils/phone'
 export { isEmailShaped, normaliseEmail } from './utils/email'
 export { default as WpEmailInput } from './components/WpEmailInput/WpEmailInput.vue'
 export { pilotDisplayName, pilotInitials, type NamedPilot } from './utils/pilot-name'

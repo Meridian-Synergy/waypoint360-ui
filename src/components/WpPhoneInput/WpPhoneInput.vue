@@ -24,10 +24,21 @@ const props = withDefaults(defineProps<{
   disabled?: boolean
   /** Shown when the value cannot be read as a number. Already translated. */
   invalidMessage?: string
+  /**
+   * ISO-2 country the number is expected to belong to — the record's country,
+   * or the person's.
+   *
+   * ⚠️ NOT A CONSTRAINT. An international number is accepted whatever this says:
+   * a Swiss company near the border may publish a French number. It only tells
+   * the parser how to read a LOCAL form, which carries no dialling code. Without
+   * it, `079 123 45 67` was read as French and became someone else's number.
+   */
+  country?: string
 }>(), {
   modelValue: null,
   disabled: false,
   invalidMessage: 'This number does not look valid.',
+  country: 'FR',
 })
 
 const emit = defineEmits<{ 'update:modelValue': [value: string | null] }>()
@@ -39,7 +50,7 @@ const invalid = ref(false)
 // The value can change from outside — a record loading, a form reset. We never
 // rewrite while the person is typing.
 watch(() => props.modelValue, v => {
-  if (toE164(raw.value) === v) return
+  if (toE164(raw.value, props.country) === v) return
   raw.value = formatPhone(v)
   invalid.value = false
 })
@@ -55,7 +66,7 @@ function onBlur() {
   const v = raw.value.trim()
   if (!v) { invalid.value = false; emit('update:modelValue', null); return }
 
-  const e164 = toE164(v)
+  const e164 = toE164(v, props.country)
   invalid.value = !e164
   if (!e164) return
 
