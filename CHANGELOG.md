@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.17.0...v0.17.1) (2026-08-23)
+
+
+### Bug Fixes
+
+* **phone:** ne plus inventer d'indicatif français pour un numéro local étranger ([#83](https://github.com/Meridian-Synergy/waypoint360-ui/issues/83)) ([c1a100d](https://github.com/Meridian-Synergy/waypoint360-ui/commit/c1a100de817768f42002588d2416d34021e6d879))
+
 ## [0.17.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.16.0...v0.17.0) (2026-08-20)
 
 
