@@ -1,10 +1,27 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const DGAC_KEYS = ['a1_a3', 'a2_cofc', 'cats', 'sts_01', 'sts_02'] as const
+// ⚠️ La liste s'appelait DGAC_KEYS — du nom de l'AUTORITÉ FRANÇAISE — et
+// mélangeait deux natures. A1/A3, A2 CofC, STS-01 et STS-02 sont des titres
+// EASA, identiques dans toute l'Union : un télépilote allemand les reconnaît.
+// Le CATS, lui, n'existe QU'EN FRANCE — c'est une réforme nationale du
+// 2026-01-01, qui a remplacé le CATT.
+//
+// Les présenter sur un pied d'égalité proposait à un Allemand une case qu'il ne
+// peut pas cocher, sans rien lui dire de pourquoi.
+//
+// ⚠️ On SÉPARE, on ne MASQUE PAS. Filtrer sur le pays de l'organisation
+// reposerait sur un champ dont on sait qu'il est parfois faux — mesuré le
+// 2026-08-24, une fiche est rangée en France avec une adresse suisse. Cacher
+// une case à quelqu'un qui détient réellement le titre lui ferait perdre un
+// fait ; une étiquette ne coûte qu'une ligne. Un Français installé à Berlin
+// garde son CATS.
+const EU_KEYS       = ['a1_a3', 'a2_cofc', 'sts_01', 'sts_02'] as const
+const NATIONAL_KEYS = ['cats'] as const
+const DGAC_KEYS = [...EU_KEYS, ...NATIONAL_KEYS] as const
 const ADDITIONAL_KEYS = ['certibiocide', 'certiphyto'] as const
 
-type DgacKey       = typeof DGAC_KEYS[number]
+type DgacKey       = typeof EU_KEYS[number] | typeof NATIONAL_KEYS[number]
 type AdditionalKey = typeof ADDITIONAL_KEYS[number]
 
 export type CertKey = DgacKey | AdditionalKey
@@ -41,6 +58,10 @@ export interface WpCertCountryOption { value: string; label: string }
 
 const props = withDefaults(defineProps<{
   modelValue:        WpCertificationsValue
+  /** Intitulé du groupe européen. Fourni, la liste se sépare en deux. */
+  euTitle?:          string
+  /** Intitulé du groupe national — celui du CATS. */
+  nationalTitle?:    string
   labels:            Record<DgacKey, string>
   title?:            string
   hint?:             string
@@ -166,13 +187,23 @@ const hasAdditional = computed(() =>
 )
 
 const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
+
+/** Titres de groupe. Absents, la liste reste d'un seul tenant — l'appelant qui
+ *  ne les fournit pas ne voit aucun changement. */
+const groupesTitres = computed(() => ({ eu: props.euTitle, national: props.nationalTitle }))
+const grouper = computed(() => !!(props.euTitle || props.nationalTitle))
 </script>
 
 <template>
   <div class="wp-certs">
     <p v-if="title" class="wp-certs__title">{{ title }}</p>
-    <div class="wp-certs__grid">
-      <div v-for="key in RENDER_KEYS" :key="key" class="wp-certs__row">
+    <!-- ⚠️ Deux groupes, jamais un filtre. Cf. le commentaire de EU_KEYS :
+         masquer le CATS hors de France reposerait sur un champ pays parfois
+         faux, et priverait de sa case un Français installé à l'étranger. -->
+    <template v-if="grouper">
+      <p v-if="groupesTitres.eu" class="wp-certs__title wp-certs__title--groupe">{{ groupesTitres.eu }}</p>
+      <div class="wp-certs__grid">
+      <div v-for="key in EU_KEYS" :key="key" class="wp-certs__row">
         <label class="wp-certs__item">
           <input type="checkbox" :checked="isHeld(modelValue[key])" class="wp-certs__native" @change="toggle(key)" />
           <span class="wp-certs__check" :class="{ 'wp-certs__check--on': isHeld(modelValue[key]) }">
@@ -205,6 +236,78 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
           </template>
         </div>
       </div>
+      <div class="wp-certs__divider" />
+      <p v-if="groupesTitres.national" class="wp-certs__title wp-certs__title--groupe">{{ groupesTitres.national }}</p>
+      <div class="wp-certs__grid">
+      <div v-for="key in NATIONAL_KEYS" :key="key" class="wp-certs__row">
+        <label class="wp-certs__item">
+          <input type="checkbox" :checked="isHeld(modelValue[key])" class="wp-certs__native" @change="toggle(key)" />
+          <span class="wp-certs__check" :class="{ 'wp-certs__check--on': isHeld(modelValue[key]) }">
+            <svg v-if="isHeld(modelValue[key])" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="wp-certs__label">{{ labels[key as DgacKey] }}</span>
+        </label>
+        <div v-if="richMode && isHeld(modelValue[key])" class="wp-certs__meta">
+          <template v-if="withCountry">
+            <label class="wp-certs__meta-label">{{ countryLabel }}</label>
+            <select class="wp-certs__select" :value="countryOf(modelValue[key]) ?? defaultCountry ?? ''" @change="setCountry(key, $event)">
+              <option value="">—</option>
+              <option v-for="c in countryOptions" :key="c.value" :value="c.value">{{ c.label }}</option>
+            </select>
+          </template>
+          <template v-if="withDates && dateLabels">
+            <label class="wp-certs__meta-label">{{ dateLabels.obtained }}</label>
+            <input type="date" class="wp-certs__date-input" :value="obtainedOf(modelValue[key]) ?? ''" @change="setDate(key, $event)" />
+            <template v-if="dateLabels.expiresInput">
+              <label class="wp-certs__meta-label">{{ dateLabels.expiresInput }}</label>
+              <input type="date" class="wp-certs__date-input" :value="expiresOf(modelValue[key]) ?? ''" @change="setExpiry(key, $event)" />
+            </template>
+            <span v-if="validityInfoText(key)" class="wp-certs__validity">{{ validityInfoText(key) }}</span>
+            <template v-if="expiry(key)">
+              <span class="wp-certs__expiry">{{ expiresText(key) }}</span>
+              <span class="wp-certs__status" :class="`wp-certs__status--${status(key)}`">{{ statusText(key) }}</span>
+            </template>
+          </template>
+        </div>
+      </div>
+    </template>
+
+    <div v-else class="wp-certs__grid">
+      <div v-for="key in RENDER_KEYS" :key="key" class="wp-certs__row">
+        <label class="wp-certs__item">
+          <input type="checkbox" :checked="isHeld(modelValue[key])" class="wp-certs__native" @change="toggle(key)" />
+          <span class="wp-certs__check" :class="{ 'wp-certs__check--on': isHeld(modelValue[key]) }">
+            <svg v-if="isHeld(modelValue[key])" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="wp-certs__label">{{ labels[key as DgacKey] }}</span>
+        </label>
+        <div v-if="richMode && isHeld(modelValue[key])" class="wp-certs__meta">
+          <template v-if="withCountry">
+            <label class="wp-certs__meta-label">{{ countryLabel }}</label>
+            <select class="wp-certs__select" :value="countryOf(modelValue[key]) ?? defaultCountry ?? ''" @change="setCountry(key, $event)">
+              <option value="">—</option>
+              <option v-for="c in countryOptions" :key="c.value" :value="c.value">{{ c.label }}</option>
+            </select>
+          </template>
+          <template v-if="withDates && dateLabels">
+            <label class="wp-certs__meta-label">{{ dateLabels.obtained }}</label>
+            <input type="date" class="wp-certs__date-input" :value="obtainedOf(modelValue[key]) ?? ''" @change="setDate(key, $event)" />
+            <template v-if="dateLabels.expiresInput">
+              <label class="wp-certs__meta-label">{{ dateLabels.expiresInput }}</label>
+              <input type="date" class="wp-certs__date-input" :value="expiresOf(modelValue[key]) ?? ''" @change="setExpiry(key, $event)" />
+            </template>
+            <span v-if="validityInfoText(key)" class="wp-certs__validity">{{ validityInfoText(key) }}</span>
+            <template v-if="expiry(key)">
+              <span class="wp-certs__expiry">{{ expiresText(key) }}</span>
+              <span class="wp-certs__status" :class="`wp-certs__status--${status(key)}`">{{ statusText(key) }}</span>
+            </template>
+          </template>
+        </div>
+    </div>
     </div>
 
     <template v-if="hasAdditional">

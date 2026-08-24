@@ -74,3 +74,26 @@ export const Dark: Story = {
   args: { ...WithDates.args },
   parameters: { backgrounds: { default: 'dark' } },
 }
+
+/**
+ * ⚠️ Deux portées, et c'est le point de l'histoire : A1/A3, A2 CofC, STS-01 et
+ * STS-02 sont des titres EASA, identiques dans toute l'Union. Le CATS n'existe
+ * qu'en France.
+ *
+ * On les SÉPARE au lieu de masquer le CATS hors de France : un filtre reposerait
+ * sur le pays de l'organisation, champ parfois faux, et priverait de sa case un
+ * Français installé à l'étranger. Une étiquette ne coûte qu'une ligne ; un
+ * filtre coûte un fait.
+ */
+export const ParPortee: Story = {
+  args: {
+    modelValue: { a1_a3: true, cats: { held: true, obtained: '2026-03-01', country: 'FR' } },
+    labels: {
+      a1_a3: 'A1/A3 (formation de base)', a2_cofc: 'A2 CofC',
+      cats: 'CATS', sts_01: 'STS-01', sts_02: 'STS-02',
+    },
+    euTitle: 'Certifications européennes',
+    nationalTitle: 'Certifications nationales',
+    withDates: true,
+  },
+}
