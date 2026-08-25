@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const DGAC_KEYS = ['a1_a3', 'a2_cofc', 'cats', 'sts_01', 'sts_02'] as const
+// ⚠️ La liste s'appelait DGAC_KEYS — du nom de l'AUTORITÉ FRANÇAISE — et
+// mélangeait deux natures. A1/A3, A2 CofC, STS-01 et STS-02 sont des titres
+// EASA, identiques dans toute l'Union : un télépilote allemand les reconnaît.
+// Le CATS n'existe QU'EN FRANCE, où il a remplacé le CATT au 2026-01-01.
+//
+// ⚠️ ON SÉPARE, ON NE MASQUE PAS. Filtrer sur le pays de l'organisation
+// reposerait sur un champ dont on sait qu'il est parfois faux — mesuré le
+// 2026-08-24, une fiche de l'annuaire est rangée en France avec une adresse
+// suisse. Cacher une case à quelqu'un qui détient réellement le titre lui
+// ferait perdre un fait ; une étiquette ne coûte qu'une ligne. Un Français
+// installé à Berlin garde son CATS.
+const EU_KEYS       = ['a1_a3', 'a2_cofc', 'sts_01', 'sts_02'] as const
+const NATIONAL_KEYS = ['cats'] as const
+const DGAC_KEYS = [...EU_KEYS, ...NATIONAL_KEYS] as const
 const ADDITIONAL_KEYS = ['certibiocide', 'certiphyto'] as const
 
-type DgacKey       = typeof DGAC_KEYS[number]
+type DgacKey       = typeof EU_KEYS[number] | typeof NATIONAL_KEYS[number]
 type AdditionalKey = typeof ADDITIONAL_KEYS[number]
 
 export type CertKey = DgacKey | AdditionalKey
@@ -41,6 +54,10 @@ export interface WpCertCountryOption { value: string; label: string }
 
 const props = withDefaults(defineProps<{
   modelValue:        WpCertificationsValue
+  /** Intitulé du groupe européen. Fourni, un titre s'insère avant la première. */
+  euTitle?:          string
+  /** Intitulé du groupe national — celui du CATS. */
+  nationalTitle?:    string
   labels:            Record<DgacKey, string>
   title?:            string
   hint?:             string
@@ -166,13 +183,32 @@ const hasAdditional = computed(() =>
 )
 
 const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
+
+/**
+ * Le titre à insérer AVANT une clé donnée, ou null.
+ *
+ * ⚠️ UNE SEULE BOUCLE, un seul balisage de rangée. Ma première version
+ * dupliquait la rangée dans deux grilles séparées et y a oublié une balise
+ * fermante — que ni les tests ni le lint n'ont vue, parce que seul le build
+ * compile le gabarit. Ne pas dupliquer, c'est ne pas pouvoir désynchroniser.
+ */
+function titreAvant(key: CertKey): string | null {
+  if (key === EU_KEYS[0]) return props.euTitle ?? null
+  if (key === NATIONAL_KEYS[0]) return props.nationalTitle ?? null
+  return null
+}
 </script>
 
 <template>
   <div class="wp-certs">
     <p v-if="title" class="wp-certs__title">{{ title }}</p>
     <div class="wp-certs__grid">
-      <div v-for="key in RENDER_KEYS" :key="key" class="wp-certs__row">
+      <!-- ⚠️ Le titre de groupe glisse DANS la même grille : deux grilles
+           séparées voudraient dire deux balisages de rangée, donc deux
+           occasions de diverger. -->
+      <template v-for="key in RENDER_KEYS" :key="key">
+      <p v-if="titreAvant(key)" class="wp-certs__title wp-certs__title--groupe">{{ titreAvant(key) }}</p>
+      <div class="wp-certs__row">
         <label class="wp-certs__item">
           <input type="checkbox" :checked="isHeld(modelValue[key])" class="wp-certs__native" @change="toggle(key)" />
           <span class="wp-certs__check" :class="{ 'wp-certs__check--on': isHeld(modelValue[key]) }">
@@ -205,6 +241,7 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
           </template>
         </div>
       </div>
+      </template>
     </div>
 
     <template v-if="hasAdditional">
