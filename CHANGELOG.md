@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.17.1...v0.18.0) (2026-08-25)
+
+
+### Features
+
+* séparer les certifications européennes des certifications nationales ([#85](https://github.com/Meridian-Synergy/waypoint360-ui/issues/85)) ([79d4fb1](https://github.com/Meridian-Synergy/waypoint360-ui/commit/79d4fb179db6c454a7bfa2194727695355d922f3))
+
 ## [0.17.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.17.0...v0.17.1) (2026-08-23)
 
 
