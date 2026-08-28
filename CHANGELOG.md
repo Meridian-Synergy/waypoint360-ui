@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.18.0...v0.18.1) (2026-08-28)
+
+
+### Bug Fixes
+
+* **formulaires:** le message de validation ne tue plus le clic d'envoi ([#87](https://github.com/Meridian-Synergy/waypoint360-ui/issues/87)) ([7e08d34](https://github.com/Meridian-Synergy/waypoint360-ui/commit/7e08d3429920db9be012609941cea8204df6180a))
+
 ## [0.18.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.17.1...v0.18.0) (2026-08-25)
 
 
