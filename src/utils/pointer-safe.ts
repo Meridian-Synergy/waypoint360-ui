@@ -32,53 +32,94 @@
  */
 export interface PointerHost {
   addEventListener(type: string, listener: () => void, capture?: boolean): void
+  removeEventListener(type: string, listener: () => void, capture?: boolean): void
 }
 
 export interface PointerGuard {
   /**
-   * Exécute `fn` tout de suite si aucun pointeur n'est appuyé, sinon après le
-   * relâchement.
+   * Exécute `fn` tout de suite hors geste de pointeur, sinon à la fin du geste
+   * — c'est-à-dire après le `click`, jamais avant.
    */
   runAfterPointerRelease: (fn: () => void) => void
-  /** Pour les tests et le diagnostic. */
-  isPointerDown: () => boolean
+  /** Un geste de pointeur est en cours. Pour les tests et le diagnostic. */
+  isGestureActive: () => boolean
 }
 
 export function createPointerGuard(host: PointerHost): PointerGuard {
-  let pointerDown = false
+  let gestureActive = false
   let pending: Array<() => void> = []
+  let armed = false
 
-  function flush() {
+  function flushNow() {
     if (!pending.length) return
     const fns = pending
     pending = []
-    // ⚠️ APRÈS le relâchement, pas pendant. La cible du `click` se déduit de
-    // l'appui et du relâchement DÉJÀ émis : une fois `pointerup` passé, plus
-    // rien de ce qu'on écrit ne peut la changer. Le `setTimeout` laisse en
-    // outre `mouseup` puis `click` partir avant qu'on touche au DOM.
-    setTimeout(() => { for (const fn of fns) fn() }, 0)
+    for (const fn of fns) fn()
+  }
+
+  /**
+   * ⚠️ LA FENÊTRE DE DANGER VA DU `pointerdown` AU `click`, PAS AU `pointerup`.
+   * Les deux ordres d'événements diffèrent, et c'est ce qui a fait manquer la
+   * cible deux fois :
+   *
+   * - à la souris : `pointerdown`, `blur`, `pointerup`, `mouseup`, `click` ;
+   * - au doigt : `pointerdown`, `pointerup`, **puis** `blur`, puis `click`.
+   *
+   * Mesuré sur la build du site, au doigt : relâchement à 798 ms, `blur` à
+   * 799, `click` à 801. Un garde qui rend la main au `pointerup` croit le geste
+   * fini alors que le `blur` n'a pas encore eu lieu : il exécute tout de suite,
+   * le bouton descend, et le `click` tombe sur le formulaire. La souris était
+   * réparée, le tactile restait cassé — sur un annuaire consulté au téléphone,
+   * c'est le cas le plus fréquent, et celui où le message fait 66 px au lieu
+   * de 22.
+   *
+   * Le `click` est donc le seul repère sûr : sa cible est arrêtée à son
+   * émission. On rend la main une macrotâche après, pour laisser l'action par
+   * défaut — la soumission du formulaire — se produire d'abord.
+   */
+  const DELAI_SANS_CLIC_MS = 400
+
+  function armer() {
+    if (armed) return
+    armed = true
+    const liberer = () => {
+      if (!armed) return
+      armed = false
+      gestureActive = false
+      host.removeEventListener('click', liberer, true)
+      clearTimeout(minuteur)
+      setTimeout(flushNow, 0)
+    }
+    // Filet : un geste qui ne produit aucun clic — glissé hors de la cible,
+    // sélection de texte. Sans lui, le message n'apparaîtrait jamais.
+    // Posé AVANT l'écoute du clic : `liberer` s'y réfère, et un minuteur ne
+    // peut pas se déclencher au milieu de ces deux lignes.
+    const minuteur = setTimeout(liberer, DELAI_SANS_CLIC_MS)
+    host.addEventListener('click', liberer, true)
   }
 
   // En capture : un `stopPropagation` d'un composant tiers ne doit pas rendre
-  // le garde aveugle — il resterait bloqué à « appuyé » et le message
+  // le garde aveugle — il resterait bloqué en « geste en cours » et le message
   // n'apparaîtrait plus jamais.
   host.addEventListener('pointerdown', () => {
-    // Filet : un geste dont le relâchement s'est perdu (hors fenêtre, capture
-    // volée) ne doit pas retenir les messages en attente indéfiniment.
-    flush()
-    pointerDown = true
+    // Filet : un geste dont la suite s'est perdue (hors fenêtre, capture volée)
+    // ne doit pas retenir les messages en attente indéfiniment.
+    flushNow()
+    gestureActive = true
   }, true)
 
-  const release = () => { pointerDown = false; flush() }
-  host.addEventListener('pointerup', release, true)
-  host.addEventListener('pointercancel', release, true)
+  // ⚠️ On arme même sans rien en attente : au doigt, le `blur` qui remplit la
+  // file arrive APRÈS le relâchement.
+  const relacher = () => armer()
+  host.addEventListener('pointerup', relacher, true)
+  host.addEventListener('pointercancel', relacher, true)
 
   return {
     runAfterPointerRelease(fn) {
-      if (!pointerDown) { fn(); return }
+      if (!gestureActive) { fn(); return }
       pending.push(fn)
     },
-    isPointerDown: () => pointerDown,
+    isGestureActive: () => gestureActive,
   }
 }
 
