@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { createPointerGuard, type PointerHost } from '../src/utils/pointer-safe'
 
@@ -17,10 +17,20 @@ function fauxHote() {
   const abonnes: Record<string, Array<() => void>> = {}
   const host: PointerHost = {
     addEventListener(type, listener) { (abonnes[type] ??= []).push(listener) },
+    removeEventListener(type, listener) {
+      abonnes[type] = (abonnes[type] ?? []).filter(f => f !== listener)
+    },
   }
   return {
     host,
-    declencher(type: string) { for (const fn of abonnes[type] ?? []) fn() },
+    declencher(type: string) { for (const fn of [...(abonnes[type] ?? [])]) fn() },
+    /** Le geste complet d'un pointeur qui aboutit à un clic. */
+    async cliquer() {
+      this.declencher('pointerdown')
+      this.declencher('pointerup')
+      this.declencher('click')
+      await tick()
+    },
   }
 }
 
@@ -37,19 +47,62 @@ describe('garde de pointeur', () => {
     expect(fait).toBe(true)
   })
 
-  it('retient tant que le pointeur est appuyé, puis exécute après le relâchement', async () => {
+  it('ordre SOURIS — retient du `pointerdown` au `click`', async () => {
     const { host, declencher } = fauxHote()
     const garde = createPointerGuard(host)
     declencher('pointerdown')
 
     let fait = false
-    garde.runAfterPointerRelease(() => { fait = true })
+    garde.runAfterPointerRelease(() => { fait = true })   // le `blur` de la souris
     expect(fait).toBe(false)          // ⬅️ l'instant décisif : le bouton ne bouge pas
 
     declencher('pointerup')
-    expect(fait).toBe(false)          // même après `pointerup`, on laisse partir `mouseup` puis `click`
+    await tick()
+    // ⚠️ TOUJOURS PAS. Le `click` est émis après, et sa cible se décide à ce
+    // moment-là : rendre la main ici laisserait le tactile cassé.
+    expect(fait).toBe(false)
+
+    declencher('click')
     await tick()
     expect(fait).toBe(true)
+  })
+
+  it('ordre TACTILE — le `blur` arrive APRÈS le relâchement et doit être retenu quand même', async () => {
+    // ⚠️ C'EST L'ORDRE QUI A FAIT MANQUER LA CIBLE. Mesuré au doigt sur la
+    // build du site : relâchement à 798 ms, `blur` à 799, `click` à 801. Un
+    // garde qui se croit libéré au `pointerup` exécute le `blur` tout de suite,
+    // le bouton descend, et le `click` tombe sur le formulaire.
+    const { host, declencher } = fauxHote()
+    const garde = createPointerGuard(host)
+    declencher('pointerdown')
+    declencher('pointerup')            // ⬅️ AVANT le blur, contrairement à la souris
+
+    let fait = false
+    garde.runAfterPointerRelease(() => { fait = true })
+    expect(fait).toBe(false)
+
+    declencher('click')
+    await tick()
+    expect(fait).toBe(true)
+  })
+
+  it('exécute quand même si aucun clic ne suit le relâchement', async () => {
+    // Un glissé hors de la cible, une sélection de texte : le geste ne produit
+    // aucun clic. Sans ce filet, le message d'erreur ne paraîtrait jamais.
+    vi.useFakeTimers()
+    try {
+      const { host, declencher } = fauxHote()
+      const garde = createPointerGuard(host)
+      declencher('pointerdown')
+      let fait = false
+      garde.runAfterPointerRelease(() => { fait = true })
+      declencher('pointerup')
+      await vi.advanceTimersByTimeAsync(500)
+      expect(fait).toBe(true)
+      expect(garde.isGestureActive()).toBe(false)
+    } finally {
+      vi.useRealTimers()
+    }
   })
 
   it('n’exécute que le dernier état voulu, dans l’ordre d’enregistrement', async () => {
@@ -60,6 +113,7 @@ describe('garde de pointeur', () => {
     garde.runAfterPointerRelease(() => ordre.push(1))
     garde.runAfterPointerRelease(() => ordre.push(2))
     declencher('pointerup')
+    declencher('click')
     await tick()
     expect(ordre).toEqual([1, 2])
   })
@@ -74,6 +128,7 @@ describe('garde de pointeur', () => {
     let fait = false
     garde.runAfterPointerRelease(() => { fait = true })
     declencher('pointercancel')
+    declencher('click')
     await tick()
     expect(fait).toBe(true)
   })
@@ -91,14 +146,18 @@ describe('garde de pointeur', () => {
     expect(fait).toBe(true)
   })
 
-  it('rend l’état du pointeur, pour le diagnostic', () => {
+  it('rend l’état du geste, pour le diagnostic', async () => {
     const { host, declencher } = fauxHote()
     const garde = createPointerGuard(host)
-    expect(garde.isPointerDown()).toBe(false)
+    expect(garde.isGestureActive()).toBe(false)
     declencher('pointerdown')
-    expect(garde.isPointerDown()).toBe(true)
+    expect(garde.isGestureActive()).toBe(true)
     declencher('pointerup')
-    expect(garde.isPointerDown()).toBe(false)
+    // Le geste n'est PAS fini au relâchement : le `click` n'est pas encore émis.
+    expect(garde.isGestureActive()).toBe(true)
+    declencher('click')
+    await tick()
+    expect(garde.isGestureActive()).toBe(false)
   })
 })
 
