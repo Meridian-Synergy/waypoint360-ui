@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.3](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.18.2...v0.18.3) (2026-08-28)
+
+
+### Bug Fixes
+
+* **formulaires:** retenir jusqu'au clic, pas jusqu'au relâchement ([#91](https://github.com/Meridian-Synergy/waypoint360-ui/issues/91)) ([4ce6229](https://github.com/Meridian-Synergy/waypoint360-ui/commit/4ce62297bb597b839ac25b25d1e43e2d98d16c20))
+
 ## [0.18.2](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.18.1...v0.18.2) (2026-08-28)
 
 
