@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.2](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.18.1...v0.18.2) (2026-08-28)
+
+
+### Bug Fixes
+
+* **formulaires:** poser le garde de pointeur à l'import, pas au premier appel ([#89](https://github.com/Meridian-Synergy/waypoint360-ui/issues/89)) ([9613abb](https://github.com/Meridian-Synergy/waypoint360-ui/commit/9613abb12ea2d957a46827e2c63b47cf5f4911e6))
+
 ## [0.18.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.18.0...v0.18.1) (2026-08-28)
 
 
