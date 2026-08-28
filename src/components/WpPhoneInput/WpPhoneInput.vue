@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue'
 import WpInput from '../WpInput/WpInput.vue'
 import { toE164, formatPhone } from '../../utils/phone'
+import { runAfterPointerRelease } from '../../utils/pointer-safe'
 
 /**
  * A phone field that understands instead of constraining.
@@ -59,15 +60,30 @@ function onInput(v: string) {
   raw.value = v
   // Clear the complaint on the first correction: keeping it on screen while
   // someone repairs makes them feel they are still failing.
-  if (invalid.value) invalid.value = false
+  if (invalid.value) setInvalid(false)
+}
+
+/**
+ * ⚠️ LE MESSAGE NE PARAÎT NI NE DISPARAÎT SOUS UN POINTEUR APPUYÉ. Il déplace
+ * ce qui le suit — donc le bouton d'envoi, sur lequel on est justement en train
+ * d'appuyer : le relâchement tombe à côté, le navigateur n'émet aucun `click`,
+ * et l'envoi paraît mort. Cf. `utils/pointer-safe` pour la mesure.
+ *
+ * On garde l'état VOULU plutôt que d'empiler des appels : si deux décisions se
+ * suivent avant le relâchement, c'est la dernière qui vaut.
+ */
+let wanted = false
+function setInvalid(v: boolean) {
+  wanted = v
+  runAfterPointerRelease(() => { invalid.value = wanted })
 }
 
 function onBlur() {
   const v = raw.value.trim()
-  if (!v) { invalid.value = false; emit('update:modelValue', null); return }
+  if (!v) { setInvalid(false); emit('update:modelValue', null); return }
 
   const e164 = toE164(v, props.country)
-  invalid.value = !e164
+  setInvalid(!e164)
   if (!e164) return
 
   // Rewriting what was just understood IS the feedback — it says "I read your
