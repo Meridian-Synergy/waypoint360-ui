@@ -82,19 +82,23 @@ export function createPointerGuard(host: PointerHost): PointerGuard {
   }
 }
 
-// Rendu au premier appel, jamais à l'import : le paquet est consommé par deux
-// applications Nuxt, et le module est évalué sur le serveur, où `document`
-// n'existe pas.
-let shared: PointerGuard | null = null
-
 /**
- * Exécute `fn` sans déplacer la mise en page sous un pointeur appuyé.
+ * ⚠️ POSÉ À L'IMPORT, JAMAIS AU PREMIER APPEL. Une pose paresseuse ne peut pas
+ * marcher : le premier appel vient d'un `blur`, et le `blur` arrive APRÈS le
+ * `pointerdown` qu'il s'agit d'observer. Le garde naissait donc en croyant
+ * qu'aucun pointeur n'était appuyé et exécutait tout de suite — exactement le
+ * défaut qu'il corrige. Vérifié le 2026-08-28 sur la build du site : le
+ * `pointerup` tombait encore sur le formulaire au lieu du bouton.
  *
- * Hors navigateur (rendu serveur), exécute immédiatement : il n'y a ni
+ * `document` est absent au rendu serveur : le module y est évalué sans rien
+ * poser, et `runAfterPointerRelease` exécute alors immédiatement — il n'y a ni
  * pointeur ni mise en page à protéger.
  */
+const shared: PointerGuard | null =
+  typeof document === 'undefined' ? null : createPointerGuard(document)
+
+/** Exécute `fn` sans déplacer la mise en page sous un pointeur appuyé. */
 export function runAfterPointerRelease(fn: () => void): void {
-  if (typeof document === 'undefined') { fn(); return }
-  shared ??= createPointerGuard(document)
+  if (!shared) { fn(); return }
   shared.runAfterPointerRelease(fn)
 }
