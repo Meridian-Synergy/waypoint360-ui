@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue'
 import WpInput from '../WpInput/WpInput.vue'
 import { isEmailShaped, normaliseEmail } from '../../utils/email'
+import { runAfterPointerRelease } from '../../utils/pointer-safe'
 
 /**
  * Un champ e-mail qui vérifie au bon moment.
@@ -52,16 +53,32 @@ function onInput(v: string) {
   raw.value = v
   // La correction efface l'erreur immédiatement : laisser le message pendant
   // qu'on corrige donne l'impression de ne pas être écouté.
-  if (invalid.value && isEmailShaped(v)) invalid.value = false
+  if (invalid.value && isEmailShaped(v)) setInvalid(false)
   emit('update:modelValue', normaliseEmail(v))
+}
+
+/**
+ * ⚠️ LE MESSAGE NE PARAÎT NI NE DISPARAÎT SOUS UN POINTEUR APPUYÉ. Il déplace
+ * ce qui le suit — donc le bouton d'envoi, sur lequel on est justement en train
+ * d'appuyer : le relâchement tombe à côté, le navigateur n'émet aucun `click`,
+ * et l'envoi paraît mort. Cf. `utils/pointer-safe` pour la mesure.
+ *
+ * On garde l'état VOULU plutôt que d'empiler des appels : si deux décisions se
+ * suivent avant le relâchement, c'est la dernière qui vaut.
+ */
+let wanted = false
+function setInvalid(v: boolean) {
+  wanted = v
+  runAfterPointerRelease(() => { invalid.value = wanted })
 }
 
 function onBlur() {
   const v = raw.value.trim()
   // Un champ vidé n'est pas un champ invalide : beaucoup d'adresses sont
   // facultatives, et crier sur un champ qu'on vient d'effacer est absurde.
-  invalid.value = v.length > 0 && !isEmailShaped(v)
-  if (!invalid.value) raw.value = normaliseEmail(v) ?? ''
+  const bad = v.length > 0 && !isEmailShaped(v)
+  setInvalid(bad)
+  if (!bad) raw.value = normaliseEmail(v) ?? ''
 }
 </script>
 

@@ -77,5 +77,8 @@ export type { ShareNetwork }           from './components/WpShareSheet/WpShareSh
 export { wpCharCountLevel, WP_CHAR_WARN_RATIO, type WpCharCountLevel } from './utils/char-count'
 export { toE164, formatPhone, phoneCountryMismatch, DIAL_CODES } from './utils/phone'
 export { isEmailShaped, normaliseEmail } from './utils/email'
+// Exporté pour les consommateurs qui valident eux-mêmes au `blur` : le piège
+// du clic perdu n'est pas propre aux champs du design system.
+export { runAfterPointerRelease, createPointerGuard, type PointerGuard } from './utils/pointer-safe'
 export { default as WpEmailInput } from './components/WpEmailInput/WpEmailInput.vue'
 export { pilotDisplayName, pilotInitials, type NamedPilot } from './utils/pilot-name'
