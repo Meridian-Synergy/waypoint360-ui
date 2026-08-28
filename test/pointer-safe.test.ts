@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import { readFileSync } from 'node:fs'
 import { createPointerGuard, type PointerHost } from '../src/utils/pointer-safe'
 
 /**
@@ -98,5 +99,30 @@ describe('garde de pointeur', () => {
     expect(garde.isPointerDown()).toBe(true)
     declencher('pointerup')
     expect(garde.isPointerDown()).toBe(false)
+  })
+})
+
+describe('la pose du garde partagé', () => {
+  /**
+   * ⚠️ CE GARDE A COÛTÉ UNE VERSION. La première écriture posait les écouteurs
+   * au PREMIER APPEL. Or le premier appel vient d'un `blur`, et le `blur`
+   * arrive après le `pointerdown` qu'il s'agit justement d'observer : le garde
+   * naissait en croyant qu'aucun pointeur n'était appuyé, exécutait tout de
+   * suite, et reproduisait mot pour mot le défaut qu'il corrige. Les six tests
+   * ci-dessus étaient verts — ils construisent le garde à la main, donc avant
+   * l'événement.
+   *
+   * Le contrôle est textuel faute de mieux : on ne peut pas observer un effet
+   * de module depuis un test qui a déjà importé ce module.
+   */
+  it('n’est pas paresseuse : `runAfterPointerRelease` ne construit rien', () => {
+    const source = readFileSync(new URL('../src/utils/pointer-safe.ts', import.meta.url), 'utf-8')
+    const corps = source.slice(source.indexOf('export function runAfterPointerRelease'))
+    expect(corps).not.toContain('createPointerGuard')
+  })
+
+  it('ne pose rien hors navigateur — le module est évalué au rendu serveur', () => {
+    const source = readFileSync(new URL('../src/utils/pointer-safe.ts', import.meta.url), 'utf-8')
+    expect(source).toContain("typeof document === 'undefined'")
   })
 })
