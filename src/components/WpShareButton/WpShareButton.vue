@@ -91,7 +91,18 @@ async function onClick() {
   border:          1px solid var(--wp-color-border, #D5D9E4);
   border-radius:   var(--wp-radius-md, 8px);
   background:      transparent;
-  color:           var(--wp-color-navy, #1B2B56);
+  /**
+   * ⚠️ THEME-ADAPTIVE, comme `WpButton` outline depuis 0.5.17.
+   *
+   * `--wp-color-navy` en dur rendait le libellé INVISIBLE partout où la surface
+   * suit le thème : en thème sombre, `--wp-color-surface` EST le navy, et on
+   * peignait du navy dessus. Le bouton restait là, cliquable, avec sa bordure —
+   * seul le texte avait disparu. Vu sur la carte « Faites connaître votre
+   * société » du tableau de bord, le 2026-08-30.
+   *
+   * Le repli garde le navy pour la vitrine, qui n'a pas de thème sombre.
+   */
+  color:           var(--wp-color-text, var(--wp-color-navy, #1B2B56));
   cursor:          pointer;
   font-family:     var(--wp-font-body, 'Barlow', sans-serif);
   font-size:       0.875rem;
@@ -110,6 +121,11 @@ async function onClick() {
 
 .wp-share-button__icon { width: 18px; height: 18px; display: block; flex-shrink: 0; }
 
+/**
+ * ⚠️ `dark` VEUT DIRE « JE SUIS POSÉ SUR UNE SURFACE FONCÉE », pas « thème
+ * sombre ». Le réserver aux fonds navy explicites : le mettre en dur sur une
+ * surface qui suit le thème rend le bouton invisible dans l'AUTRE thème.
+ */
 .wp-share-button--dark {
   border-color: rgba(255, 255, 255, 0.12);
   color:        var(--wp-color-white, #FFFFFF);
