@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.4](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.18.3...v0.18.4) (2026-08-31)
+
+
+### Tests
+
+* **WpShareButton:** garder le libellé qui suit le thème de son hôte ([#94](https://github.com/Meridian-Synergy/waypoint360-ui/issues/94)) ([121ca7d](https://github.com/Meridian-Synergy/waypoint360-ui/commit/121ca7da47668938130d929cd367fb039bc1843e))
+
 ## [0.18.3](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.18.2...v0.18.3) (2026-08-28)
 
 
