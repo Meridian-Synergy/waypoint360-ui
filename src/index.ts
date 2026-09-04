@@ -3,6 +3,7 @@
 export { default as WpLogo           } from './components/WpLogo/WpLogo.vue'
 export { default as WpButton         } from './components/WpButton/WpButton.vue'
 export { default as WpDataTable      } from './components/WpDataTable/WpDataTable.vue'
+export { default as WpDeleteConfirm  } from './components/WpDeleteConfirm/WpDeleteConfirm.vue'
 export type { WpColumn }               from './components/WpDataTable/WpDataTable.vue'
 export { default as WpPagination     } from './components/WpPagination/WpPagination.vue'
 export { default as WpBadge          } from './components/WpBadge/WpBadge.vue'
