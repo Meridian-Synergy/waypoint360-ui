@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.18.4...v0.19.0) (2026-09-04)
+
+
+### Features
+
+* WpDeleteConfirm, le panneau de confirmation d'une suppression ([#96](https://github.com/Meridian-Synergy/waypoint360-ui/issues/96)) ([cbc803d](https://github.com/Meridian-Synergy/waypoint360-ui/commit/cbc803d077f64f0b07bb77b3b955ba1cdd22a085))
+
 ## [0.18.4](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.18.3...v0.18.4) (2026-08-31)
 
 
