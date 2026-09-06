@@ -1,6 +1,6 @@
 {
   "name": "waypoint360-ui",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "description": "Waypoint360 shared front-end library — design system (Vue 3 + Storybook) and shared logic",
   "main": "index.js",
   "scripts": {

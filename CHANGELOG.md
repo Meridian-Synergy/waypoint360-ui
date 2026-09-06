@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.19.0...v0.20.0) (2026-09-06)
+
+
+### Features
+
+* le moteur GeoPDF vers MBTiles rejoint le paquet partage ([#98](https://github.com/Meridian-Synergy/waypoint360-ui/issues/98)) ([b05feda](https://github.com/Meridian-Synergy/waypoint360-ui/commit/b05fedad597774859b296ae257e96241e8685604))
+
 ## [0.19.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.18.4...v0.19.0) (2026-09-04)
 
 
