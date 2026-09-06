@@ -83,3 +83,20 @@ export { isEmailShaped, normaliseEmail } from './utils/email'
 export { runAfterPointerRelease, createPointerGuard, type PointerGuard } from './utils/pointer-safe'
 export { default as WpEmailInput } from './components/WpEmailInput/WpEmailInput.vue'
 export { pilotDisplayName, pilotInitials, type NamedPilot } from './utils/pilot-name'
+
+// ⚠️ LE MOTEUR GeoPDF VIT ICI POUR LA MÊME RAISON QUE `char-count` : la vitrine
+// et l'app le consomment toutes les deux, et deux implémentations divergeraient
+// comme `useFaq.ts` a divergé. Ce n'est pas de l'interface, c'est du partagé —
+// le paquet en porte déjà (téléphone, e-mail, compteur de caractères).
+//
+// ⛔ Les imports de `convert` sont DYNAMIQUES : pdf.js et sql.js pèsent 1,1 Mo à
+// eux deux. Exporter le module ici ne les charge pas ; seul l'appel le fait.
+export {
+  readGeoreference, isAxisAligned, pixelFromLonLat, interpolationErrorMetres,
+  metresPerPixel, nativeZoom, GeopdfUnreadable,
+  type Corner, type Georeference,
+} from './geopdf/georeference'
+export {
+  convert, TILE_SIZE, lonToX, latToY, xToLon, yToLat,
+  type Progress, type Result,
+} from './geopdf/convert'
