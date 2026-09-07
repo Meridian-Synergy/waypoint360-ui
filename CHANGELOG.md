@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.21.0...v0.21.1) (2026-09-07)
+
+
+### Bug Fixes
+
+* **ui:** WpCard suit le thème de son hôte ([#102](https://github.com/Meridian-Synergy/waypoint360-ui/issues/102)) ([05250bb](https://github.com/Meridian-Synergy/waypoint360-ui/commit/05250bbaaafd1f774e647d395d1a7f1e3be890aa))
+
 ## [0.21.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.20.0...v0.21.0) (2026-09-07)
 
 
