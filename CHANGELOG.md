@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.20.0...v0.21.0) (2026-09-07)
+
+
+### Features
+
+* **ui:** reprendre le consentement sans le redemander, entre vitrine et app ([#100](https://github.com/Meridian-Synergy/waypoint360-ui/issues/100)) ([6749bfe](https://github.com/Meridian-Synergy/waypoint360-ui/commit/6749bfe85fc85b1254ff1d2ff9afb254acc9462b))
+
 ## [0.20.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.19.0...v0.20.0) (2026-09-06)
 
 
