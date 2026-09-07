@@ -24,7 +24,15 @@ withDefaults(defineProps<{
 
 <style scoped>
 .wp-card {
-  background:    var(--wp-color-white, #FFFFFF);
+  /* ⛔ C'ÉTAIT `--wp-color-white`, UNE PRIMITIVE : la carte restait blanche en
+     thème sombre, sous un texte devenu blanc. Mesuré le 2026-09-07 sur
+     /organisation/mission-maps, deux titres invisibles. Le reste du DS écrit
+     déjà `--wp-color-surface` (WpButton, WpDataTable, WpPagination,
+     WpActionSection). La vitrine ne définit pas ce token, le repli la laisse
+     inchangée.
+     ⚠️ La prop `dark` n'est pas le levier : elle dit « posé sur un fond navy »,
+     pas « thème sombre ». En dur, elle casserait le thème clair. */
+  background:    var(--wp-color-surface, #FFFFFF);
   border:        1px solid var(--wp-color-border, #D5D9E4);
   border-radius: var(--wp-radius-lg, 16px);
   box-shadow:    var(--wp-shadow-sm, 0 2px 12px rgba(27, 43, 86, 0.06));
@@ -51,7 +59,7 @@ withDefaults(defineProps<{
   font-family: var(--wp-font-display, 'Barlow', sans-serif);
   font-size:   0.875rem;
   font-weight: 600;
-  color:       var(--wp-color-navy, #1B2B56);
+  color:       var(--wp-color-text, var(--wp-color-navy, #1B2B56));
 }
 .wp-card--dark .wp-card__title { color: var(--wp-color-white, #FFFFFF); }
 
