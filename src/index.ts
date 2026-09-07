@@ -83,6 +83,9 @@ export { isEmailShaped, normaliseEmail } from './utils/email'
 export { runAfterPointerRelease, createPointerGuard, type PointerGuard } from './utils/pointer-safe'
 export { default as WpEmailInput } from './components/WpEmailInput/WpEmailInput.vue'
 export { pilotDisplayName, pilotInitials, type NamedPilot } from './utils/pilot-name'
+export { resoudreConsentement, nouveauConsentement, estValide,
+         WP_CONSENT_COOKIE, WP_CONSENT_TTL_MS,
+         type WpConsent, type AncienConsentWeb } from './utils/consent'
 
 // ⚠️ LE MOTEUR GeoPDF VIT ICI POUR LA MÊME RAISON QUE `char-count` : la vitrine
 // et l'app le consomment toutes les deux, et deux implémentations divergeraient
