@@ -46,8 +46,49 @@ Illustrator garde la cote de sa page d'origine : le fichier annoncerait 280 mm e
 l'imprimeur poserait une transformation par-dessus. Ajouter une taille se fait par une
 ligne dans `generate/build.mjs`.
 
-`planche-placement.png` donne les cotes de pose, `apercu-fond-noir.png` montre les sept
-visuels à la même échelle sur fond noir.
+## Où poser les motifs
+
+⛔ **Ces trois cotes étaient inventées jusqu'au 2026-09-13.** La planche d'origine posait
+le dos à 90 mm sous l'encolure, le cœur à 190 mm sous la couture d'épaule, sur un vêtement
+de 478 × 720 mm. Aucun de ces nombres n'était sourcé : le commit d'origine documente les
+polices, la colorimétrie et le recadrage, et ne dit rien du placement. Denis a trouvé le
+dos haut ; mesure faite, il l'était, et le cœur l'était bien davantage.
+
+| | avant | maintenant | référence |
+|---|---|---|---|
+| Dos, haut du motif sous l'encolure | 84 mm | **102 mm** | 76 à 102 mm |
+| Cœur, centre sous l'encolure | 192 mm | **90 mm** | 64 à 114 mm |
+| Cœur, écart à l'axe | 70 mm | **95 mm** | 76 à 102 mm |
+| Silhouette | 478 × 720 mm | **565 × 750 mm** | Creator 2.0 taille L |
+
+⚠️ **Notre dos n'est pas un « full back ».** Il fait 9,8 × 3,6 pouces : c'est un
+**back yoke**, que le guide de screenprinting.com pose à 4 pouces du col, avec un format de
+référence de 12 × 4 pouces. Confondre les deux catégories donne une cote plausible et
+fausse.
+
+⚠️ **Tout se mesure depuis l'encolure**, y compris le cœur. L'ancienne planche mélangeait
+deux références — « sous l'encolure » au dos, « sous la couture d'épaule » devant — ce qui
+rendait ses deux cotes incomparables entre elles, et incomparables aux guides qui partent
+tous du col.
+
+Sources, relevées le 2026-09-13 :
+
+- [screenprinting.com — guide des placements standard](https://www.screenprinting.com/blogs/news/t-shirt-design-placement-guide-your-easy-reference-for-industry-standard-layouts)
+- [freshprintssupply.com — tableau des mesures](https://freshprintssupply.com/blog/t-shirt-print-placement-size-chart-standard-measurements-for-front-back-chest-sleeves/)
+- [Fiche produit Stanley/Stella Creator 2.0 STTU169](https://api.stanleystella.com/ProductSheet/en_US/STTU169.pdf)
+
+## Les planches
+
+| Fichier | Usage |
+|---|---|
+| `planche-placement.png` | technique, cotée — c'est elle qui part chez l'imprimeur |
+| `planche-textile.png` | présentation, aux cotes de commande, sans mentions |
+| `planche-textile-reference.png` | présentation, aux cotes de référence |
+| `apercu-fond-noir.png` | les sept visuels à la même échelle sur fond noir |
+
+⛔ **Les deux planches de présentation importent leur géométrie de `silhouette.mjs`, elles
+ne la recopient pas.** C'est l'image sans cotes qu'on regarde et qu'on fait circuler ; si
+elle plaçait le motif ailleurs que la planche technique, c'est elle qu'on croirait.
 
 ## Couleurs
 
