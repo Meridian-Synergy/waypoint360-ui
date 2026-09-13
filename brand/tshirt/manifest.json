@@ -1,32 +1,51 @@
 [
   {
+    "key": "dos",
     "name": "dos",
     "W": 280,
     "H": 71.93,
     "base": "../dos-280x71.93mm"
   },
   {
+    "key": "dos-url",
     "name": "dos-url",
     "W": 280,
     "H": 101.79,
     "base": "../dos-url-280x101.79mm"
   },
   {
+    "key": "coeur-horizontal",
     "name": "coeur-horizontal",
     "W": 90,
     "H": 23.12,
     "base": "../coeur-horizontal-90x23.12mm"
   },
   {
+    "key": "coeur-vertical",
     "name": "coeur-vertical",
     "W": 38.81,
     "H": 48,
     "base": "../coeur-vertical-38.81x48mm"
   },
   {
+    "key": "coeur-pin",
     "name": "coeur-pin",
     "W": 34.56,
     "H": 45,
     "base": "../coeur-pin-34.56x45mm"
+  },
+  {
+    "key": "coeur-horizontal-100",
+    "name": "coeur-horizontal",
+    "W": 100,
+    "H": 25.69,
+    "base": "../coeur-horizontal-100x25.69mm"
+  },
+  {
+    "key": "dos-url-250",
+    "name": "dos-url",
+    "W": 250,
+    "H": 90.88,
+    "base": "../dos-url-250x90.88mm"
   }
 ]

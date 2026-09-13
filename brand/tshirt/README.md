@@ -31,7 +31,22 @@ marge. Le nom du fichier porte ses cotes.
 | `coeur-vertical-38.81x48mm` | poitrine gauche, variante verticale | 38,8 × 48 mm |
 | `coeur-pin-34.56x45mm` | poitrine gauche, pin seul | 34,6 × 45 mm |
 
-`planche-placement.png` donne les cotes de pose, `apercu-fond-noir.png` montre les cinq
+### Cotes de commande
+
+Demandées pour une commande réelle, et versionnées pour ne pas être refabriquées de
+mémoire à la suivante. Mêmes tracés que ci-dessus, seule l'échelle change.
+
+| Fichier | Emplacement | Taille |
+|---|---|---|
+| `dos-url-250x90.88mm` | dos, variante avec `waypoint360.eu` | 250 × 90,9 mm |
+| `coeur-horizontal-100x25.69mm` | poitrine gauche | 100 × 25,7 mm |
+
+**Une cote se regénère, elle ne se redimensionne pas.** Un PDF mis à l'échelle dans
+Illustrator garde la cote de sa page d'origine : le fichier annoncerait 280 mm et
+l'imprimeur poserait une transformation par-dessus. Ajouter une taille se fait par une
+ligne dans `generate/build.mjs`.
+
+`planche-placement.png` donne les cotes de pose, `apercu-fond-noir.png` montre les sept
 visuels à la même échelle sur fond noir.
 
 ## Couleurs
@@ -53,7 +68,7 @@ c'est le seul moment où l'on voit le vrai bleu sur le vrai tissu.
   épouse la silhouette du visuel ; un fond opaque donnerait un rectangle blanc.
 - **DTG demande ≥ 80 % de coton.** Vérifier la composition du textile choisi.
 - Plus petit détail : le point navy au centre du pin, **Ø 2,96 mm** sur la variante cœur
-  90 mm (Ø 9,2 mm au dos). Au-dessus du seuil de risque en impression numérique ; en
+  90 mm, Ø 3,29 mm sur la 100 mm (Ø 9,2 mm au dos 280, Ø 8,2 mm au dos 250). Au-dessus du seuil de risque en impression numérique ; en
   revanche, en flex découpé il serait inéchenillable.
 - Le flex monochrome est à écarter (3 couleurs), la broderie aussi sauf à simplifier le
   pin.
@@ -75,6 +90,13 @@ Non construit par la CI. À relancer si la marque change :
 ```bash
 cd generate && npm install && npm run generate
 ```
+
+⚠️ **Les dix PDF existants ressortent « modifiés » à chaque exécution, sans l'être.**
+pdf-lib horodate chaque fichier, et la longueur de la date décale toute la table de
+références croisées : le diff binaire est donc franc alors que la boîte de page et le
+flux de dessin sont identiques à l'octet près. Vérifié ainsi le 2026-09-13 sur les dix.
+Rendre ces fichiers à leur état avant de commiter, sinon la revue porte sur dix binaires
+qui n'ont pas bougé et le vrai changement s'y perd.
 
 Le wordmark est vectorisé à partir des `barlow-{800,700,600}-latin.woff2` de
 `waypoint360-web/public/fonts/` (chemin surchargeable par `BARLOW_DIR`), avec le layout

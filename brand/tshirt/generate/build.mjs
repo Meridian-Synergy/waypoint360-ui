@@ -72,7 +72,14 @@ const svg = ({ paths, W, H }, { px = false, bg = null } = {}) => {
     + `</svg>`
 }
 
-async function emit(name, variant, dims) {
+/**
+ * ⚠️ `key` IDENTIFIE, `name` NOMME LE FICHIER. Ils ne font qu'un tant qu'un
+ * emplacement n'a qu'une cote. Depuis que le cœur et le dos en ont deux, le nom
+ * ne suffit plus : `planche.mjs` et `apercu.mjs` cherchent par `find`, qui rend
+ * la PREMIÈRE correspondance — deux entrées homonymes auraient donc choisi en
+ * silence, et jamais celle qu'on croit.
+ */
+async function emit(name, variant, dims, key = name) {
   const fitted = fit(variant, dims)
   const { paths, W, H } = fitted
   const base = `${OUT}/${name}-${W}x${H}mm`
@@ -98,8 +105,8 @@ async function emit(name, variant, dims) {
     .png({ compressionLevel: 9 }).withMetadata({ density: DPI }).toFile(`${base}.png`)
 
   writeFileSync(`${base}.svg`, svg(fitted))          // archive / editing source, not for the printer
-  console.log(`${name.padEnd(22)} ${String(W).padStart(6)} x ${String(H).padEnd(6)} mm   ${paths.length} shapes`)
-  return { name, W, H, base }
+  console.log(`${key.padEnd(22)} ${String(W).padStart(6)} x ${String(H).padEnd(6)} mm   ${paths.length} shapes`)
+  return { key, name, W, H, base }
 }
 
 const built = []
@@ -108,4 +115,12 @@ built.push(await emit('dos-url',        horizontal({ url: true }), { width: 280 
 built.push(await emit('coeur-horizontal', horizontal(),            { width: 90 }))
 built.push(await emit('coeur-vertical',   vertical(),              { height: 48 }))
 built.push(await emit('coeur-pin',        pinOnly(),               { height: 45 }))
+
+// ⛔ DEUX COTES DEMANDÉES POUR UNE COMMANDE RÉELLE, le 2026-09-13, et versionnées
+// pour ne pas être refabriquées de mémoire à la prochaine. Elles se REGÉNÈRENT
+// ici plutôt que de se redimensionner depuis les fichiers ci-dessus : un PDF mis
+// à l'échelle garde la cote de sa page d'origine, et l'imprimeur pose alors une
+// transformation par-dessus une cote qui ment.
+built.push(await emit('coeur-horizontal', horizontal(),              { width: 100 }, 'coeur-horizontal-100'))
+built.push(await emit('dos-url',          horizontal({ url: true }), { width: 250 }, 'dos-url-250'))
 writeFileSync(`${OUT}/manifest.json`, JSON.stringify(built, null, 2))

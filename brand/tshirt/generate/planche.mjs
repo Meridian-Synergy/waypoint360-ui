@@ -1,7 +1,7 @@
 import sharp from 'sharp'
 import { readFileSync } from 'fs'
 const M = JSON.parse(readFileSync('../manifest.json'))
-const g = (n) => M.find(m => m.name === n)
+const g = (n) => M.find(m => m.key === n)
 
 // Silhouette: body 57->143 = 86 u for 478 mm wide, shoulder y=20, hem y=150 (~720 mm).
 const TEE = 'M 62 20 L 85 12 Q 100 24 115 12 L 138 20 L 172 42 L 152 72 L 143 62 L 143 150 L 57 150 L 57 62 L 48 72 L 28 42 Z'
