@@ -48,32 +48,49 @@ ligne dans `generate/build.mjs`.
 
 ## Où poser les motifs
 
-⛔ **Ces trois cotes étaient inventées jusqu'au 2026-09-13.** La planche d'origine posait
-le dos à 90 mm sous l'encolure, le cœur à 190 mm sous la couture d'épaule, sur un vêtement
-de 478 × 720 mm. Aucun de ces nombres n'était sourcé : le commit d'origine documente les
-polices, la colorimétrie et le recadrage, et ne dit rien du placement. Denis a trouvé le
-dos haut ; mesure faite, il l'était, et le cœur l'était bien davantage.
+⛔ **Ces cotes étaient inventées jusqu'au 2026-09-13.** La planche d'origine posait le dos
+à 90 mm sous l'encolure, le cœur à 190 mm sous la couture d'épaule, sur un vêtement de
+478 × 720 mm. Aucun de ces nombres n'était sourcé : le commit d'origine documente les
+polices, la colorimétrie et le recadrage, et ne dit rien du placement.
 
-| | avant | maintenant | référence |
+⛔ **ET LA PREMIÈRE CORRECTION A EMPIRÉ LE CŒUR.** Cotée sous l'encolure, elle l'avait
+remonté à 126 mm sous le point haut d'épaule, en dehors des deux fourchettes que donnent
+les guides. La valeur d'août, 224 mm, était elle dans la fourchette majoritaire. Deux
+défauts l'avaient masquée : le dessin servait la MÊME encolure devant et derrière, alors
+qu'un col rond descend d'environ 2 cm derrière et 7 cm devant, et la cote partait du col.
+
+| | avant | maintenant | repère |
 |---|---|---|---|
-| Dos, haut du motif sous l'encolure | 84 mm | **102 mm** | 76 à 102 mm |
-| Cœur, centre sous l'encolure | 192 mm | **90 mm** | 64 à 114 mm |
-| Cœur, écart à l'axe | 70 mm | **95 mm** | 76 à 102 mm |
+| Dos, haut du motif | 84 mm | **150 mm** | sous l'encolure arrière |
+| Cœur, centre | 126 mm | **224 mm** | sous le point haut d'épaule |
+| Cœur, écart à l'axe | 95 mm | **141 mm** | moitié de la demi-largeur |
 | Silhouette | 478 × 720 mm | **565 × 750 mm** | Creator 2.0 taille L |
 
-⚠️ **Notre dos n'est pas un « full back ».** Il fait 9,8 × 3,6 pouces : c'est un
-**back yoke**, que le guide de screenprinting.com pose à 4 pouces du col, avec un format de
-référence de 12 × 4 pouces. Confondre les deux catégories donne une cote plausible et
-fausse.
+⚠️ **LE CŒUR SE COTE SOUS LA COUTURE D'ÉPAULE, JAMAIS SOUS LE COL**, et arklavo dit
+pourquoi : « les cols varient en hauteur d'une marque à l'autre, les coutures d'épaule
+non ». C'est l'erreur qui avait fait remonter ce logo.
 
-⚠️ **Tout se mesure depuis l'encolure**, y compris le cœur. L'ancienne planche mélangeait
-deux références — « sous l'encolure » au dos, « sous la couture d'épaule » devant — ce qui
-rendait ses deux cotes incomparables entre elles, et incomparables aux guides qui partent
-tous du col.
+⚠️ **Les guides divergent vraiment sur le cœur** : arklavo donne 102 mm sous l'épaule,
+vistaprint et printify 178 à 229 mm. « Left chest » n'est pas défini par une mesure unique.
+Les trois positions ont été rendues côte à côte et **arbitrées à l'œil par Denis** le
+2026-09-13 ; l'écart à l'axe est le sien, « au centre de la moitié droite », et il est
+dérivé de la largeur plutôt que saisi.
+
+⚠️ **Notre dos n'est pas un « full back ».** Il fait 9,8 × 3,6 pouces : c'est un
+**back yoke**, que screenprinting.com pose à 4 pouces du col, avec un format de référence
+de 12 × 4 pouces. Confondre les deux catégories donne une cote plausible et fausse. 150 mm
+est en dessous de cette référence, choisi à l'œil : au format standard, le motif paraissait
+perché en haut d'un grand vide.
+
+⚠️ **Les deux profondeurs d'encolure du dessin, 25 et 75 mm, ne sont pas sourcées.** La
+fiche produit Creator 2.0 ne donne que trois cotes — demi-poitrine, longueur, manche. Ce
+sont des ordres de grandeur de col rond, et elles ne servent qu'au DESSIN : la cote du cœur
+part du point haut d'épaule, précisément pour ne dépendre d'aucune d'elles.
 
 Sources, relevées le 2026-09-13 :
 
 - [screenprinting.com — guide des placements standard](https://www.screenprinting.com/blogs/news/t-shirt-design-placement-guide-your-easy-reference-for-industry-standard-layouts)
+- [arklavo — guide de placement des logos](https://arklavo.com/blogs/custom-apparel-guide/tshirt-logo-placement-guide)
 - [freshprintssupply.com — tableau des mesures](https://freshprintssupply.com/blog/t-shirt-print-placement-size-chart-standard-measurements-for-front-back-chest-sleeves/)
 - [Fiche produit Stanley/Stella Creator 2.0 STTU169](https://api.stanleystella.com/ProductSheet/en_US/STTU169.pdf)
 
