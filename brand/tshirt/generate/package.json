@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Fichiers d'impression textile derives de WpLogo.vue (texte converti en courbes)",
   "scripts": {
-    "generate": "node build.mjs && node planche.mjs && node apercu.mjs"
+    "generate": "node build.mjs && node planche.mjs && node apercu.mjs && node planche-nue.mjs dos-url-250 coeur-horizontal-100 ../planche-textile.png && node planche-nue.mjs dos coeur-horizontal ../planche-textile-reference.png"
   },
   "dependencies": {
     "fontkit": "^2.0.4",

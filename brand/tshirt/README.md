@@ -31,8 +31,81 @@ marge. Le nom du fichier porte ses cotes.
 | `coeur-vertical-38.81x48mm` | poitrine gauche, variante verticale | 38,8 × 48 mm |
 | `coeur-pin-34.56x45mm` | poitrine gauche, pin seul | 34,6 × 45 mm |
 
-`planche-placement.png` donne les cotes de pose, `apercu-fond-noir.png` montre les cinq
-visuels à la même échelle sur fond noir.
+### Cotes de commande
+
+Demandées pour une commande réelle, et versionnées pour ne pas être refabriquées de
+mémoire à la suivante. Mêmes tracés que ci-dessus, seule l'échelle change.
+
+| Fichier | Emplacement | Taille |
+|---|---|---|
+| `dos-url-250x90.88mm` | dos, variante avec `waypoint360.eu` | 250 × 90,9 mm |
+| `coeur-horizontal-100x25.69mm` | poitrine gauche | 100 × 25,7 mm |
+
+**Une cote se regénère, elle ne se redimensionne pas.** Un PDF mis à l'échelle dans
+Illustrator garde la cote de sa page d'origine : le fichier annoncerait 280 mm et
+l'imprimeur poserait une transformation par-dessus. Ajouter une taille se fait par une
+ligne dans `generate/build.mjs`.
+
+## Où poser les motifs
+
+⛔ **Ces cotes étaient inventées jusqu'au 2026-09-13.** La planche d'origine posait le dos
+à 90 mm sous l'encolure, le cœur à 190 mm sous la couture d'épaule, sur un vêtement de
+478 × 720 mm. Aucun de ces nombres n'était sourcé : le commit d'origine documente les
+polices, la colorimétrie et le recadrage, et ne dit rien du placement.
+
+⛔ **ET LA PREMIÈRE CORRECTION A EMPIRÉ LE CŒUR.** Cotée sous l'encolure, elle l'avait
+remonté à 126 mm sous le point haut d'épaule, en dehors des deux fourchettes que donnent
+les guides. La valeur d'août, 224 mm, était elle dans la fourchette majoritaire. Deux
+défauts l'avaient masquée : le dessin servait la MÊME encolure devant et derrière, alors
+qu'un col rond descend d'environ 2 cm derrière et 7 cm devant, et la cote partait du col.
+
+| | avant | maintenant | repère |
+|---|---|---|---|
+| Dos, haut du motif | 84 mm | **150 mm** | sous l'encolure arrière |
+| Cœur, centre | 126 mm | **224 mm** | sous le point haut d'épaule |
+| Cœur, écart à l'axe | 95 mm | **141 mm** | moitié de la demi-largeur |
+| Silhouette | 478 × 720 mm | **565 × 750 mm** | Creator 2.0 taille L |
+
+⚠️ **LE CŒUR SE COTE SOUS LA COUTURE D'ÉPAULE, JAMAIS SOUS LE COL**, et arklavo dit
+pourquoi : « les cols varient en hauteur d'une marque à l'autre, les coutures d'épaule
+non ». C'est l'erreur qui avait fait remonter ce logo.
+
+⚠️ **Les guides divergent vraiment sur le cœur** : arklavo donne 102 mm sous l'épaule,
+vistaprint et printify 178 à 229 mm. « Left chest » n'est pas défini par une mesure unique.
+Les trois positions ont été rendues côte à côte et **arbitrées à l'œil par Denis** le
+2026-09-13 ; l'écart à l'axe est le sien, « au centre de la moitié droite », et il est
+dérivé de la largeur plutôt que saisi.
+
+⚠️ **Notre dos n'est pas un « full back ».** Il fait 9,8 × 3,6 pouces : c'est un
+**back yoke**, que screenprinting.com pose à 4 pouces du col, avec un format de référence
+de 12 × 4 pouces. Confondre les deux catégories donne une cote plausible et fausse. 150 mm
+est en dessous de cette référence, choisi à l'œil : au format standard, le motif paraissait
+perché en haut d'un grand vide.
+
+⚠️ **Les deux profondeurs d'encolure du dessin, 25 et 75 mm, ne sont pas sourcées.** La
+fiche produit Creator 2.0 ne donne que trois cotes — demi-poitrine, longueur, manche. Ce
+sont des ordres de grandeur de col rond, et elles ne servent qu'au DESSIN : la cote du cœur
+part du point haut d'épaule, précisément pour ne dépendre d'aucune d'elles.
+
+Sources, relevées le 2026-09-13 :
+
+- [screenprinting.com — guide des placements standard](https://www.screenprinting.com/blogs/news/t-shirt-design-placement-guide-your-easy-reference-for-industry-standard-layouts)
+- [arklavo — guide de placement des logos](https://arklavo.com/blogs/custom-apparel-guide/tshirt-logo-placement-guide)
+- [freshprintssupply.com — tableau des mesures](https://freshprintssupply.com/blog/t-shirt-print-placement-size-chart-standard-measurements-for-front-back-chest-sleeves/)
+- [Fiche produit Stanley/Stella Creator 2.0 STTU169](https://api.stanleystella.com/ProductSheet/en_US/STTU169.pdf)
+
+## Les planches
+
+| Fichier | Usage |
+|---|---|
+| `planche-placement.png` | technique, cotée — c'est elle qui part chez l'imprimeur |
+| `planche-textile.png` | présentation, aux cotes de commande, sans mentions |
+| `planche-textile-reference.png` | présentation, aux cotes de référence |
+| `apercu-fond-noir.png` | les sept visuels à la même échelle sur fond noir |
+
+⛔ **Les deux planches de présentation importent leur géométrie de `silhouette.mjs`, elles
+ne la recopient pas.** C'est l'image sans cotes qu'on regarde et qu'on fait circuler ; si
+elle plaçait le motif ailleurs que la planche technique, c'est elle qu'on croirait.
 
 ## Couleurs
 
@@ -53,7 +126,7 @@ c'est le seul moment où l'on voit le vrai bleu sur le vrai tissu.
   épouse la silhouette du visuel ; un fond opaque donnerait un rectangle blanc.
 - **DTG demande ≥ 80 % de coton.** Vérifier la composition du textile choisi.
 - Plus petit détail : le point navy au centre du pin, **Ø 2,96 mm** sur la variante cœur
-  90 mm (Ø 9,2 mm au dos). Au-dessus du seuil de risque en impression numérique ; en
+  90 mm, Ø 3,29 mm sur la 100 mm (Ø 9,2 mm au dos 280, Ø 8,2 mm au dos 250). Au-dessus du seuil de risque en impression numérique ; en
   revanche, en flex découpé il serait inéchenillable.
 - Le flex monochrome est à écarter (3 couleurs), la broderie aussi sauf à simplifier le
   pin.
@@ -75,6 +148,13 @@ Non construit par la CI. À relancer si la marque change :
 ```bash
 cd generate && npm install && npm run generate
 ```
+
+⚠️ **Les dix PDF existants ressortent « modifiés » à chaque exécution, sans l'être.**
+pdf-lib horodate chaque fichier, et la longueur de la date décale toute la table de
+références croisées : le diff binaire est donc franc alors que la boîte de page et le
+flux de dessin sont identiques à l'octet près. Vérifié ainsi le 2026-09-13 sur les dix.
+Rendre ces fichiers à leur état avant de commiter, sinon la revue porte sur dix binaires
+qui n'ont pas bougé et le vrai changement s'y perd.
 
 Le wordmark est vectorisé à partir des `barlow-{800,700,600}-latin.woff2` de
 `waypoint360-web/public/fonts/` (chemin surchargeable par `BARLOW_DIR`), avec le layout
