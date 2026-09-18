@@ -9,20 +9,50 @@ export interface ContextOption {
   universe: Universe
   // Already-localized label for the universe (the app owns i18n).
   universeLabel: string
+  /**
+   * ⛔ DEUX ENTRÉES PEUVENT PARTAGER `orgId`, ET C'EST LE POINT. Un
+   * professionnel qui achète des prestations a UNE organisation et deux
+   * casquettes : c'est l'usage qui les distingue, pas l'organisation. Sans cette
+   * clé, les deux lignes seraient le même bouton.
+   */
+  intention?: string
 }
 
 const props = withDefaults(defineProps<{
   contexts: ContextOption[]
   activeOrgId: string | null
+  activeIntention?: string | null
   theme?: 'dark' | 'light'
-}>(), { theme: 'dark' })
+}>(), { theme: 'dark', activeIntention: null })
 
-const emit = defineEmits<{ select: [orgId: string] }>()
+const emit = defineEmits<{ select: [orgId: string, intention?: string] }>()
 
 const open = ref(false)
 const containerRef = ref<HTMLElement | null>(null)
 
-const active = computed(() => props.contexts.find(ctx => ctx.orgId === props.activeOrgId))
+function estActif(ctx: ContextOption): boolean {
+  if (ctx.orgId !== props.activeOrgId) return false
+  return ctx.intention === undefined || ctx.intention === props.activeIntention
+}
+
+const active = computed(() => props.contexts.find(estActif))
+
+// Identifie une ENTRÉE, pas une organisation : cf. `intention` ci-dessus.
+function cle(ctx: ContextOption): string {
+  return `${ctx.orgId}::${ctx.intention ?? ''}`
+}
+
+/**
+ * ⚠️ AVEC UNE SEULE ORGANISATION, SON NOM NE DISTINGUE RIEN. Le répéter sur
+ * chaque ligne sous un intitulé d'usage donnerait « Télépilote / AgriDrone »
+ * puis « Client / AgriDrone » : deux fois le même mot, et la seule information
+ * utile reléguée en titre de groupe. C'est alors l'usage qui porte la ligne.
+ */
+const uneSeuleOrganisation = computed(() => new Set(props.contexts.map(c => c.orgId)).size <= 1)
+
+function intitule(ctx: ContextOption): string {
+  return uneSeuleOrganisation.value ? ctx.universeLabel : ctx.name
+}
 
 // Stable universe ordering for the grouped list.
 const UNIVERSE_ORDER: Universe[] = ['individual', 'pro_operator', 'public_service', 'client']
@@ -41,9 +71,9 @@ const groups = computed(() => {
 
 function toggle() { open.value = !open.value }
 
-function select(orgId: string) {
+function select(ctx: ContextOption) {
   open.value = false
-  emit('select', orgId)
+  emit('select', ctx.orgId, ctx.intention)
 }
 
 function onOutsideClick(e: MouseEvent) {
@@ -63,8 +93,8 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
       @click.stop="toggle"
     >
       <span class="wp-cs__trigger-text">
-        <span class="wp-cs__name">{{ active?.name }}</span>
-        <span v-if="active" class="wp-cs__universe">{{ active.universeLabel }}</span>
+        <span class="wp-cs__name">{{ active ? intitule(active) : '' }}</span>
+        <span v-if="active && !uneSeuleOrganisation" class="wp-cs__universe">{{ active.universeLabel }}</span>
       </span>
       <svg
         class="wp-cs__chevron"
@@ -77,17 +107,17 @@ onUnmounted(() => document.removeEventListener('click', onOutsideClick, true))
 
     <div v-if="open" class="wp-cs__dropdown" role="listbox">
       <div v-for="group in groups" :key="group.universe" class="wp-cs__group">
-        <p class="wp-cs__group-label">{{ group.label }}</p>
+        <p v-if="!uneSeuleOrganisation" class="wp-cs__group-label">{{ group.label }}</p>
         <button
           v-for="ctx in group.contexts"
-          :key="ctx.orgId"
+          :key="cle(ctx)"
           role="option"
-          :aria-selected="ctx.orgId === activeOrgId"
+          :aria-selected="estActif(ctx)"
           class="wp-cs__option"
-          :class="{ 'wp-cs__option--active': ctx.orgId === activeOrgId }"
-          @click="select(ctx.orgId)"
+          :class="{ 'wp-cs__option--active': estActif(ctx) }"
+          @click="select(ctx)"
         >
-          {{ ctx.name }}
+          {{ intitule(ctx) }}
         </button>
       </div>
     </div>
