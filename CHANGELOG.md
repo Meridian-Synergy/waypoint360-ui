@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.21.1...v0.22.0) (2026-09-18)
+
+
+### Features
+
+* le sélecteur de contexte distingue deux usages d'une même organisation ([#105](https://github.com/Meridian-Synergy/waypoint360-ui/issues/105)) ([6e767fb](https://github.com/Meridian-Synergy/waypoint360-ui/commit/6e767fb40899fc786eab557c9c58a9caffda58d7))
+
 ## [0.21.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.21.0...v0.21.1) (2026-09-07)
 
 
