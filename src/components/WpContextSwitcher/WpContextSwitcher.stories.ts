@@ -33,3 +33,22 @@ export const SingleContext: Story = {
   args: { contexts: [CONTEXTS[0]], activeOrgId: 'org-ind', theme: 'dark' },
   parameters: { backgrounds: { default: 'navy' } },
 }
+
+/**
+ * ⚠️ LE CAS QUI A MOTIVÉ L'USAGE : une seule organisation, deux casquettes. Le
+ * nom n'y distingue rien et disparaît ; ce sont les usages qui portent les
+ * lignes, et la bascule se fait sans changer d'organisation.
+ */
+export const DeuxUsagesUneOrganisation: Story = {
+  name: 'Un pro qui achète aussi',
+  args: {
+    contexts: [
+      { orgId: 'org-op', name: 'AgriDrone', universe: 'pro_operator' as const, universeLabel: 'Télépilote', intention: 'droniste' },
+      { orgId: 'org-op', name: 'AgriDrone', universe: 'client' as const,       universeLabel: 'Client',     intention: 'client' },
+    ],
+    activeOrgId: 'org-op',
+    activeIntention: 'droniste',
+    theme: 'dark',
+  },
+  parameters: { backgrounds: { default: 'navy' } },
+}
