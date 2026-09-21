@@ -6,6 +6,7 @@ export { default as WpDataTable      } from './components/WpDataTable/WpDataTabl
 export { default as WpDeleteConfirm  } from './components/WpDeleteConfirm/WpDeleteConfirm.vue'
 export type { WpColumn }               from './components/WpDataTable/WpDataTable.vue'
 export { default as WpPagination     } from './components/WpPagination/WpPagination.vue'
+export { default as WpCarousel       } from './components/WpCarousel/WpCarousel.vue'
 export { default as WpBadge          } from './components/WpBadge/WpBadge.vue'
 export { default as WpInput          } from './components/WpInput/WpInput.vue'
 export { default as WpField          } from './components/WpField/WpField.vue'
