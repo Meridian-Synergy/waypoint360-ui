@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.22.0...v0.23.0) (2026-09-22)
+
+
+### Features
+
+* **carousel:** rail horizontal qui ne tourne pas tout seul ([#107](https://github.com/Meridian-Synergy/waypoint360-ui/issues/107)) ([f669ba4](https://github.com/Meridian-Synergy/waypoint360-ui/commit/f669ba42ac665b12a240f5b398322f7ccd97eaaf))
+
 ## [0.22.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.21.1...v0.22.0) (2026-09-18)
 
 
