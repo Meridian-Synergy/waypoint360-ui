@@ -3,33 +3,32 @@ import { computed, ref, useSlots, onMounted, onBeforeUnmount, nextTick, type VNo
 import { Comment, Fragment, Text } from 'vue'
 
 /**
- * Rail horizontal défilant — un carrousel qui ne tourne pas tout seul.
+ * A horizontal scrolling rail — a carousel that never moves on its own.
  *
- * ⛔ PAS DE DÉFILEMENT AUTOMATIQUE, ET CE N'EST PAS UNE OMISSION. Un contenu qui
- * bouge sans qu'on l'ait demandé déplace la cible sous le doigt, casse la
- * lecture de qui lit lentement, et déclenche les troubles vestibulaires. Le
- * WCAG 2.2 l'encadre au critère 2.2.2 : ce composant s'épargne le problème en
- * ne démarrant jamais.
+ * No auto-scrolling, and that is not an omission. Content that moves unasked
+ * shifts the target under the finger, breaks the reading of anyone who reads
+ * slowly, and triggers vestibular disorders. WCAG 2.2 covers it under 2.2.2;
+ * this component spares itself the problem by never starting.
  *
- * ⚠️ LE DÉFILEMENT EST NATIF, PAS SIMULÉ. Un rail en `transform` avec un index
- * interne perd le geste tactile, la molette horizontale et la restitution de
- * position au retour. `overflow-x: auto` + `scroll-snap` les rend gratuitement,
- * et les deux boutons ne font que poser un `scrollBy`.
+ * The scrolling is NATIVE, not simulated. A `transform` rail with an internal
+ * index loses touch gestures, horizontal wheel and scroll restoration on the
+ * way back. `overflow-x: auto` + `scroll-snap` give all three for free, and the
+ * two buttons only issue a `scrollBy`.
  *
- * ⚠️ UN CONTENEUR DÉFILANT DOIT ÊTRE ATTEIGNABLE AU CLAVIER. Sans `tabindex`,
- * personne ne peut le faire défiler aux flèches : le contenu hors écran
- * n'existe alors que pour la souris et le doigt.
+ * A scrollable container must be reachable by keyboard. Without `tabindex`
+ * nobody can scroll it with the arrow keys: the off-screen content then exists
+ * only for the mouse and the finger.
  *
- * Le design system ne traduit pas : tous les libellés viennent de l'appelant.
+ * The design system does not translate: every label comes from the caller.
  */
 const props = withDefaults(defineProps<{
-  /** Nom accessible du rail. Obligatoire en pratique : « carrousel » ne dit rien. */
+  /** Accessible name of the rail. Required in practice: "carousel" says nothing. */
   ariaLabel: string
-  /** Nom accessible du bouton précédent. */
+  /** Accessible name of the previous button. */
   prevLabel?: string
-  /** Nom accessible du bouton suivant. */
+  /** Accessible name of the next button. */
   nextLabel?: string
-  /** Largeur minimale d'une carte. Le rail en place autant que la place permet. */
+  /** Minimum card width. The rail fits as many as the space allows. */
   itemMinWidth?: string
 }>(), {
   prevLabel: 'Previous',
@@ -40,97 +39,106 @@ const props = withDefaults(defineProps<{
 const slots = useSlots()
 
 /**
- * ⛔ UN RAIL VIDE SE RETIRE DE LUI-MÊME, il ne s'affiche pas en creux.
+ * An empty rail removes itself; it does not render as a hollow.
  *
- * ⚠️ La décision vit ICI plutôt que chez l'appelant, et c'est délibéré : un
- * `v-if` à recopier sur chaque page finit par être oublié sur l'une d'elles, et
- * ce jour-là la vitrine montre un rail vide, ce qui dit qu'elle est morte.
+ * The decision lives HERE rather than in the caller, deliberately: a `v-if` to
+ * copy onto every page ends up forgotten on one of them, and that day the site
+ * shows an empty rail, which says it is dead.
  *
- * ⚠️ Les commentaires et les textes blancs ne comptent pas : un `v-if` faux
- * laisse un nœud Comment, et un `v-for` vide laisse un Fragment sans enfant.
- * Les compter rendrait le composant vide mais présent, ce qu'on veut éviter.
+ * Comments and whitespace do not count: a false `v-if` leaves a Comment node,
+ * and an empty `v-for` leaves a childless Fragment. Counting them would render
+ * the component empty but present, which is what we are avoiding.
  */
-function porteDuContenu(noeuds: VNode[] | undefined): boolean {
-  if (!noeuds) return false
-  return noeuds.some((n) => {
+function hasContent(nodes: VNode[] | undefined): boolean {
+  if (!nodes) return false
+  return nodes.some((n) => {
     if (n.type === Comment) return false
     if (n.type === Text) return String(n.children ?? '').trim().length > 0
-    if (n.type === Fragment) return porteDuContenu(n.children as VNode[] | undefined)
+    if (n.type === Fragment) return hasContent(n.children as VNode[] | undefined)
     return true
   })
 }
-const vide = computed(() => !porteDuContenu(slots.default?.()))
+const isEmpty = computed(() => !hasContent(slots.default?.()))
 
 const rail = ref<HTMLElement | null>(null)
-const auDebut = ref(true)
-const aLaFin = ref(true)
+const atStart = ref(true)
+const atEnd = ref(true)
 
 /**
- * ⚠️ LA MARGE DE 2 px N'EST PAS DÉCORATIVE. `scrollLeft` est fractionnaire dès
- * que la page est zoomée ou que l'écran a un rapport non entier : une égalité
- * stricte laisse le bouton « suivant » actif en bout de course, et cliquer
- * dessus ne fait rien. Un bouton qui ne fait rien est pire qu'un bouton éteint.
+ * Two dead arrows beside a single card, and that is the commonest case when a
+ * list opens. Measured 2026-09-22: when the rail does not overflow, `atStart`
+ * and `atEnd` are both true, so the buttons were rendered then disabled. Two
+ * switched-off buttons announce content that does not exist.
  */
-const MARGE = 2
+const overflows = ref(false)
 
-function mesurer() {
+/**
+ * The 2 px margin is not decorative. `scrollLeft` is fractional as soon as the
+ * page is zoomed or the screen has a non-integer ratio: a strict equality
+ * leaves the "next" button active at the end of the run, and clicking it does
+ * nothing. A button that does nothing is worse than a button switched off.
+ */
+const MARGIN = 2
+
+function measure() {
   const el = rail.value
   if (!el) return
-  auDebut.value = el.scrollLeft <= MARGE
-  aLaFin.value = el.scrollLeft + el.clientWidth >= el.scrollWidth - MARGE
+  overflows.value = el.scrollWidth > el.clientWidth + MARGIN
+  atStart.value = el.scrollLeft <= MARGIN
+  atEnd.value = el.scrollLeft + el.clientWidth >= el.scrollWidth - MARGIN
 }
 
 /**
- * ⚠️ LE DÉFILEMENT DOUX SE COUPE POUR QUI A DEMANDÉ MOINS D'ANIMATION. C'est la
- * même gêne que celle qui fait refuser le défilement automatique, et une règle
- * CSS ne suffirait pas : le comportement est demandé ici, en JavaScript, donc
- * `scroll-behavior` dans une feuille de style ne serait jamais consulté.
+ * Smooth scrolling is switched off for anyone who asked for less animation. It
+ * is the same discomfort that rules out auto-scrolling, and a CSS rule would
+ * not do: the behaviour is requested here, in JavaScript, so a stylesheet
+ * `scroll-behavior` would never be consulted.
  */
-function douceur(): ScrollBehavior {
+function scrollSmoothness(): ScrollBehavior {
   if (typeof matchMedia !== 'function') return 'smooth'
   return matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
 }
 
-function defiler(sens: -1 | 1) {
+function scrollByPage(direction: -1 | 1) {
   const el = rail.value
   if (!el) return
-  // Une largeur visible moins un chevauchement : on garde une carte à l'écran
-  // pour que l'œil sache qu'il a avancé plutôt que changé de page.
-  el.scrollBy({ left: sens * Math.max(el.clientWidth - 80, 120), behavior: douceur() })
+  // One visible width minus an overlap: a card stays on screen so the eye knows
+  // it moved forward rather than changed page.
+  el.scrollBy({ left: direction * Math.max(el.clientWidth - 80, 120), behavior: scrollSmoothness() })
 }
 
-let observateur: ResizeObserver | null = null
+let resizeObserver: ResizeObserver | null = null
 onMounted(async () => {
   await nextTick()
-  mesurer()
+  measure()
   if (typeof ResizeObserver !== 'undefined' && rail.value) {
-    observateur = new ResizeObserver(mesurer)
-    observateur.observe(rail.value)
+    resizeObserver = new ResizeObserver(measure)
+    resizeObserver.observe(rail.value)
   }
 })
-onBeforeUnmount(() => observateur?.disconnect())
+onBeforeUnmount(() => resizeObserver?.disconnect())
 </script>
 
 <template>
-  <section v-if="!vide" class="wp-carousel" :aria-label="ariaLabel">
+  <section v-if="!isEmpty" class="wp-carousel" :aria-label="ariaLabel">
     <div
       ref="rail"
       class="wp-carousel__rail"
       tabindex="0"
       :style="{ '--wp-carousel-item': itemMinWidth }"
-      @scroll="mesurer"
+      @scroll="measure"
     >
       <slot />
     </div>
 
-    <!-- ⚠️ `aria-hidden` sur les deux boutons : le rail est déjà atteignable au
-         clavier et défile aux flèches. Les annoncer ajouterait deux arrêts qui
-         ne font rien de plus que ce que la flèche fait déjà. Ils restent
-         cliquables à la souris et au doigt. -->
-    <div class="wp-carousel__controls" aria-hidden="true">
+    <!-- `aria-hidden` on both buttons: the rail is already keyboard reachable
+         and scrolls with the arrow keys. Announcing them would add two stops
+         that do no more than the arrow key already does. They stay clickable
+         with mouse and finger. -->
+    <div v-if="overflows" class="wp-carousel__controls" aria-hidden="true">
       <button
         type="button" class="wp-carousel__nav" tabindex="-1"
-        :disabled="auDebut" :aria-label="prevLabel" @click="defiler(-1)"
+        :disabled="auDebut" :aria-label="prevLabel" @click="scrollByPage(-1)"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
@@ -138,7 +146,7 @@ onBeforeUnmount(() => observateur?.disconnect())
       </button>
       <button
         type="button" class="wp-carousel__nav" tabindex="-1"
-        :disabled="aLaFin" :aria-label="nextLabel" @click="defiler(1)"
+        :disabled="aLaFin" :aria-label="nextLabel" @click="scrollByPage(1)"
       >
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
@@ -160,8 +168,8 @@ onBeforeUnmount(() => observateur?.disconnect())
   gap: 16px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  /* Le rail porte son propre rembourrage vertical : sans lui, l'ombre des
-     cartes est rognée par le conteneur défilant. */
+  /* The rail carries its own vertical padding: without it the cards' shadow is
+     clipped by the scrolling container. */
   padding: 4px 2px 12px;
   scrollbar-width: thin;
 }
