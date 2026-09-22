@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.23.0...v0.23.1) (2026-09-22)
+
+
+### Bug Fixes
+
+* **WpCarousel:** pas de flèches quand il n'y a rien à faire défiler ([#109](https://github.com/Meridian-Synergy/waypoint360-ui/issues/109)) ([6568bc7](https://github.com/Meridian-Synergy/waypoint360-ui/commit/6568bc72a398e36afc90fc7fd41409c345d54d68))
+
 ## [0.23.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.22.0...v0.23.0) (2026-09-22)
 
 
