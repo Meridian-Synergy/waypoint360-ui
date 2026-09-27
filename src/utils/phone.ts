@@ -176,7 +176,8 @@ export function phoneCountryMismatch(
  *
  * Ce sont des numéros d'EXEMPLE, au format national usuel, jamais attribués à
  * quelqu'un de précis. Un pays absent de la table retombe sur son indicatif
- * seul, et un pays inconnu sur la France, comme `toE164`.
+ * seul, puis sur un « + » nu. Seule l'ABSENCE de pays vaut la France, comme
+ * `toE164` : c'est le cas des numéros personnels.
  */
 const EXEMPLES: Record<string, string> = {
   FR: '+33 6 12 34 56 78',
@@ -191,11 +192,35 @@ const EXEMPLES: Record<string, string> = {
   GB: '+44 7400 123456',
   IE: '+353 85 123 4567',
   AT: '+43 664 1234567',
+  DK: '+45 20 12 34 56',
+  SE: '+46 70 123 45 67',
+  NO: '+47 412 34 567',
+  FI: '+358 40 123 4567',
+  PL: '+48 512 345 678',
+  CZ: '+420 601 123 456',
+  SK: '+421 912 345 678',
+  HU: '+36 20 123 4567',
+  RO: '+40 712 345 678',
+  BG: '+359 87 123 4567',
+  HR: '+385 91 234 5678',
+  SI: '+386 31 234 567',
+  GR: '+30 691 234 5678',
+  EE: '+372 5123 4567',
+  LV: '+371 21 234 567',
+  LT: '+370 612 34567',
+  MT: '+356 7912 3456',
+  CY: '+357 96 123456',
+  IS: '+354 611 1234',
+  LI: '+423 660 1234',
+  US: '+1 202 555 0123',
+  CA: '+1 416 555 0123',
 }
 
 export function exempleInternational(country: string | null | undefined = 'FR'): string {
-  const c = String(country ?? 'FR').toUpperCase() || 'FR'
+  const c = String(country ?? '').trim().toUpperCase() || 'FR'
   if (EXEMPLES[c]) return EXEMPLES[c]!
+  // ⛔ Un pays CONNU mais absent de la table ne reçoit jamais l'exemple français :
+  // un « +33 » sur une fiche suédoise enseignerait le mauvais indicatif.
   const code = DIAL_CODES[c]?.[0]
-  return code ? `+${code} …` : EXEMPLES.FR!
+  return code ? `+${code} …` : '+…'
 }

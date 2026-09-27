@@ -195,7 +195,7 @@ describe('exempleInternational', () => {
 
   // ⛔ Plus jamais la forme locale française, qui s'affichait partout.
   it('ne propose jamais une forme locale', () => {
-    for (const c of ['FR', 'BE', 'CH', 'DE', 'NL', 'ES', 'IT', 'PT', 'LU', 'GB', 'IE', 'AT', 'US', 'XX', null]) {
+    for (const c of ['FR', 'BE', 'CH', 'DE', 'NL', 'ES', 'IT', 'PT', 'LU', 'GB', 'IE', 'AT', 'US', 'DK', null]) {
       expect(exempleInternational(c), String(c)).toMatch(/^\+\d/)
     }
   })
@@ -208,9 +208,21 @@ describe('exempleInternational', () => {
     }
   })
 
-  it('retombe sur l’indicatif seul, puis sur la France', () => {
-    expect(exempleInternational('US')).toBe('+1 …')
+  // ⛔ Le Danemark recevait l'exemple français : sa ligne manquait, et le repli
+  // allait à la France.
+  it('un pays proposé par l’app a son propre indicatif, jamais le +33', () => {
+    const APP = ['FR', 'BE', 'LU', 'DE', 'CH', 'NL', 'ES', 'IT', 'PT', 'GB', 'IE', 'AT',
+      'DK', 'SE', 'NO', 'FI', 'PL', 'CZ', 'SK', 'HU', 'RO', 'BG', 'HR', 'SI',
+      'GR', 'EE', 'LV', 'LT', 'MT', 'CY', 'IS', 'LI', 'US', 'CA']
+    for (const c of APP.filter(c => c !== 'FR')) {
+      expect(exempleInternational(c), c).not.toMatch(/^\+33\b/)
+      expect(toE164(exempleInternational(c), c), c).not.toBeNull()
+    }
+  })
+
+  it('sans pays, la France ; pays inconnu, un « + » nu', () => {
     expect(exempleInternational(null)).toBe('+33 6 12 34 56 78')
-    expect(exempleInternational('XX')).toBe('+33 6 12 34 56 78')
+    expect(exempleInternational('')).toBe('+33 6 12 34 56 78')
+    expect(exempleInternational('XX')).toBe('+…')
   })
 })
