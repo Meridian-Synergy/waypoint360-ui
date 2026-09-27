@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { toE164, formatPhone, phoneCountryMismatch, exempleInternational } from '../src/utils/phone'
+import { toE164, formatPhone, phoneCountryMismatch, exempleInternational, DIAL_CODES } from '../src/utils/phone'
 
 /**
  * ⚠️ CES CAS SONT PARTAGÉS AVEC L'API, mot pour mot.
@@ -213,10 +213,15 @@ describe('exempleInternational', () => {
   it('un pays proposé par l’app a son propre indicatif, jamais le +33', () => {
     const APP = ['FR', 'BE', 'LU', 'DE', 'CH', 'NL', 'ES', 'IT', 'PT', 'GB', 'IE', 'AT',
       'DK', 'SE', 'NO', 'FI', 'PL', 'CZ', 'SK', 'HU', 'RO', 'BG', 'HR', 'SI',
-      'GR', 'EE', 'LV', 'LT', 'MT', 'CY', 'IS', 'LI', 'US', 'CA']
+      'GR', 'EE', 'LV', 'LT', 'MT', 'CY', 'IS', 'LI', 'US', 'CA',
+      'MC', 'AD', 'AU', 'NZ', 'JP', 'KR', 'SG', 'AE', 'SA', 'IL', 'IN', 'BR', 'MX', 'ZA']
     for (const c of APP.filter(c => c !== 'FR')) {
       expect(exempleInternational(c), c).not.toMatch(/^\+33\b/)
       expect(toE164(exempleInternational(c), c), c).not.toBeNull()
+      // L'exemple porte l'indicatif du pays, et la table le connaît : sinon le
+      // contrôle de cohérence se tait sur ce pays.
+      expect(DIAL_CODES[c], c).toBeDefined()
+      expect(phoneCountryMismatch(toE164(exempleInternational(c), c), c), c).toBeNull()
     }
   })
 
