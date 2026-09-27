@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { toE164, formatPhone, phoneCountryMismatch } from '../src/utils/phone'
+import { toE164, formatPhone, phoneCountryMismatch, exempleInternational } from '../src/utils/phone'
 
 /**
  * ⚠️ CES CAS SONT PARTAGÉS AVEC L'API, mot pour mot.
@@ -182,5 +182,35 @@ describe('discordance entre le numéro et le pays de la fiche', () => {
     expect(phoneCountryMismatch('+33612345678', null)).toBeNull()
     expect(phoneCountryMismatch('0612345678', 'FR')).toBeNull()
     expect(phoneCountryMismatch('+33612345678', 'XX')).toBeNull()
+  })
+})
+
+// ── L'exemple affiché dans le champ, ajouté le 2026-09-27 ────────────────────
+describe('exempleInternational', () => {
+  it('donne la forme internationale du pays de la fiche', () => {
+    expect(exempleInternational('FR')).toBe('+33 6 12 34 56 78')
+    expect(exempleInternational('ch')).toBe('+41 79 123 45 67')
+    expect(exempleInternational('ES')).toBe('+34 612 34 56 78')
+  })
+
+  // ⛔ Plus jamais la forme locale française, qui s'affichait partout.
+  it('ne propose jamais une forme locale', () => {
+    for (const c of ['FR', 'BE', 'CH', 'DE', 'NL', 'ES', 'IT', 'PT', 'LU', 'GB', 'IE', 'AT', 'US', 'XX', null]) {
+      expect(exempleInternational(c), String(c)).toMatch(/^\+\d/)
+    }
+  })
+
+  // L'exemple doit être un numéro que le champ accepte : sinon il enseigne une
+  // saisie refusée.
+  it('chaque exemple est lui-même un numéro valide', () => {
+    for (const c of ['FR', 'BE', 'CH', 'LU', 'DE', 'NL', 'ES', 'IT', 'PT', 'GB', 'IE', 'AT']) {
+      expect(toE164(exempleInternational(c), c), c).not.toBeNull()
+    }
+  })
+
+  it('retombe sur l’indicatif seul, puis sur la France', () => {
+    expect(exempleInternational('US')).toBe('+1 …')
+    expect(exempleInternational(null)).toBe('+33 6 12 34 56 78')
+    expect(exempleInternational('XX')).toBe('+33 6 12 34 56 78')
   })
 })

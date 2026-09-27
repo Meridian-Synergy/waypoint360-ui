@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import WpInput from '../WpInput/WpInput.vue'
-import { toE164, formatPhone } from '../../utils/phone'
+import { toE164, formatPhone, exempleInternational } from '../../utils/phone'
 import { runAfterPointerRelease } from '../../utils/pointer-safe'
 
 /**
@@ -102,7 +102,7 @@ function onBlur() {
     :label="label"
     :hint="hint"
     :disabled="disabled"
-    :placeholder="placeholder || '06 12 34 56 78'"
+:placeholder="placeholder || exempleInternational(country)"
     :error="invalid ? invalidMessage : undefined"
     v-bind="$attrs"
     @update:model-value="onInput"

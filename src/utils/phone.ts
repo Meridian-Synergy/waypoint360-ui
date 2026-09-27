@@ -164,3 +164,38 @@ export function phoneCountryMismatch(
   if (found && expected.includes(found)) return null
   return { expected, found }
 }
+
+/**
+ * Un exemple de numéro, au format INTERNATIONAL, pour le pays de la fiche.
+ *
+ * ⛔ LE CHAMP MONTRAIT « 06 12 34 56 78 », une forme locale française, partout,
+ * y compris sur une fiche suisse ou espagnole (signalé le 2026-09-27). On veut
+ * voir la forme qu'on attend : l'indicatif du pays, puis le numéro. Le champ
+ * accepte toujours les formes locales sans ambiguïté (cf. `LOCAL_PLANS`) ;
+ * l'exemple dit seulement la forme la plus sûre.
+ *
+ * Ce sont des numéros d'EXEMPLE, au format national usuel, jamais attribués à
+ * quelqu'un de précis. Un pays absent de la table retombe sur son indicatif
+ * seul, et un pays inconnu sur la France, comme `toE164`.
+ */
+const EXEMPLES: Record<string, string> = {
+  FR: '+33 6 12 34 56 78',
+  BE: '+32 470 12 34 56',
+  CH: '+41 79 123 45 67',
+  LU: '+352 621 123 456',
+  DE: '+49 151 23456789',
+  NL: '+31 6 12345678',
+  ES: '+34 612 34 56 78',
+  IT: '+39 312 345 6789',
+  PT: '+351 912 345 678',
+  GB: '+44 7400 123456',
+  IE: '+353 85 123 4567',
+  AT: '+43 664 1234567',
+}
+
+export function exempleInternational(country: string | null | undefined = 'FR'): string {
+  const c = String(country ?? 'FR').toUpperCase() || 'FR'
+  if (EXEMPLES[c]) return EXEMPLES[c]!
+  const code = DIAL_CODES[c]?.[0]
+  return code ? `+${code} …` : EXEMPLES.FR!
+}
