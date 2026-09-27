@@ -20,6 +20,44 @@
 const FR_TRUNK = /^0[1-9]\d{8}$/
 
 /**
+ * Local forms that can be read WITHOUT GUESSING, country by country.
+ *
+ * A local number carries no dialling code, so it can only be turned into E.164
+ * when the national plan leaves one reading. That is the whole criterion for a
+ * country to appear here — convenience is not.
+ *
+ * `trunk`: the plan dials a leading `0` inside the country and drops it abroad.
+ * It is REQUIRED in the input for these countries. Without it, nine German
+ * digits may be a subscriber number missing its area code, and we would build
+ * someone else's number. France alone restores a lost zero (see below), because
+ * that loss was measured in our own imports and its result is checked.
+ *
+ * `nsn`: the national significant number, i.e. what follows the dialling code.
+ *
+ * ⛔ ITALY IS ABSENT ON PURPOSE. It KEEPS its trunk zero in the international
+ * form (`+39 06…`) and its lengths vary: no rule reads `06 1234567` without a
+ * guess. Its local forms stay refused.
+ *
+ * Added on 2026-09-27: `936555555`, copied from a Barcelona company's website,
+ * became `+33936555555` — a French number that does not exist — because the
+ * field could not read a Spanish local form and fell back on France.
+ */
+const LOCAL_PLANS: Record<string, { code: string; trunk: boolean; nsn: RegExp }> = {
+  // Nine digits, no trunk prefix: 6 and 7 mobile, 8 and 9 fixed.
+  ES: { code: '34', trunk: false, nsn: /^[6-9]\d{8}$/ },
+  // Eight digits for a fixed line, nine for a mobile (045x to 049x).
+  // ⚠️ Liège's fixed lines ALSO start with 4 (04 xxx xx xx): the length tells
+  // them apart, not the first digit.
+  BE: { code: '32', trunk: true, nsn: /^(4[5-9]\d{7}|[1-9]\d{7})$/ },
+  CH: { code: '41', trunk: true, nsn: /^[1-9]\d{8}$/ },
+  NL: { code: '31', trunk: true, nsn: /^[1-9]\d{8}$/ },
+  // Variable length: area codes of two to five digits. The conversion itself is
+  // unambiguous (drop the 0, prefix +49); only the length is loose, and E.164
+  // caps the whole number at fifteen digits.
+  DE: { code: '49', trunk: true, nsn: /^[1-9]\d{5,12}$/ },
+}
+
+/**
  * Any reasonable spelling to E.164, or `null` when it cannot be a number.
  *
  * ⚠️ `country` IS NOT A LOCK. A number already written internationally passes
@@ -32,9 +70,10 @@ const FR_TRUNK = /^0[1-9]\d{8}$/
  * assume France and returned `+33791234567`, a number belonging to someone
  * else. Measured on 2026-08-24 while harvesting a Swiss site.
  *
- * Outside France it now returns `null` rather than a plausible falsehood. That
- * is the principle this module already stated without applying it to the local
- * form: reshaping what we do not understand is worse than leaving it alone.
+ * Outside France it returns `null` rather than a plausible falsehood — except
+ * for the countries of `LOCAL_PLANS`, whose plan leaves a single reading. That
+ * is the principle this module already stated: reshaping what we do not
+ * understand is worse than leaving it alone.
  *
  * ⚠️ An omitted `country` means FRANCE, so the 890 already-normalised French
  * records keep working. Callers that know the country MUST pass it.
@@ -56,10 +95,18 @@ export function toE164(raw: string | null | undefined, country = 'FR'): string |
   // understand into a French pattern is worse than leaving it alone.
   if (v.startsWith('+')) return /^\+\d{8,15}$/.test(v) ? v : null
   // ── LOCAL form, no dialling code ────────────────────────────────────────────
-  // The only place the country matters. Outside France we assume nothing: the
-  // national plans differ too much — Italy KEEPS its trunk zero, Spain has none.
-  // Guessing would produce a plausible falsehood.
-  if (country.toUpperCase() !== 'FR') return null
+  // The only place the country matters. A country whose plan leaves a single
+  // reading is converted; any other stays refused, because guessing would
+  // produce a plausible falsehood.
+  const c = country.toUpperCase()
+  if (c !== 'FR') {
+    const plan = LOCAL_PLANS[c]
+    if (!plan) return null
+    const nsn = plan.trunk
+      ? (v.startsWith('0') ? v.slice(1) : null)
+      : v
+    return nsn && plan.nsn.test(nsn) ? `+${plan.code}${nsn}` : null
+  }
 
   if (FR_TRUNK.test(v)) return `+33${v.slice(1)}`
 
