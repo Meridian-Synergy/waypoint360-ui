@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.23.1...v0.24.0) (2026-09-27)
+
+
+### Features
+
+* **telephone:** lire les formes locales sans ambiguïté en Espagne, Belgique, Suisse, Pays-Bas et Allemagne ([#111](https://github.com/Meridian-Synergy/waypoint360-ui/issues/111)) ([9783550](https://github.com/Meridian-Synergy/waypoint360-ui/commit/97835502f49dc3e19680b7d5e299be20ef6cb532))
+
 ## [0.23.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.23.0...v0.23.1) (2026-09-22)
 
 
