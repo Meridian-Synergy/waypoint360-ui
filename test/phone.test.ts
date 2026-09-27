@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { toE164, formatPhone, phoneCountryMismatch } from '../src/utils/phone'
+import { toE164, formatPhone, phoneCountryMismatch, exempleInternational, DIAL_CODES } from '../src/utils/phone'
 
 /**
  * ⚠️ CES CAS SONT PARTAGÉS AVEC L'API, mot pour mot.
@@ -182,5 +182,52 @@ describe('discordance entre le numéro et le pays de la fiche', () => {
     expect(phoneCountryMismatch('+33612345678', null)).toBeNull()
     expect(phoneCountryMismatch('0612345678', 'FR')).toBeNull()
     expect(phoneCountryMismatch('+33612345678', 'XX')).toBeNull()
+  })
+})
+
+// ── L'exemple affiché dans le champ, ajouté le 2026-09-27 ────────────────────
+describe('exempleInternational', () => {
+  it('donne la forme internationale du pays de la fiche', () => {
+    expect(exempleInternational('FR')).toBe('+33 6 12 34 56 78')
+    expect(exempleInternational('ch')).toBe('+41 79 123 45 67')
+    expect(exempleInternational('ES')).toBe('+34 612 34 56 78')
+  })
+
+  // ⛔ Plus jamais la forme locale française, qui s'affichait partout.
+  it('ne propose jamais une forme locale', () => {
+    for (const c of ['FR', 'BE', 'CH', 'DE', 'NL', 'ES', 'IT', 'PT', 'LU', 'GB', 'IE', 'AT', 'US', 'DK', null]) {
+      expect(exempleInternational(c), String(c)).toMatch(/^\+\d/)
+    }
+  })
+
+  // L'exemple doit être un numéro que le champ accepte : sinon il enseigne une
+  // saisie refusée.
+  it('chaque exemple est lui-même un numéro valide', () => {
+    for (const c of ['FR', 'BE', 'CH', 'LU', 'DE', 'NL', 'ES', 'IT', 'PT', 'GB', 'IE', 'AT']) {
+      expect(toE164(exempleInternational(c), c), c).not.toBeNull()
+    }
+  })
+
+  // ⛔ Le Danemark recevait l'exemple français : sa ligne manquait, et le repli
+  // allait à la France.
+  it('un pays proposé par l’app a son propre indicatif, jamais le +33', () => {
+    const APP = ['FR', 'BE', 'LU', 'DE', 'CH', 'NL', 'ES', 'IT', 'PT', 'GB', 'IE', 'AT',
+      'DK', 'SE', 'NO', 'FI', 'PL', 'CZ', 'SK', 'HU', 'RO', 'BG', 'HR', 'SI',
+      'GR', 'EE', 'LV', 'LT', 'MT', 'CY', 'IS', 'LI', 'US', 'CA',
+      'MC', 'AD', 'AU', 'NZ', 'JP', 'KR', 'SG', 'AE', 'SA', 'IL', 'IN', 'BR', 'MX', 'ZA']
+    for (const c of APP.filter(c => c !== 'FR')) {
+      expect(exempleInternational(c), c).not.toMatch(/^\+33\b/)
+      expect(toE164(exempleInternational(c), c), c).not.toBeNull()
+      // L'exemple porte l'indicatif du pays, et la table le connaît : sinon le
+      // contrôle de cohérence se tait sur ce pays.
+      expect(DIAL_CODES[c], c).toBeDefined()
+      expect(phoneCountryMismatch(toE164(exempleInternational(c), c), c), c).toBeNull()
+    }
+  })
+
+  it('sans pays, la France ; pays inconnu, un « + » nu', () => {
+    expect(exempleInternational(null)).toBe('+33 6 12 34 56 78')
+    expect(exempleInternational('')).toBe('+33 6 12 34 56 78')
+    expect(exempleInternational('XX')).toBe('+…')
   })
 })

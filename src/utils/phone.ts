@@ -134,6 +134,12 @@ export const DIAL_CODES: Record<string, string[]> = {
   BE: ['32'],  CH: ['41'],  DE: ['49'],  ES: ['34'],  IT: ['39'],
   PT: ['351'], LU: ['352'], NL: ['31'],  GB: ['44'],  IE: ['353'],
   US: ['1'],   CA: ['1'],                // one plan for North America
+  AT: ['43'],  DK: ['45'],  SE: ['46'],  NO: ['47'],  FI: ['358'], PL: ['48'],
+  CZ: ['420'], SK: ['421'], HU: ['36'],  RO: ['40'],  BG: ['359'], HR: ['385'],
+  SI: ['386'], GR: ['30'],  EE: ['372'], LV: ['371'], LT: ['370'], MT: ['356'],
+  CY: ['357'], IS: ['354'], LI: ['423'], MC: ['377'], AD: ['376'],
+  AU: ['61'],  NZ: ['64'],  JP: ['81'],  KR: ['82'],  SG: ['65'],  AE: ['971'],
+  SA: ['966'], IL: ['972'], IN: ['91'],  BR: ['55'],  MX: ['52'],  ZA: ['27'],
 }
 
 /**
@@ -163,4 +169,78 @@ export function phoneCountryMismatch(
 
   if (found && expected.includes(found)) return null
   return { expected, found }
+}
+
+/**
+ * Un exemple de numéro, au format INTERNATIONAL, pour le pays de la fiche.
+ *
+ * ⛔ LE CHAMP MONTRAIT « 06 12 34 56 78 », une forme locale française, partout,
+ * y compris sur une fiche suisse ou espagnole (signalé le 2026-09-27). On veut
+ * voir la forme qu'on attend : l'indicatif du pays, puis le numéro. Le champ
+ * accepte toujours les formes locales sans ambiguïté (cf. `LOCAL_PLANS`) ;
+ * l'exemple dit seulement la forme la plus sûre.
+ *
+ * Ce sont des numéros d'EXEMPLE, au format national usuel, jamais attribués à
+ * quelqu'un de précis. Un pays absent de la table retombe sur son indicatif
+ * seul, puis sur un « + » nu. Seule l'ABSENCE de pays vaut la France, comme
+ * `toE164` : c'est le cas des numéros personnels.
+ */
+const EXEMPLES: Record<string, string> = {
+  FR: '+33 6 12 34 56 78',
+  BE: '+32 470 12 34 56',
+  CH: '+41 79 123 45 67',
+  LU: '+352 621 123 456',
+  DE: '+49 151 23456789',
+  NL: '+31 6 12345678',
+  ES: '+34 612 34 56 78',
+  IT: '+39 312 345 6789',
+  PT: '+351 912 345 678',
+  GB: '+44 7400 123456',
+  IE: '+353 85 123 4567',
+  AT: '+43 664 1234567',
+  DK: '+45 20 12 34 56',
+  SE: '+46 70 123 45 67',
+  NO: '+47 412 34 567',
+  FI: '+358 40 123 4567',
+  PL: '+48 512 345 678',
+  CZ: '+420 601 123 456',
+  SK: '+421 912 345 678',
+  HU: '+36 20 123 4567',
+  RO: '+40 712 345 678',
+  BG: '+359 87 123 4567',
+  HR: '+385 91 234 5678',
+  SI: '+386 31 234 567',
+  GR: '+30 691 234 5678',
+  EE: '+372 5123 4567',
+  LV: '+371 21 234 567',
+  LT: '+370 612 34567',
+  MT: '+356 7912 3456',
+  CY: '+357 96 123456',
+  IS: '+354 611 1234',
+  LI: '+423 660 1234',
+  US: '+1 202 555 0123',
+  CA: '+1 416 555 0123',
+  MC: '+377 6 12 34 56 78',
+  AD: '+376 312 345',
+  AU: '+61 412 345 678',
+  NZ: '+64 21 123 4567',
+  JP: '+81 90 1234 5678',
+  KR: '+82 10 1234 5678',
+  SG: '+65 8123 4567',
+  AE: '+971 50 123 4567',
+  SA: '+966 50 123 4567',
+  IL: '+972 50 123 4567',
+  IN: '+91 98765 43210',
+  BR: '+55 11 91234 5678',
+  MX: '+52 55 1234 5678',
+  ZA: '+27 82 123 4567',
+}
+
+export function exempleInternational(country: string | null | undefined = 'FR'): string {
+  const c = String(country ?? '').trim().toUpperCase() || 'FR'
+  if (EXEMPLES[c]) return EXEMPLES[c]!
+  // ⛔ Un pays CONNU mais absent de la table ne reçoit jamais l'exemple français :
+  // un « +33 » sur une fiche suédoise enseignerait le mauvais indicatif.
+  const code = DIAL_CODES[c]?.[0]
+  return code ? `+${code} …` : '+…'
 }
