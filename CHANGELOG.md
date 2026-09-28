@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.24.0...v0.25.0) (2026-09-27)
+
+
+### Features
+
+* **phone:** exemple de saisie au format international selon le pays ([#113](https://github.com/Meridian-Synergy/waypoint360-ui/issues/113)) ([d43eea2](https://github.com/Meridian-Synergy/waypoint360-ui/commit/d43eea2564addcd529715fa74672119b715d5bf7))
+
 ## [0.24.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.23.1...v0.24.0) (2026-09-27)
 
 
