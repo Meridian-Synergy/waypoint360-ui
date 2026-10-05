@@ -42,7 +42,9 @@ const FR_TRUNK = /^0[1-9]\d{8}$/
  * became `+33936555555` — a French number that does not exist — because the
  * field could not read a Spanish local form and fell back on France.
  */
-const LOCAL_PLANS: Record<string, { code: string; trunk: boolean; nsn: RegExp }> = {
+const LOCAL_PLANS: Record<string, { code: string; trunk: boolean; nsn: RegExp; prefix?: string }> = {
+  // `prefix`: a national prefix that MAY be written and is dropped, tried only when
+  // the digits alone are not a valid number.
   // Nine digits, no trunk prefix: 6 and 7 mobile, 8 and 9 fixed.
   ES: { code: '34', trunk: false, nsn: /^[6-9]\d{8}$/ },
   // Eight digits for a fixed line, nine for a mobile (045x to 049x).
@@ -55,6 +57,16 @@ const LOCAL_PLANS: Record<string, { code: string; trunk: boolean; nsn: RegExp }>
   // unambiguous (drop the 0, prefix +49); only the length is loose, and E.164
   // caps the whole number at fifteen digits.
   DE: { code: '49', trunk: true, nsn: /^[1-9]\d{5,12}$/ },
+  // North American Numbering Plan, one plan for the US and Canada: ten digits, and
+  // neither the area code nor the exchange starts with 0 or 1. The long-distance 1
+  // may be written in front; it is dropped.
+  US: { code: '1', trunk: false, nsn: /^[2-9]\d{2}[2-9]\d{6}$/, prefix: '1' },
+  CA: { code: '1', trunk: false, nsn: /^[2-9]\d{2}[2-9]\d{6}$/, prefix: '1' },
+  // Brazil: a two-digit area code (DDD, never a 0), then nine digits for a mobile
+  // (starting with 9) or eight for a landline (2 to 5). A long-distance 0 may be
+  // written in front; the carrier-selection form (0 + carrier + DDD) is longer and
+  // stays refused, since dropping the carrier would mean guessing it.
+  BR: { code: '55', trunk: false, nsn: /^[1-9]{2}(9\d{8}|[2-5]\d{7})$/, prefix: '0' },
 }
 
 /**
@@ -102,9 +114,10 @@ export function toE164(raw: string | null | undefined, country = 'FR'): string |
   if (c !== 'FR') {
     const plan = LOCAL_PLANS[c]
     if (!plan) return null
-    const nsn = plan.trunk
+    let nsn = plan.trunk
       ? (v.startsWith('0') ? v.slice(1) : null)
       : v
+    if (nsn && plan.prefix && !plan.nsn.test(nsn) && nsn.startsWith(plan.prefix)) nsn = nsn.slice(plan.prefix.length)
     return nsn && plan.nsn.test(nsn) ? `+${plan.code}${nsn}` : null
   }
 
