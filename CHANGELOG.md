@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.26.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.25.0...v0.26.0) (2026-10-05)
+
+
+### Features
+
+* **certifications:** titres d'autres juridictions, nommés par l'appelant ([#115](https://github.com/Meridian-Synergy/waypoint360-ui/issues/115)) ([dc3f2c2](https://github.com/Meridian-Synergy/waypoint360-ui/commit/dc3f2c28a65672bfb04234e22fd96f331672c7ce))
+* **phone:** numéros locaux américains, canadiens et brésiliens ([#117](https://github.com/Meridian-Synergy/waypoint360-ui/issues/117)) ([82739cb](https://github.com/Meridian-Synergy/waypoint360-ui/commit/82739cb0c16dfbf98625cf444abdff017204496a))
+
 ## [0.25.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.24.0...v0.25.0) (2026-09-27)
 
 
