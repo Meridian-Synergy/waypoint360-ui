@@ -20,7 +20,9 @@ const ADDITIONAL_KEYS = ['certibiocide', 'certiphyto'] as const
 type DgacKey       = typeof EU_KEYS[number] | typeof NATIONAL_KEYS[number]
 type AdditionalKey = typeof ADDITIONAL_KEYS[number]
 
-export type CertKey = DgacKey | AdditionalKey
+// Hors du groupe EASA et français, un titre se nomme par sa clé (Part 107, TC Basic…) :
+// la liste n'est plus fermée, elle vient de l'appelant (`otherLabels`).
+export type CertKey = DgacKey | AdditionalKey | (string & {})
 
 // A cert is either a plain held flag (legacy) or held + obtention date + explicit
 // expiry date + issuing country. The official EU competency certificate prints the
@@ -36,6 +38,7 @@ export interface WpCertificationsValue {
   cats?:         CertEntry
   certibiocide?: CertEntry
   certiphyto?:   CertEntry
+  [key: string]: CertEntry | undefined
 }
 
 export interface WpCertificationsDateLabels {
@@ -63,6 +66,10 @@ const props = withDefaults(defineProps<{
   hint?:             string
   additionalTitle?:  string
   additionalLabels?: Partial<Record<AdditionalKey, string>>
+  /** Titres d'autres juridictions (Part 107, Transport Canada…), dans l'ordre d'affichage. */
+  otherLabels?:      Record<string, string>
+  /** Intitulé du groupe de `otherLabels`. */
+  otherTitle?:       string
   /** Show obtention date + computed expiry/status under each held cert. */
   withDates?:        boolean
   /** Validity period in years (EU drone competency certs = 5). */
@@ -84,6 +91,8 @@ const props = withDefaults(defineProps<{
   hint:             undefined,
   additionalTitle:  undefined,
   additionalLabels: undefined,
+  otherLabels:      undefined,
+  otherTitle:       undefined,
   withDates:        false,
   validityYears:    5,
   validityByKey:    undefined,
@@ -182,7 +191,8 @@ const hasAdditional = computed(() =>
   !!props.additionalLabels && Object.keys(props.additionalLabels).length > 0
 )
 
-const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
+const OTHER_KEYS = computed<string[]>(() => Object.keys(props.otherLabels ?? {}))
+const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS, ...OTHER_KEYS.value])
 
 /**
  * Le titre à insérer AVANT une clé donnée, ou null.
@@ -195,7 +205,12 @@ const RENDER_KEYS = computed<CertKey[]>(() => [...DGAC_KEYS])
 function titreAvant(key: CertKey): string | null {
   if (key === EU_KEYS[0]) return props.euTitle ?? null
   if (key === NATIONAL_KEYS[0]) return props.nationalTitle ?? null
+  if (key === OTHER_KEYS.value[0]) return props.otherTitle ?? null
   return null
+}
+
+function labelOf(key: CertKey): string {
+  return props.labels[key as DgacKey] ?? props.otherLabels?.[key] ?? key
 }
 </script>
 
@@ -216,7 +231,7 @@ function titreAvant(key: CertKey): string | null {
               <path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </span>
-          <span class="wp-certs__label">{{ labels[key as DgacKey] }}</span>
+          <span class="wp-certs__label">{{ labelOf(key) }}</span>
         </label>
         <div v-if="richMode && isHeld(modelValue[key])" class="wp-certs__meta">
           <template v-if="withCountry">
