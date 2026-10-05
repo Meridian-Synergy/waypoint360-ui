@@ -116,6 +116,16 @@ describe('toE164 — formes locales lues sans deviner', () => {
     ['089 12345',       'DE', '+498912345'],
     // Le code pays s'écrit en minuscules aussi.
     ['936555555',       'es', '+34936555555'],
+    // Plan nord-américain (États-Unis, Canada) : dix chiffres, l'indicatif de zone et le
+    // central ne commencent ni par 0 ni par 1. Le 1 d'appel interurbain peut s'écrire.
+    ['(202) 555-0123',  'US', '+12025550123'],
+    ['202-555-0123',    'US', '+12025550123'],
+    ['1 202 555 0123',  'US', '+12025550123'],
+    ['416 555 0123',    'CA', '+14165550123'],
+    // Brésil : DDD à deux chiffres, puis neuf pour un mobile (9…) ou huit pour un fixe (2 à 5).
+    ['(11) 91234-5678', 'BR', '+5511912345678'],
+    ['(11) 3456-7890',  'BR', '+551134567890'],
+    ['011 91234-5678',  'BR', '+5511912345678'],
   ]
   for (const [v, pays, attendu] of lues) {
     it(`« ${v} » en ${pays} → ${attendu}`, () => expect(toE164(v, pays)).toBe(attendu))
@@ -144,6 +154,12 @@ describe('toE164 — formes locales lues sans deviner', () => {
     ['333 1234567',   'IT'],
     // Un pays hors de la table reste refusé, comme avant.
     ['0123456789',    'AT'],
+    ['555-0123',            'US'],   // sept chiffres : l'indicatif de zone manque
+    ['(102) 555-0123',      'US'],   // aucun indicatif de zone ne commence par 1
+    ['202 155 0123',        'US'],   // ni aucun central
+    ['0 21 11 91234-5678',  'BR'],   // choix de l'opérateur : on ne le retire pas en devinant
+    ['(11) 81234-5678',     'BR'],   // neuf chiffres qui ne commencent pas par 9
+    ['(01) 91234-5678',     'BR'],   // aucun DDD ne contient de 0
   ]
   for (const [v, pays] of refusees) {
     it(`refuse « ${v} » en ${pays}`, () => expect(toE164(v, pays)).toBeNull())
