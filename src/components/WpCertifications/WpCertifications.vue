@@ -445,8 +445,16 @@ const items = computed<CertRenderItem[]>(() => {
 .wp-certs__status--soon    { color: #eab308; }
 .wp-certs__status--expired { color: #ef4444; }
 
+/*
+ * A group heading belongs to the rows BELOW it: space above (except for the
+ * first one), none below beyond the grid gap. Seen on the 2026-10-13 capture,
+ * headings sat flush against the previous group's last row.
+ */
+.wp-certs__title--groupe { margin: 14px 0 0; }
+.wp-certs__title--groupe:first-child { margin-top: 0; }
+
 .wp-certs__group-hint {
-  margin: -8px 0 4px;
+  margin: -6px 0 0;
   font-size: 0.6875rem;
   color: var(--wp-color-text-sub, var(--wp-color-silver, #7A7D8A));
 }
