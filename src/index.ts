@@ -66,6 +66,8 @@ export type { SocialLinkItem, SocialNetwork } from './components/WpSocialLinks/W
 
 export { default as WpCertifications } from './components/WpCertifications/WpCertifications.vue'
 export type { WpCertificationsValue, WpCertificationsDateLabels, WpCertCountryOption } from './components/WpCertifications/WpCertifications.vue'
+export { certRenderItems } from './components/WpCertifications/certGroups'
+export type { WpCertGroup, CertRenderItem } from './components/WpCertifications/certGroups'
 
 export { default as WpPatch          } from './components/WpPatch/WpPatch.vue'
 export type { WpPatchShape, WpPatchTier, WpPatchIcon } from './components/WpPatch/WpPatch.vue'

@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { certRenderItems, type CertRenderItem, type WpCertGroup } from './certGroups'
 
-// ⚠️ La liste s'appelait DGAC_KEYS — du nom de l'AUTORITÉ FRANÇAISE — et
-// mélangeait deux natures. A1/A3, A2 CofC, STS-01 et STS-02 sont des titres
-// EASA, identiques dans toute l'Union : un télépilote allemand les reconnaît.
-// Le CATS n'existe QU'EN FRANCE, où il a remplacé le CATT au 2026-01-01.
+// ⛔ CORRECTED 2026-10-13: this comment used to say the CATS « exists only in
+// France ». False. The DGAC's own STS transition guide defines the CATS
+// (« Certificat d'Aptitude Théorique pour les Scénarios standard ») as the single
+// theoretical exam of Regulation (EU) 2019/947, Annex 1 Appendix A, also offered
+// online in the Netherlands, Italy, Latvia, Cyprus and Poland. The French
+// national title it replaced was the CATT, gone with all national titles on
+// 2026-01-01. All five keys below are EASA titles; NATIONAL_KEYS is kept only for
+// the legacy `nationalTitle` prop. Callers should prefer `groups`.
 //
 // ⚠️ ON SÉPARE, ON NE MASQUE PAS. Filtrer sur le pays de l'organisation
 // reposerait sur un champ dont on sait qu'il est parfois faux — mesuré le
@@ -86,6 +91,13 @@ const props = withDefaults(defineProps<{
   countryLabel?:     string
   /** Country pre-selected when a cert is first marked as held. */
   defaultCountry?:   string | null
+  /**
+   * Titles grouped by issuing authority, in display order. When set, it replaces
+   * the legacy layout (`labels`, `euTitle`, `nationalTitle`, `otherLabels`).
+   */
+  groups?:           WpCertGroup[]
+  /** Label of the button unfolding the `collapsed` groups (e.g. « Other countries »). */
+  othersLabel?:      string
 }>(), {
   title:            undefined,
   hint:             undefined,
@@ -101,6 +113,8 @@ const props = withDefaults(defineProps<{
   countryOptions:   () => [],
   countryLabel:     undefined,
   defaultCountry:   null,
+  groups:           undefined,
+  othersLabel:      undefined,
 })
 
 const emit = defineEmits<{ 'update:modelValue': [value: WpCertificationsValue] }>()
@@ -212,6 +226,26 @@ function titreAvant(key: CertKey): string | null {
 function labelOf(key: CertKey): string {
   return props.labels[key as DgacKey] ?? props.otherLabels?.[key] ?? key
 }
+
+const expanded = ref(false)
+
+/**
+ * ONE render list for both layouts, so the row markup exists once (see
+ * `titreAvant`). Legacy layout: the fixed EASA keys then `otherLabels`, with the
+ * legacy headings. Grouped layout: `certRenderItems`.
+ */
+const items = computed<CertRenderItem[]>(() => {
+  if (props.groups?.length) {
+    return certRenderItems(props.groups, k => isHeld(props.modelValue[k]), expanded.value)
+  }
+  const out: CertRenderItem[] = []
+  for (const key of RENDER_KEYS.value) {
+    const t = titreAvant(key)
+    if (t) out.push({ kind: 'title', id: `title-${key}`, text: t })
+    out.push({ kind: 'row', id: `row-${key}`, key, label: labelOf(key) })
+  }
+  return out
+})
 </script>
 
 <template>
@@ -221,37 +255,41 @@ function labelOf(key: CertKey): string {
       <!-- ⚠️ Le titre de groupe glisse DANS la même grille : deux grilles
            séparées voudraient dire deux balisages de rangée, donc deux
            occasions de diverger. -->
-      <template v-for="key in RENDER_KEYS" :key="key">
-      <p v-if="titreAvant(key)" class="wp-certs__title wp-certs__title--groupe">{{ titreAvant(key) }}</p>
-      <div class="wp-certs__row">
+      <template v-for="item in items" :key="item.id">
+      <template v-if="item.kind === 'title'">
+        <p class="wp-certs__title wp-certs__title--groupe">{{ item.text }}</p>
+        <p v-if="item.hint" class="wp-certs__group-hint">{{ item.hint }}</p>
+      </template>
+      <button v-else-if="item.kind === 'toggle'" type="button" class="wp-certs__toggle" @click="expanded = true">{{ othersLabel }}</button>
+      <div v-else class="wp-certs__row">
         <label class="wp-certs__item">
-          <input type="checkbox" :checked="isHeld(modelValue[key])" class="wp-certs__native" @change="toggle(key)" />
-          <span class="wp-certs__check" :class="{ 'wp-certs__check--on': isHeld(modelValue[key]) }">
-            <svg v-if="isHeld(modelValue[key])" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <input type="checkbox" :checked="isHeld(modelValue[item.key])" class="wp-certs__native" @change="toggle(item.key)" />
+          <span class="wp-certs__check" :class="{ 'wp-certs__check--on': isHeld(modelValue[item.key]) }">
+            <svg v-if="isHeld(modelValue[item.key])" width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
               <path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </span>
-          <span class="wp-certs__label">{{ labelOf(key) }}</span>
+          <span class="wp-certs__label">{{ item.label }}</span>
         </label>
-        <div v-if="richMode && isHeld(modelValue[key])" class="wp-certs__meta">
+        <div v-if="richMode && isHeld(modelValue[item.key])" class="wp-certs__meta">
           <template v-if="withCountry">
             <label class="wp-certs__meta-label">{{ countryLabel }}</label>
-            <select class="wp-certs__select" :value="countryOf(modelValue[key]) ?? defaultCountry ?? ''" @change="setCountry(key, $event)">
+            <select class="wp-certs__select" :value="countryOf(modelValue[item.key]) ?? defaultCountry ?? ''" @change="setCountry(item.key, $event)">
               <option value="">—</option>
               <option v-for="c in countryOptions" :key="c.value" :value="c.value">{{ c.label }}</option>
             </select>
           </template>
           <template v-if="withDates && dateLabels">
             <label class="wp-certs__meta-label">{{ dateLabels.obtained }}</label>
-            <input type="date" class="wp-certs__date-input" :value="obtainedOf(modelValue[key]) ?? ''" @change="setDate(key, $event)" />
+            <input type="date" class="wp-certs__date-input" :value="obtainedOf(modelValue[item.key]) ?? ''" @change="setDate(item.key, $event)" />
             <template v-if="dateLabels.expiresInput">
               <label class="wp-certs__meta-label">{{ dateLabels.expiresInput }}</label>
-              <input type="date" class="wp-certs__date-input" :value="expiresOf(modelValue[key]) ?? ''" @change="setExpiry(key, $event)" />
+              <input type="date" class="wp-certs__date-input" :value="expiresOf(modelValue[item.key]) ?? ''" @change="setExpiry(item.key, $event)" />
             </template>
-            <span v-if="validityInfoText(key)" class="wp-certs__validity">{{ validityInfoText(key) }}</span>
-            <template v-if="expiry(key)">
-              <span class="wp-certs__expiry">{{ expiresText(key) }}</span>
-              <span class="wp-certs__status" :class="`wp-certs__status--${status(key)}`">{{ statusText(key) }}</span>
+            <span v-if="validityInfoText(item.key)" class="wp-certs__validity">{{ validityInfoText(item.key) }}</span>
+            <template v-if="expiry(item.key)">
+              <span class="wp-certs__expiry">{{ expiresText(item.key) }}</span>
+              <span class="wp-certs__status" :class="`wp-certs__status--${status(item.key)}`">{{ statusText(item.key) }}</span>
             </template>
           </template>
         </div>
@@ -406,6 +444,25 @@ function labelOf(key: CertKey): string {
 .wp-certs__status--valid   { color: #16a34a; }
 .wp-certs__status--soon    { color: #eab308; }
 .wp-certs__status--expired { color: #ef4444; }
+
+.wp-certs__group-hint {
+  margin: -8px 0 4px;
+  font-size: 0.6875rem;
+  color: var(--wp-color-text-sub, var(--wp-color-silver, #7A7D8A));
+}
+
+/* Unfolds the other jurisdictions: a quiet text button, not a call to action. */
+.wp-certs__toggle {
+  align-self: flex-start;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 0.8125rem;
+  color: var(--wp-color-sky, #00AAEF);
+  cursor: pointer;
+}
+.wp-certs__toggle:hover { text-decoration: underline; }
 
 .wp-certs__hint {
   margin-top: 10px;
