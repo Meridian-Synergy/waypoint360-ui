@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.26.0...v0.27.0) (2026-10-13)
+
+
+### Features
+
+* **certifications:** group titles by issuing authority ([#118](https://github.com/Meridian-Synergy/waypoint360-ui/issues/118)) ([855e441](https://github.com/Meridian-Synergy/waypoint360-ui/commit/855e44163e65f398f777fa59b24ccf35c5eecd98))
+
 ## [0.26.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.25.0...v0.26.0) (2026-10-05)
 
 
