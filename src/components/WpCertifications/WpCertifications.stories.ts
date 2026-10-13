@@ -76,14 +76,12 @@ export const Dark: Story = {
 }
 
 /**
- * ⚠️ Deux portées, et c'est le point de l'histoire : A1/A3, A2 CofC, STS-01 et
- * STS-02 sont des titres EASA, identiques dans toute l'Union. Le CATS n'existe
- * qu'en France.
+ * Legacy layout (`euTitle` / `nationalTitle`), kept for backward compatibility.
  *
- * On les SÉPARE au lieu de masquer le CATS hors de France : un filtre reposerait
- * sur le pays de l'organisation, champ parfois faux, et priverait de sa case un
- * Français installé à l'étranger. Une étiquette ne coûte qu'une ligne ; un
- * filtre coûte un fait.
+ * ⛔ CORRECTED 2026-10-13: this story used to say the CATS « exists only in
+ * France ». It does not: the CATS is the EASA theoretical exam for standard
+ * scenarios (Reg. (EU) 2019/947, Annex 1 Appendix A), per the DGAC's STS guide.
+ * New callers should use `groups` (see `ByAuthority`).
  */
 export const ParPortee: Story = {
   args: {
@@ -94,6 +92,33 @@ export const ParPortee: Story = {
     },
     euTitle: 'Certifications européennes',
     nationalTitle: 'Certifications nationales',
+    withDates: true,
+  },
+}
+
+/**
+ * Titles grouped by issuing authority. The caller decides the order and which
+ * groups fold under « Other countries »; a folded group unfolds by itself when
+ * one of its titles is held (here the Part 107), so a held title is never hidden.
+ */
+export const ByAuthority: Story = {
+  args: {
+    modelValue: { a1_a3: true, part_107: { held: true, obtained: '2025-03-01', country: 'US' } },
+    labels: { a1_a3: '', a2_cofc: '', cats: '', sts_01: '', sts_02: '' },
+    groups: [
+      {
+        id: 'easa', title: 'Europe — EASA',
+        hint: 'Issued in France by the DGAC, valid in the EU, Switzerland, Norway, Iceland and Liechtenstein',
+        labels: {
+          a1_a3: 'A1/A3: Open subcategories', a2_cofc: 'A2 CofC: Certificate of competency',
+          cats: 'CATS: Theoretical knowledge, standard scenarios', sts_01: 'STS-01: Standard scenario VLOS', sts_02: 'STS-02: Standard scenario BVLOS',
+        },
+      },
+      { id: 'trade', title: 'Trade permits (France)', labels: { certibiocide: 'Certibiocide', certiphyto: 'Certiphyto' } },
+      { id: 'faa', title: 'United States — FAA', labels: { part_107: 'Part 107: Remote pilot certificate' }, collapsed: true },
+      { id: 'tc', title: 'Canada — Transport Canada', labels: { tc_basic: 'Basic operations', tc_advanced: 'Advanced operations' }, collapsed: true },
+    ],
+    othersLabel: 'Other countries',
     withDates: true,
   },
 }
