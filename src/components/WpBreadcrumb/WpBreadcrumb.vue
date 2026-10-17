@@ -63,6 +63,5 @@ defineProps<{
   font-weight: 500;
   min-width: 0;
   overflow-wrap: anywhere;
-  white-space: nowrap;
 }
 </style>
