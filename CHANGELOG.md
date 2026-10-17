@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.27.0...v0.27.1) (2026-10-17)
+
+
+### Bug Fixes
+
+* **breadcrumb:** le titre de la page passe à la ligne sur un écran étroit ([#120](https://github.com/Meridian-Synergy/waypoint360-ui/issues/120)) ([b8750c1](https://github.com/Meridian-Synergy/waypoint360-ui/commit/b8750c14f803ed980a3e72580cdb8dbcc677a933))
+
 ## [0.27.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.26.0...v0.27.0) (2026-10-13)
 
 
