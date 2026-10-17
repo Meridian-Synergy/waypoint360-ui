@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest run --config vitest.guards.config.ts",
+    "test:stories": "vitest run --config vitest.config.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint .",
