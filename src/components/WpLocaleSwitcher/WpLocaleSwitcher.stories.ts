@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { expect, userEvent, within } from 'storybook/test'
+import { expect, fn, userEvent, within } from 'storybook/test'
 import WpLocaleSwitcher from './WpLocaleSwitcher.vue'
 
 const meta: Meta<typeof WpLocaleSwitcher> = {
@@ -32,7 +32,11 @@ export const Light: Story = {
 // étaient des `<li>` sans tabindex ni gestion des touches. Sur les trois produits,
 // changer de langue exigeait une souris.
 export const KeyboardSelection: Story = {
-  args: { locales, currentLocale: 'fr' },
+  // ⚠️ L'ESPION EST DÉCLARÉ, JAMAIS SUPPOSÉ. Storybook 10 ne crée plus d'espion
+  // implicite pour un `on*` : sans `fn()`, `args.onSelect` valait `undefined` et
+  // l'assertion levait « is not a spy ». Personne ne l'a vu, le banc de tests ne
+  // chargeait aucune story jusqu'au 2026-10-17.
+  args: { locales, currentLocale: 'fr', onSelect: fn() },
   parameters: { backgrounds: { default: 'dark' } },
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement)
@@ -64,7 +68,7 @@ export const KeyboardSelection: Story = {
 // Échap doit annuler sans rien choisir — sinon toute exploration de la liste
 // devient un engagement.
 export const EscapeCancels: Story = {
-  args: { locales, currentLocale: 'fr' },
+  args: { locales, currentLocale: 'fr', onSelect: fn() },
   parameters: { backgrounds: { default: 'dark' } },
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement)

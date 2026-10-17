@@ -21,5 +21,15 @@ jobs:
       - run: pnpm install
       - name: Lint
         run: pnpm lint
+      # ⛔ AUCUN TEST NE TOURNAIT ICI jusqu'au 2026-10-17 : ni les gardes, ni les
+      # stories. Le banc des stories est resté en panne sans que personne le voie
+      # (plugin Vue absent, 0 story chargée), et deux stories de WpLocaleSwitcher
+      # étaient fausses sans échouer. Dépôt public : ces minutes ne coûtent rien.
+      - name: Gardes
+        run: pnpm test
+      - name: Chromium pour les stories
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Stories (navigateur)
+        run: pnpm test:stories
       - name: Build Storybook
         run: pnpm build-storybook

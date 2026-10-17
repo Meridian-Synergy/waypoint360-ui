@@ -51,10 +51,17 @@ defineProps<{
   line-height: 1;
 }
 
+/* ⛔ LE MAILLON COURANT PASSE À LA LIGNE, LES LIENS NON. C'est le titre de la
+   page, donc le plus long : en `nowrap`, il faisait déborder 10 guides sur 29 de
+   waypoint360.eu à 390 px (2026-10-17), la page entière défilant de côté.
+   `min-width: 0` lui permet de rétrécir dans le flex ; `overflow-wrap` coupe un
+   mot sans espace plus large que l'écran. Les liens restent sur une ligne :
+   ils sont courts, et un « Accueil » coupé en deux se lirait mal. */
 .wp-bc-current {
   font-size: 0.8125rem;
   color: var(--wp-color-navy, #1B2B56);
   font-weight: 500;
-  white-space: nowrap;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 </style>
