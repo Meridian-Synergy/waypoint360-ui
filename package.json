@@ -32,7 +32,7 @@
     "eslint": "^10.7.0",
     "flag-icons": "^7.5.0",
     "pdfjs-dist": "^6.3.289",
-    "playwright": "^1.58.2",
+    "playwright": "^1.61.1",
     "sql.js": "^1.14.2",
     "storybook": "^10.2.15",
     "typescript": "^5.9.3",
