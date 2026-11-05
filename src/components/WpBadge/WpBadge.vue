@@ -3,14 +3,14 @@ import { computed } from 'vue'
 
 const props = withDefaults(defineProps<{
   label:    string
-  variant?: 'active' | 'inactive' | 'pending' | 'alert' | 'warning' | 'navy' | 'sky' | 'orange'
+  variant?: 'active' | 'inactive' | 'pending' | 'alert' | 'warning' | 'info' | 'navy' | 'sky' | 'orange'
   dot?:     boolean
 }>(), {
   variant: 'active',
   dot:     true,
 })
 
-// The status dot only makes sense on status variants (not navy/sky/orange labels).
+// The status dot only makes sense on status variants (not info/navy/sky/orange labels).
 const isStatusVariant = computed(() => STATUS_VARIANTS.includes(props.variant))
 </script>
 
@@ -56,6 +56,10 @@ const STATUS_VARIANTS = ['active', 'inactive', 'pending', 'alert', 'warning']
 .wp-badge--pending  { background: #e6f6fd; color: #0086be; border-color: #bae8fb; }
 .wp-badge--alert    { background: #fde9e4; color: #c94820; border-color: #fcd3c8; }
 .wp-badge--warning  { background: #fef9c3; color: #a16207; border-color: #fde68a; }
+
+/* Soft label variant: same light sky as `pending`, but it states a fact (an account
+   type, a category), not a status, so it never shows the dot. */
+.wp-badge--info     { background: #e6f6fd; color: #0086be; border-color: #bae8fb; }
 
 /* Solid variants */
 .wp-badge--navy   { background: var(--wp-color-navy, #1B2B56);   color: var(--wp-color-white, #FFFFFF); }
