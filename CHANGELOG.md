@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.28.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.27.1...v0.28.0) (2026-11-05)
+
+
+### Features
+
+* **badge:** variante info, libellé bleu clair sans pastille ([#124](https://github.com/Meridian-Synergy/waypoint360-ui/issues/124)) ([61134b7](https://github.com/Meridian-Synergy/waypoint360-ui/commit/61134b71b25a8ec50217febfa917ff45f1e821aa))
+
 ## [0.27.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.27.0...v0.27.1) (2026-10-17)
 
 
