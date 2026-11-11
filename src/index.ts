@@ -8,6 +8,7 @@ export type { WpColumn }               from './components/WpDataTable/WpDataTabl
 export { default as WpPagination     } from './components/WpPagination/WpPagination.vue'
 export { default as WpCarousel       } from './components/WpCarousel/WpCarousel.vue'
 export { default as WpBadge          } from './components/WpBadge/WpBadge.vue'
+export { default as WpAiMark         } from './components/WpAiMark/WpAiMark.vue'
 export { default as WpInput          } from './components/WpInput/WpInput.vue'
 export { default as WpField          } from './components/WpField/WpField.vue'
 export { default as WpTextarea       } from './components/WpTextarea/WpTextarea.vue'
