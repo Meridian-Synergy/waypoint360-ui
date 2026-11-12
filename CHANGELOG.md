@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.29.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.28.0...v0.29.0) (2026-11-12)
+
+
+### Features
+
+* **ai-mark:** repère WpAiMark pour les contenus produits par WP360 AI ([#126](https://github.com/Meridian-Synergy/waypoint360-ui/issues/126)) ([a086663](https://github.com/Meridian-Synergy/waypoint360-ui/commit/a0866634c1b9fac443361797f93ec1fef3914de0))
+
 ## [0.28.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.27.1...v0.28.0) (2026-11-05)
 
 
