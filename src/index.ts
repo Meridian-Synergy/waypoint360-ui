@@ -34,6 +34,9 @@ export type { LocaleOption }           from './components/WpLocaleSwitcher/WpLoc
 export { default as WpContextSwitcher } from './components/WpContextSwitcher/WpContextSwitcher.vue'
 export type { ContextOption, Universe } from './components/WpContextSwitcher/WpContextSwitcher.vue'
 
+export { default as WpTabs           } from './components/WpTabs/WpTabs.vue'
+export type { WpTabItem }              from './components/WpTabs/WpTabs.vue'
+
 export { default as WpBreadcrumb     } from './components/WpBreadcrumb/WpBreadcrumb.vue'
 export type { BreadcrumbItem }         from './components/WpBreadcrumb/WpBreadcrumb.vue'
 
