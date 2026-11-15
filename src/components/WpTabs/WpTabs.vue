@@ -48,7 +48,8 @@ function revealCurrent() {
   }
 }
 onMounted(revealCurrent)
-watch(() => props.current, () => nextTick(revealCurrent))
+// Counters often arrive after the first render and widen the tabs, pushing the current one out of view again.
+watch([() => props.current, () => props.items], () => nextTick(revealCurrent), { deep: true })
 
 const linkProps = (item: WpTabItem) => (props.as === 'a' ? { href: item.to } : { to: item.to })
 </script>

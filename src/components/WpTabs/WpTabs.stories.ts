@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { onMounted, ref } from 'vue'
 import { expect, fn, userEvent, within } from 'storybook/test'
 import WpTabs from './WpTabs.vue'
 
@@ -68,6 +69,33 @@ export const OnPhone: Story = {
     await expect(nav.getBoundingClientRect().width).toBeLessThanOrEqual(box.clientWidth + 0.5)
     await expect(bar.scrollWidth).toBeGreaterThan(bar.clientWidth)
     const current = bar.querySelector<HTMLElement>('[aria-current="page"]')!
+    const b = bar.getBoundingClientRect()
+    const r = current.getBoundingClientRect()
+    await expect(r.right).toBeLessThanOrEqual(b.right + 0.5)
+    await expect(r.left).toBeGreaterThanOrEqual(b.left - 0.5)
+  },
+}
+
+/**
+ * ⚠️ COUNTERS ARRIVING AFTER THE FIRST RENDER. Measured in waypoint360-app on 2026-11-15: the
+ * counters come from a second request, widen every tab, and the current tab, revealed at
+ * mount, ended up cut at the right edge of a phone screen.
+ */
+export const OnPhoneWithLateCounts: Story = {
+  render: () => ({
+    components: { WpTabs },
+    setup() {
+      const items = ref(SORA_TABS.map(t => ({ ...t, count: undefined as string | undefined })))
+      onMounted(() => setTimeout(() => { items.value = SORA_TABS.map(t => ({ ...t, count: t.count })) }, 50))
+      return { items }
+    },
+    template: '<div data-testid="phone" style="width: 342px"><WpTabs :items="items" current="demonstration" aria-label="Parties de la SORA" /></div>',
+  }),
+  play: async ({ canvasElement }) => {
+    const bar = canvasElement.querySelector<HTMLElement>('.wp-tabs__bar')!
+    await new Promise(r => setTimeout(r, 200))
+    const current = bar.querySelector<HTMLElement>('[aria-current="page"]')!
+    await expect(current).toHaveTextContent('12/48')
     const b = bar.getBoundingClientRect()
     const r = current.getBoundingClientRect()
     await expect(r.right).toBeLessThanOrEqual(b.right + 0.5)
