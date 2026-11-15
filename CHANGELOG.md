@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.30.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.29.0...v0.30.0) (2026-11-15)
+
+
+### Features
+
+* **tabs:** WpTabs, navigation tabs where each tab is a link with its own address ([#128](https://github.com/Meridian-Synergy/waypoint360-ui/issues/128)) ([37c22e9](https://github.com/Meridian-Synergy/waypoint360-ui/commit/37c22e9986fa0ae97ab95e83760575ea5078b898))
+
+
+### Bug Fixes
+
+* **tabs:** bring the current tab back into view when counters arrive after the first render ([#130](https://github.com/Meridian-Synergy/waypoint360-ui/issues/130)) ([4b60d78](https://github.com/Meridian-Synergy/waypoint360-ui/commit/4b60d78e5ef4b6ec9d2b5dea52b550eaae25bed3))
+
 ## [0.29.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.28.0...v0.29.0) (2026-11-12)
 
 
