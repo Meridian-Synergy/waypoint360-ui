@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.1](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.30.0...v0.30.1) (2026-11-25)
+
+
+### Bug Fixes
+
+* **modal:** WpModal sur l'élément natif &lt;dialog&gt;, Échap, focus et rôle annoncé ([#131](https://github.com/Meridian-Synergy/waypoint360-ui/issues/131)) ([baac0c6](https://github.com/Meridian-Synergy/waypoint360-ui/commit/baac0c6fc2ea50326031d46ef775f1860775d7c0))
+
 ## [0.30.0](https://github.com/Meridian-Synergy/waypoint360-ui/compare/v0.29.0...v0.30.0) (2026-11-15)
 
 
