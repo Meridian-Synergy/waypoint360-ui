@@ -14,8 +14,9 @@ import { join } from 'node:path'
  * Les recouvrements de modale et de feuille de partage sont l'exception admise :
  * cliquer à côté est un raccourci souris, jamais le seul chemin.
  *
- * ⚠️ Cette exception SUPPOSE qu'Escape ferme, ce qui n'est pas encore le cas de
- * `WpModal` ni de `WpShareSheet` — dette connue, hors de cette garde.
+ * ⚠️ Cette exception SUPPOSE qu'Escape ferme. C'est le cas de `WpModal` depuis
+ * le 2026-11-25 (élément `<dialog>` natif) ; `WpShareSheet` reste une dette connue,
+ * hors de cette garde.
  */
 
 const COMPONENTS = join(process.cwd(), 'src', 'components')
